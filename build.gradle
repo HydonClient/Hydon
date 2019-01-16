@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://files.minecraftforge.net/maven' }
+        maven { url 'https://repo.spongepowered.org/maven' }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.tweaker-client'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'java'
+
+group 'net.hydonclient'
+version 'B1'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.spongepowered.org/maven' }
+}
+
+dependencies {
+    compile 'org.spongepowered:mixin:0.7-SNAPSHOT'
+    compile 'com.github.FalseHonesty:reflections:21959e6e'
+    // https://mvnrepository.com/artifact/org.slick2d/slick2d-core
+    compile group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
+}
+
+minecraft {
+    version = '1.8.9'
+    mappings = 'stable_22'
+    tweakClass = 'net.hydonclient.launch.HydonTweaker'
+    runDir = 'run'
+}

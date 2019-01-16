@@ -1,0 +1,25 @@
+{
+  "refmap": "refmap.mixins.hydon.json",
+  "package": "net.hydonclient.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinMinecraft",
+
+    "entity.MixinEntityPlayerSP",
+
+    "gui.MixinFontRenderer",
+    "gui.MixinGui",
+    "gui.MixinGuiButton",
+    "gui.MixinGuiButtonLanguage",
+    "gui.MixinGuiIngame",
+    "gui.MixinGuiOptionSlider",
+    "gui.MixinGuiScreen",
+    "gui.MixinGuiSlider",
+    "gui.MixinGuiSlot",
+    "gui.MixinGuiTextField",
+    "gui.MixinLoadingScreenRenderer",
+
+    "network.MixinNetHandlerPlayClient",
+    "network.MixinNetworkManager"
+  ]
+}
