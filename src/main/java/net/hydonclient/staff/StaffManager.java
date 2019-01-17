@@ -14,6 +14,9 @@ public class StaffManager {
 
     private static final String URL = "https://raw.githubusercontent.com/HydonClient/Repo/master/staff.json";
 
+    /**
+     * Fetches staff from the github repository
+     */
     public static void fetchStaff() {
         try {
             String text = WebUtil.httpGet(URL);

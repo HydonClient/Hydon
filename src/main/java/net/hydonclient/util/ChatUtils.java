@@ -7,7 +7,7 @@ public class ChatUtils {
 
     private static String PREFIX =
         ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + ChatColor.BOLD + "Hydon"
-            + ChatColor.DARK_AQUA + "] " + ChatColor.WHITE;
+            + ChatColor.DARK_AQUA + "] " + ChatColor.GRAY;
 
     public static void addChatMessage(String message, boolean prefix) {
         StringBuilder sb = new StringBuilder();

@@ -46,6 +46,8 @@
 
     "network.play.server.MixinS2EPacketCloseWindow",
 
+    "util.MixinScreenshotHelper",
+
     "world.MixinWorld"
   ]
 }

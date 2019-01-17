@@ -1,6 +1,9 @@
 package net.hydonclient;
 
 import java.io.File;
+
+import net.hydonclient.event.EventBus;
+import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.staff.StaffManager;
 import net.hydonclient.util.Multithreading;
@@ -15,6 +18,9 @@ public class Hydon {
     public static final File STORAGE_FOLDER = new File(Minecraft.getMinecraft().mcDataDir, "Hydon");
     public static final String VERSION = "B1";
 
+    /**
+     * Invoked when the client starts.
+     */
     public void start() {
         LOGGER.info("Starting Hydon");
 
@@ -24,6 +30,7 @@ public class Hydon {
 
         LOGGER.info("Loading managers");
         HydonManagers.INSTANCE.init();
+        EventBus.register(CompactChat.getInstance());
 
         LOGGER.info("Loading staff");
         Multithreading.run(StaffManager::fetchStaff);
@@ -31,6 +38,9 @@ public class Hydon {
         LOGGER.info("Done");
     }
 
+    /**
+     * Invoked when the client is shutting down.
+     */
     public void stop() {
         LOGGER.info("Stopping Hydon");
 
