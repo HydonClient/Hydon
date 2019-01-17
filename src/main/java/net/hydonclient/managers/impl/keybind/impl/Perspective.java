@@ -14,6 +14,8 @@ public class Perspective extends HydonKeyBind {
     public static float modifiedYaw;
     public static float modifiedPitch;
 
+    // TODO: Add a toggle between if you want the keybind to activate by being held, or by being pressed once
+
     public Perspective() {
         super("Perspective", Keyboard.KEY_V);
         EventBus.register(this);
@@ -46,8 +48,11 @@ public class Perspective extends HydonKeyBind {
     public void onPress() {
         if (!toggled) {
             enable();
-        } else {
-            disable();
         }
+    }
+
+    @Override
+    public void onRelease() {
+        disable();
     }
 }
