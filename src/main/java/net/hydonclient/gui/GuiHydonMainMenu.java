@@ -184,7 +184,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.buttonList.add(new GuiButton(0, this.width / 2 + 1, j + 22, 100, 20,
             "Minecraft Settings"));
 
-        this.buttonList.add(new GuiButton(10, this.width / 2 - 101, j + 44, 100, 20,
+        this.buttonList.add(new GuiButton(6, this.width / 2 - 101, j + 44, 100, 20,
             "Credits"));
         this.buttonList.add(new GuiButton(4, this.width / 2 + 1, j + 44, 100, 20,
             I18n.format("menu.quit")));
@@ -272,6 +272,10 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         if (button.id == 11) {
             this.mc.launchIntegratedServer("Demo_World", "Demo_World",
                 DemoWorldServer.demoWorldSettings);
+        }
+
+        if (button.id == 6) {
+            this.mc.displayGuiScreen(new GuiHydonCredits());
         }
 
         if (button.id == 12) {

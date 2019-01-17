@@ -60,4 +60,18 @@ public class GuiUtils {
         Minecraft.getMinecraft().entityRenderer.stopUseShader();
     }
 
+    public static void overlayBackground(int startY, int endY, Minecraft mc) {
+        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDepthMask(false);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
+
+        mc.getTextureManager().bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
+        Gui.drawModalRectWithCustomSizedTexture(0, startY, 0, startY, sr.getScaledWidth(), endY, sr.getScaledWidth(), sr.getScaledHeight());
+    }
+
 }

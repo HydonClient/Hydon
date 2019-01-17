@@ -1,5 +1,6 @@
 package net.hydonclient.mixins.gui;
 
+import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiSlot;
@@ -122,7 +123,9 @@ public abstract class MixinGuiSlot {
             GL11.glDisable(GL11.GL_ALPHA_TEST);
 
             this.mc.getTextureManager().bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
-            Gui.drawModalRectWithCustomSizedTexture(this.left, this.top, this.left, this.top, this.right - this.left, this.bottom - this.top, sr.getScaledWidth(), sr.getScaledHeight());
+            Gui.drawModalRectWithCustomSizedTexture(this.left, this.top, this.left, this.top,
+                this.right - this.left, this.bottom - this.top, sr.getScaledWidth(),
+                sr.getScaledHeight());
             GlStateManager.enableAlpha();
 
             int k = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
@@ -143,7 +146,8 @@ public abstract class MixinGuiSlot {
             int j1 = this.func_148135_f();
 
             if (j1 > 0) {
-                int k1 = (this.bottom - this.top) * (this.bottom - this.top) / this.getContentHeight();
+                int k1 =
+                    (this.bottom - this.top) * (this.bottom - this.top) / this.getContentHeight();
                 k1 = MathHelper.clamp_int(k1, 32, this.bottom - this.top - 8);
                 int l1 = (int) this.amountScrolled * (this.bottom - this.top - k1) / j1 + this.top;
 
@@ -152,22 +156,34 @@ public abstract class MixinGuiSlot {
                 }
 
                 worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                worldrenderer.pos((double) i, (double) this.bottom, 0.0D).tex(0.0D, 1.0D).color(0, 0, 0, 60).endVertex();
-                worldrenderer.pos((double) j, (double) this.bottom, 0.0D).tex(1.0D, 1.0D).color(0, 0, 0, 60).endVertex();
-                worldrenderer.pos((double) j, (double) this.top, 0.0D).tex(1.0D, 0.0D).color(0, 0, 0, 60).endVertex();
-                worldrenderer.pos((double) i, (double) this.top, 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 60).endVertex();
+                worldrenderer.pos((double) i, (double) this.bottom, 0.0D).tex(0.0D, 1.0D)
+                    .color(0, 0, 0, 60).endVertex();
+                worldrenderer.pos((double) j, (double) this.bottom, 0.0D).tex(1.0D, 1.0D)
+                    .color(0, 0, 0, 60).endVertex();
+                worldrenderer.pos((double) j, (double) this.top, 0.0D).tex(1.0D, 0.0D)
+                    .color(0, 0, 0, 60).endVertex();
+                worldrenderer.pos((double) i, (double) this.top, 0.0D).tex(0.0D, 0.0D)
+                    .color(0, 0, 0, 60).endVertex();
                 tessellator.draw();
                 worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                worldrenderer.pos((double) i, (double) (l1 + k1), 0.0D).tex(0.0D, 1.0D).color(128, 128, 128, 255).endVertex();
-                worldrenderer.pos((double) j, (double) (l1 + k1), 0.0D).tex(1.0D, 1.0D).color(128, 128, 128, 255).endVertex();
-                worldrenderer.pos((double) j, (double) l1, 0.0D).tex(1.0D, 0.0D).color(128, 128, 128, 255).endVertex();
-                worldrenderer.pos((double) i, (double) l1, 0.0D).tex(0.0D, 0.0D).color(128, 128, 128, 255).endVertex();
+                worldrenderer.pos((double) i, (double) (l1 + k1), 0.0D).tex(0.0D, 1.0D)
+                    .color(128, 128, 128, 255).endVertex();
+                worldrenderer.pos((double) j, (double) (l1 + k1), 0.0D).tex(1.0D, 1.0D)
+                    .color(128, 128, 128, 255).endVertex();
+                worldrenderer.pos((double) j, (double) l1, 0.0D).tex(1.0D, 0.0D)
+                    .color(128, 128, 128, 255).endVertex();
+                worldrenderer.pos((double) i, (double) l1, 0.0D).tex(0.0D, 0.0D)
+                    .color(128, 128, 128, 255).endVertex();
                 tessellator.draw();
                 worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                worldrenderer.pos((double) i, (double) (l1 + k1 - 1), 0.0D).tex(0.0D, 1.0D).color(192, 192, 192, 255).endVertex();
-                worldrenderer.pos((double) (j - 1), (double) (l1 + k1 - 1), 0.0D).tex(1.0D, 1.0D).color(192, 192, 192, 255).endVertex();
-                worldrenderer.pos((double) (j - 1), (double) l1, 0.0D).tex(1.0D, 0.0D).color(192, 192, 192, 255).endVertex();
-                worldrenderer.pos((double) i, (double) l1, 0.0D).tex(0.0D, 0.0D).color(192, 192, 192, 255).endVertex();
+                worldrenderer.pos((double) i, (double) (l1 + k1 - 1), 0.0D).tex(0.0D, 1.0D)
+                    .color(192, 192, 192, 255).endVertex();
+                worldrenderer.pos((double) (j - 1), (double) (l1 + k1 - 1), 0.0D).tex(1.0D, 1.0D)
+                    .color(192, 192, 192, 255).endVertex();
+                worldrenderer.pos((double) (j - 1), (double) l1, 0.0D).tex(1.0D, 0.0D)
+                    .color(192, 192, 192, 255).endVertex();
+                worldrenderer.pos((double) i, (double) l1, 0.0D).tex(0.0D, 0.0D)
+                    .color(192, 192, 192, 255).endVertex();
                 tessellator.draw();
             }
 
@@ -185,17 +201,7 @@ public abstract class MixinGuiSlot {
      */
     @Overwrite
     protected void overlayBackground(int startY, int endY, int startAlpha, int endAlpha) {
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glDepthMask(false);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
-
-        this.mc.getTextureManager().bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
-        Gui.drawModalRectWithCustomSizedTexture(0, startY, 0, startY, sr.getScaledWidth(), endY, sr.getScaledWidth(), sr.getScaledHeight());
+        GuiUtils.overlayBackground(startY, endY, this.mc);
     }
 
     /**
