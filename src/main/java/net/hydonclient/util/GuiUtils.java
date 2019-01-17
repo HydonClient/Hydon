@@ -13,21 +13,21 @@ import org.lwjgl.opengl.GL11;
 public class GuiUtils {
 
     public static void drawBG() {
-        drawBG(1.0f);
+        drawBG(false);
     }
 
-    public static void drawBG(float alpha) {
+    public static void drawBG(boolean overrideWorldCheck) {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
 
         if (!(Minecraft.getMinecraft().theWorld != null && Minecraft
-            .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer))) {
+            .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer)) || overrideWorldCheck) {
             Minecraft.getMinecraft().getTextureManager()
                 .bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, sr.getScaledWidth(),

@@ -4,10 +4,13 @@ import net.hydonclient.Hydon;
 import net.hydonclient.SplashScreen;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
+import net.hydonclient.event.events.render.RenderTickEvent;
 import net.hydonclient.gui.GuiHydonMainMenu;
+import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -16,6 +19,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -93,6 +97,11 @@ public abstract class MixinMinecraft {
     @Inject(method = "startGame", at = @At(value = "NEW", target = "net/minecraft/client/particle/EffectRenderer", shift = At.Shift.AFTER))
     private void loadingStartGame8(CallbackInfo callbackInfo) {
         SplashScreen.advanceProgress("Loading effect renderer...");
+    }
+
+    @Inject(method = "runGameLoop", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;updateCameraAndRender(FJ)V", shift = Shift.AFTER))
+    private void runGameLoop(CallbackInfo callbackInfo) {
+        EventBus.call(new RenderTickEvent(new ScaledResolution(Minecraft.getMinecraft())));
     }
 
     /**

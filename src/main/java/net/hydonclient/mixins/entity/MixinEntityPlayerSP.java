@@ -1,11 +1,19 @@
 package net.hydonclient.mixins.entity;
 
+import com.google.common.base.Throwables;
 import com.mojang.authlib.GameProfile;
+import java.util.List;
+import java.util.Objects;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.ChatMessageSendEvent;
 import net.hydonclient.event.events.game.UpdateEvent;
+import net.hydonclient.util.ReflectionUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.shader.Shader;
+import net.minecraft.client.shader.ShaderGroup;
+import net.minecraft.client.shader.ShaderUniform;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

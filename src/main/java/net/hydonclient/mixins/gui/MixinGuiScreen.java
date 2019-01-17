@@ -4,8 +4,10 @@ import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiScreenResourcePacks;
 import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -32,7 +34,10 @@ public abstract class MixinGuiScreen {
     }
 
     private void renderBG() {
-        if (Minecraft.getMinecraft().theWorld != null && Minecraft
+        GuiScreen screen = Minecraft.getMinecraft().currentScreen;
+        if (screen instanceof GuiScreenResourcePacks) {
+            GuiUtils.drawBG(true);
+        } else if (Minecraft.getMinecraft().theWorld != null && Minecraft
             .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer)) {
             GuiUtils.drawIngameGuiGradient();
         } else {

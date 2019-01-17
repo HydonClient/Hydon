@@ -5,6 +5,7 @@
   "mixins": [
     "MixinMinecraft",
 
+    "entity.MixinAbstractClientPlayer",
     "entity.MixinEntityPlayerSP",
 
     "gui.MixinFontRenderer",
