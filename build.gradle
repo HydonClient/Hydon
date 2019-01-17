@@ -10,6 +10,11 @@ buildscript {
     }
 }
 
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
@@ -19,6 +24,7 @@ version 'B1'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -27,10 +33,9 @@ repositories {
 }
 
 dependencies {
-    compile 'org.spongepowered:mixin:0.7-SNAPSHOT'
-    compile 'com.github.FalseHonesty:reflections:21959e6e'
-    compile group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
-    compile 'club.minnced:java-discord-rpc:2.0.1'
+    embed 'org.spongepowered:mixin:0.7-SNAPSHOT'
+    embed 'com.github.FalseHonesty:reflections:21959e6e'
+    embed group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
 }
 
 minecraft {
@@ -38,4 +43,26 @@ minecraft {
     mappings = 'stable_22'
     tweakClass = 'net.hydonclient.launch.HydonTweaker'
     runDir = 'run'
+}
+
+jar {
+    dependsOn configurations.compile
+
+    from {
+        configurations.embed.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    manifest.attributes(
+            "MixinConfigs": 'mixins.hydon.json',
+            "TweakClass": 'net.hydonclient.launch.HydonTweaker',
+            "TweakOrder": 0,
+            "Manifest-Version": 1.0
+    )
+}
+
+mixin {
+    defaultObfuscationEnv notch
+    add sourceSets.main, "refmap.mixins.hydon.json"
 }

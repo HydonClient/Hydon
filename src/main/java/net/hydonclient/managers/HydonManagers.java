@@ -2,7 +2,6 @@ package net.hydonclient.managers;
 
 import java.io.File;
 import net.hydonclient.Hydon;
-import net.hydonclient.integrations.DiscordManager;
 import net.hydonclient.managers.impl.CommandManager;
 import net.hydonclient.managers.impl.KeybindHandler;
 import net.hydonclient.managers.impl.ModManager;
@@ -16,7 +15,6 @@ public class HydonManagers {
     private ModManager modManager;
     private ConfigManager configManager;
     private KeybindHandler keybindHandler;
-    private DiscordManager discordManager;
 
     public void init() {
         configManager = new ConfigManager(new File(Hydon.STORAGE_FOLDER, "config.json"));
@@ -29,9 +27,6 @@ public class HydonManagers {
 
         modManager = new ModManager();
         modManager.init();
-
-        discordManager = new DiscordManager();
-        discordManager.init();
 
         configManager.load();
         keybindHandler.loadPrevBinds();
@@ -57,7 +52,4 @@ public class HydonManagers {
         return keybindHandler;
     }
 
-    public DiscordManager getDiscordManager() {
-        return discordManager;
-    }
 }
