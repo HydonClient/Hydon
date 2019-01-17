@@ -7,6 +7,10 @@ public class PacketReceivedEvent extends Event {
 
     private Packet packet;
 
+    /**
+     * Fired when a packet is received
+     * @param packet the packed received
+     */
     public PacketReceivedEvent(Packet packet) {
         this.packet = packet;
     }

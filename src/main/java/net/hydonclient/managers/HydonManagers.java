@@ -16,6 +16,10 @@ public class HydonManagers {
     private ConfigManager configManager;
     private KeybindHandler keybindHandler;
 
+    /**
+     * Fired from Hydon#start
+     * Starts the config, the commands, the mods and the keybinds.
+     */
     public void init() {
         configManager = new ConfigManager(new File(Hydon.STORAGE_FOLDER, "config.json"));
 

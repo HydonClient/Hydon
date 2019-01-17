@@ -15,6 +15,9 @@ public class Hydon {
     public static final File STORAGE_FOLDER = new File(Minecraft.getMinecraft().mcDataDir, "Hydon");
     public static final String VERSION = "B1";
 
+    /**
+     * Invoked when the client starts.
+     */
     public void start() {
         LOGGER.info("Starting Hydon");
 
@@ -31,6 +34,9 @@ public class Hydon {
         LOGGER.info("Done");
     }
 
+    /**
+     * Invoked when the client is shutting down.
+     */
     public void stop() {
         LOGGER.info("Stopping Hydon");
 

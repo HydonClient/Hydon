@@ -7,6 +7,10 @@ public class GuiDisplayEvent extends Event {
 
     private GuiScreen guiScreen;
 
+    /**
+     * Fires when a GUI has been opened
+     * @param guiScreen the Gui class
+     */
     public GuiDisplayEvent(GuiScreen guiScreen) {
         this.guiScreen = guiScreen;
     }
