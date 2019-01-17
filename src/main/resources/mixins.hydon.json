@@ -15,6 +15,7 @@
 
     "client.renderer.IMixinGuiContainer",
     "client.renderer.IMixinInventoryEffectRenderer",
+    "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinInventoryEffectRenderer",
 
     "client.renderer.entity.MixinRenderPlayer",
