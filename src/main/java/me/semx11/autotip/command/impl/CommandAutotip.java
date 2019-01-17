@@ -12,7 +12,6 @@ import me.semx11.autotip.core.TaskManager;
 import me.semx11.autotip.event.EventClientConnection;
 import me.semx11.autotip.stats.StatsDaily;
 import me.semx11.autotip.universal.UniversalUtil;
-import net.hydonclient.managers.impl.command.Command;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -24,16 +23,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class CommandAutotip extends Command {
+public class CommandAutotip extends CommandAbstract {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy");
-    private static final DateTimeFormatter SESSION_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final DateTimeFormatter WAVE_FORMAT = DateTimeFormatter.ofPattern("mm:ss");
 
-    private Autotip autotip;
-
     public CommandAutotip(Autotip autotip) {
-        this.autotip = autotip;
+        super(autotip);
     }
 
     @Override

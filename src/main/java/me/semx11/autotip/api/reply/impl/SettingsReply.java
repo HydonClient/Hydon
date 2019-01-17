@@ -8,9 +8,6 @@ public class SettingsReply extends Reply {
 
     private GlobalSettings settings;
 
-    public SettingsReply() {
-    }
-
     public SettingsReply(boolean success) {
         super(success);
     }

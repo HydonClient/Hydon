@@ -12,9 +12,6 @@ public class LocaleReply extends Reply {
     private Locale lang;
     private JsonObject locale;
 
-    public LocaleReply() {
-    }
-
     public LocaleReply(boolean success) {
         super(success);
     }

@@ -45,20 +45,19 @@ public class EventClientConnection extends Event {
     }
 
     @EventListener
-    public void loggedIn(ServerJoinEvent event) {
+    public void playerLoggedIn(ServerJoinEvent event) {
         TaskManager taskManager = autotip.getTaskManager();
         SessionManager manager = autotip.getSessionManager();
 
         autotip.getMessageUtil().clearQueues();
 
-        serverIp = UniversalUtil.getRemoteAddress(event).toLowerCase();
-        lastLogin = System.currentTimeMillis();
+        this.serverIp = UniversalUtil.getRemoteAddress(event).toLowerCase();
+        this.lastLogin = System.currentTimeMillis();
 
         taskManager.getExecutor().execute(() -> {
             Object header;
             int attempts = 0;
-
-            while ((header = getHeader()) == null) {
+            while ((header = this.getHeader()) == null) {
                 if (attempts > 15) {
                     return;
                 }
@@ -82,14 +81,11 @@ public class EventClientConnection extends Event {
     }
 
     @EventListener
-    public void logOut(ServerLeaveEvent event) {
+    public void playerLoggedOut(ServerLeaveEvent event) {
         TaskManager taskManager = autotip.getTaskManager();
         SessionManager manager = autotip.getSessionManager();
-
         manager.setOnHypixel(false);
-
         taskManager.executeTask(TaskManager.TaskType.LOGOUT, manager::logout);
-
-        resetHeader();
+        this.resetHeader();
     }
 }

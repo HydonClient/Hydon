@@ -46,10 +46,6 @@ public class MessageUtil {
         this.sendRaw(PREFIX + msg, params);
     }
 
-    public void send(String msg, String url, String hoverText, Object... params) {
-        UniversalUtil.addChatMessage(StringUtil.params(PREFIX + msg, params), url, StringUtil.format(hoverText));
-    }
-
     public void separator() {
         this.sendRaw("&6&m&l----------------------------------");
     }

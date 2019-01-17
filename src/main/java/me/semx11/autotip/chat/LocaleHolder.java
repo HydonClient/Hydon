@@ -27,10 +27,6 @@ public class LocaleHolder {
         return locale;
     }
 
-    public JsonObject getRoot() {
-        return root;
-    }
-
     public String getKey(String key) {
         if (cache.containsKey(key)) {
             return cache.get(key);

@@ -53,7 +53,7 @@ public class Autotip extends Mod {
     public static IChatComponent tabHeader;
 
     private final List<Event> events = new ArrayList<>();
-    private final List<Command> commands = new ArrayList<>();
+    private final List<CommandAbstract> commands = new ArrayList<>();
 
     private boolean initialized = false;
 
@@ -137,7 +137,6 @@ public class Autotip extends Mod {
 
     @Override
     public void load() {
-        EventBus.register(this);
         ErrorReport.setAutotip(this);
         RequestHandler.setAutotip(this);
         UniversalUtil.setAutotip(this);
@@ -147,13 +146,9 @@ public class Autotip extends Mod {
         autoTipVersion = new AutoTipVersion(VERSION);
 
         messageUtil = new MessageUtil(this);
+        this.registerEvents(new EventClientTick(this));
 
-        HydonManagers.INSTANCE.getCommandManager().register(new CommandAutotip(this));
-        HydonManagers.INSTANCE.getCommandManager().register(new CommandLimbo(this));
         HydonManagers.INSTANCE.getConfigManager().register(config);
-        EventBus.register(new EventClientConnection(this));
-        EventBus.register(new EventChatReceived(this));
-        EventBus.register(new EventClientTick(this));
 
         try {
             fileUtil = new FileUtil(this);
@@ -177,8 +172,19 @@ public class Autotip extends Mod {
             config.load();
             taskManager.getExecutor().execute(() -> migrationManager.migrateLegacyFiles());
 
+            this.registerEvents(
+                    new EventClientConnection(this),
+                    new EventChatReceived(this)
+            );
+
+            this.registerCommands(
+                    new CommandAutotip(this),
+                    new CommandLimbo(this)
+            );
+
             Runtime.getRuntime().addShutdownHook(new Thread(sessionManager::logout));
             initialized = true;
+
         } catch (IOException e) {
             messageUtil.send("Autotip is disabled because it couldn't create the required files.");
             ErrorReport.reportException(e);
@@ -212,5 +218,19 @@ public class Autotip extends Mod {
     @SuppressWarnings("unchecked")
     public <T extends Command> T getCommand(Class<T> clazz) {
         return (T) commands.stream().filter(command -> command.getClass().equals(clazz)).findFirst().orElse(null);
+    }
+
+    private void registerEvents(Event... events) {
+        for (Event event : events) {
+            EventBus.call(event);
+            this.events.add(event);
+        }
+    }
+
+    private void registerCommands(CommandAbstract... commands) {
+        for (CommandAbstract command : commands) {
+            HydonManagers.INSTANCE.getCommandManager().register(command);
+            this.commands.add(command);
+        }
     }
 }

@@ -1,17 +1,15 @@
 package me.semx11.autotip.command.impl;
 
 import me.semx11.autotip.Autotip;
+import me.semx11.autotip.chat.MessageUtil;
 import me.semx11.autotip.command.CommandAbstract;
-import net.hydonclient.managers.impl.command.Command;
 
-public class CommandLimbo extends Command {
+public class CommandLimbo extends CommandAbstract {
 
     private boolean executed;
 
-    private Autotip autotip;
-
     public CommandLimbo(Autotip autotip) {
-        this.autotip = autotip;
+        super(autotip);
     }
 
     public boolean hasExecuted() {
@@ -24,16 +22,23 @@ public class CommandLimbo extends Command {
 
     @Override
     public String getName() {
-        return null;
+        return "limbo";
     }
 
     @Override
     public String getUsage() {
-        return null;
+        return "/limbo";
     }
 
     @Override
     public void onCommand(String[] args) {
+        MessageUtil messageUtil = autotip.getMessageUtil();
 
+        if (autotip.getSessionManager().isOnHypixel()) {
+            executed = true;
+            messageUtil.sendCommand("/achat \u00a7c");
+        } else {
+            messageUtil.send("&cYou must be on Hypixel to use this command.");
+        }
     }
 }

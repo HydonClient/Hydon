@@ -24,10 +24,6 @@ public class GlobalSettings {
     private List<Message> messages;
     private List<StatsMessage> statsMessages;
 
-    public AutoTipVersion getLatestAutoTipVersion() {
-        return latestAutoTipVersion;
-    }
-
     public VersionInfo getVersionInfo(AutoTipVersion autoTipVersion) {
         return versions.stream()
                 .filter(v -> v.getAutoTipVersion().equals(autoTipVersion))
@@ -41,7 +37,6 @@ public class GlobalSettings {
             return v.compareTo(lowest) > 0 && v.compareTo(this.latestAutoTipVersion) < 1;
         }).collect(Collectors.toList());
     }
-
 
     public String getHypixelHeader() {
         return hypixelHeader;

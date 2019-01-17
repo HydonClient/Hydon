@@ -6,6 +6,7 @@ import me.semx11.autotip.chat.MessageOption;
 import me.semx11.autotip.gson.exclusion.Exclude;
 import me.semx11.autotip.util.FileUtil;
 import net.hydonclient.Hydon;
+import net.hydonclient.managers.impl.config.SaveVal;
 import org.apache.commons.io.FileUtils;
 
 import javax.annotation.CheckReturnValue;
