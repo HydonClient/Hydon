@@ -15,6 +15,15 @@ public class RenderPlayerEvent extends Event {
 
     private final float partialTicks;
 
+    /**
+     * Fired when a player is being rendered
+     * @param entity the player entitiy
+     * @param renderManager the render manager
+     * @param x the x position of the player
+     * @param y the y position of the player
+     * @param z the z position of the player
+     * @param partialTicks
+     */
     public RenderPlayerEvent(AbstractClientPlayer entity, RenderManager renderManager, double x, double y, double z, float partialTicks) {
         this.entity = entity;
         this.renderManager = renderManager;

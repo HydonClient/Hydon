@@ -6,6 +6,10 @@ public class ChatMessageSendEvent extends CancellableEvent {
 
     private String message;
 
+    /**
+     * Fired when the client sends a message
+     * @param message the sent message
+     */
     public ChatMessageSendEvent(String message) {
         this.message = message;
     }

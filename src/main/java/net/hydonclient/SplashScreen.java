@@ -53,6 +53,10 @@ public class SplashScreen {
         render(Minecraft.getMinecraft().getTextureManager());
     }
 
+    /**
+     * Renders the SplashScreen
+     * @param tm the texture manager for rendering with
+     */
     public static void render(TextureManager tm) {
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());

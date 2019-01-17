@@ -16,6 +16,11 @@ public class Capes {
 
     private static final Map<UUID, ResourceLocation> capes = new HashMap<>();
 
+    /**
+     * Loads a cape from the cache or from the website.
+     * @param uuid the uuid of the player
+     * @param url  the url to fetch from
+     */
     public static void loadCape(UUID uuid, String url) {
         if (url == null || url.isEmpty()) {
             return;
@@ -40,6 +45,10 @@ public class Capes {
         Minecraft.getMinecraft().getTextureManager().loadTexture(rl, textureCape);
     }
 
+    /**
+     * Parse the cape image
+     * @param img the buffered image of the cape
+     */
     private static BufferedImage parseCape(BufferedImage img) {
         int imageWidth = 64;
         int imageHeight = 32;
