@@ -3,6 +3,7 @@ package net.hydonclient.managers;
 import java.io.File;
 import net.hydonclient.Hydon;
 import net.hydonclient.managers.impl.CommandManager;
+import net.hydonclient.managers.impl.KeybindHandler;
 import net.hydonclient.managers.impl.ModManager;
 import net.hydonclient.managers.impl.config.ConfigManager;
 
@@ -13,6 +14,7 @@ public class HydonManagers {
     private CommandManager commandManager;
     private ModManager modManager;
     private ConfigManager configManager;
+    private KeybindHandler keybindHandler;
 
     public void init() {
         configManager = new ConfigManager(new File(Hydon.STORAGE_FOLDER, "config.json"));
@@ -20,10 +22,14 @@ public class HydonManagers {
         commandManager = new CommandManager();
         commandManager.load();
 
+        keybindHandler = new KeybindHandler();
+        keybindHandler.loadBinds();
+
         modManager = new ModManager();
         modManager.init();
 
         configManager.load();
+        keybindHandler.loadPrevBinds();
     }
 
     public void close() {
@@ -40,5 +46,9 @@ public class HydonManagers {
 
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+
+    public KeybindHandler getKeybindHandler() {
+        return keybindHandler;
     }
 }
