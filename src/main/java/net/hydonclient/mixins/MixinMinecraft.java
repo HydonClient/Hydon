@@ -152,7 +152,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "startGame", at = @At("RETURN"))
     private void startGame2(CallbackInfo callbackInfo) {
-        Display.setTitle("[STARTING] Hydon // " + Hydon.VERSION);
+        Display.setTitle("Hydon // " + Hydon.VERSION);
     }
 
     @Inject(method = "shutdown", at = @At("HEAD"))

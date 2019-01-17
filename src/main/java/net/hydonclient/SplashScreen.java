@@ -6,6 +6,8 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
+import net.hydonclient.util.Images;
+import net.hydonclient.util.ResolutionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -23,7 +25,7 @@ public class SplashScreen {
     public static class Progress {
 
         private int current;
-        private int max = 8;
+        private int max = 9;
         private String text = "Starting...";
 
         void inc(String text) {
@@ -84,47 +86,41 @@ public class SplashScreen {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
-//
-//        tm.bindTexture(logoLocation);
-//
-//        double reduceBy = 5;
-//
-//        double w = Constants.LOGO_WIDTH / Math.max(1, reduceBy);
-//        double h = Constants.LOGO_HEIGHT / Math.max(1, reduceBy);
-//
-        int spacing = 10;
-//
-//        Gui.drawModalRectWithCustomSizedTexture((int) ((sr.getScaledWidth() - w) / 2), (int) ((sr.getScaledHeight() / 2 + spacing) - h), 0, 0, (int) w, (int) h, (int) w,(int) h);
 
-        try {
-            MinecraftFontRenderer fontRenderer = new MinecraftFontRenderer(
-                Font.createFont(Font.TRUETYPE_FONT,
-                    Hydon.class
-                        .getResourceAsStream("/assets/minecraft/fonts/Product-Sans-Bold.ttf"))
-                    .deriveFont(40f), true, true);
-            fontRenderer.drawCenteredStringWithShadow("HYDON", sr.getScaledWidth() / 2f,
-                sr.getScaledHeight() / 3f - fontRenderer.getHeight(),
-                0xffffff);
+        GlStateManager.enableAlpha();
+        tm.bindTexture(Images.LOGO.getLocation());
+        double logoScaleFactor = ResolutionUtil.getImageScaleFactor();
+        int logoWidth = (int) (Images.LOGO.getWidth() * logoScaleFactor);
+        int logoHeight = (int) (Images.LOGO.getHeight() * logoScaleFactor);
+        int logoX = (ResolutionUtil.getCurrent().getScaledWidth() - logoWidth) / 2;
+        int logoY = (sr.getScaledHeight() + logoHeight) / 4;
 
-            HydonFonts.PRODUCT_SANS_REGULAR.drawCenteredStringWithShadow(progress.getText(), sr.getScaledWidth() / 2f, sr.getScaledHeight() / 2f - HydonFonts.PRODUCT_SANS_REGULAR.getHeight(), 0xffffff);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 
-            int barHeight = 20;
-            double newCurrentProgress = progress.getCurrent();
-            double progressDouble = (newCurrentProgress / progress.getMax());
-            progressDouble *= sr.getScaledWidth() / 2f;
-            Gui.drawRect(sr.getScaledWidth() / 4, sr.getScaledHeight() / 2 + spacing,
-                sr.getScaledWidth() / 4 * 3, sr.getScaledHeight() / 2 + spacing + barHeight,
-                new Color(0, 0, 0, 100).getRGB());
-            Gui.drawRect(sr.getScaledWidth() / 4, sr.getScaledHeight() / 2 + spacing,
-                (int) (sr.getScaledWidth() / 4 + progressDouble),
-                sr.getScaledHeight() / 2 + spacing + barHeight,
-                new Color(201, 57, 53, 200).getRGB());
+        GlStateManager.color(0.0f, 0.0f, 0.0f, 0.2f);
+        Gui.drawModalRectWithCustomSizedTexture(logoX + 2, logoY + 2, 0, 0, logoWidth, logoHeight,
+            logoWidth, logoHeight);
 
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-        }
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        Gui.drawModalRectWithCustomSizedTexture(logoX, logoY, 0, 0, logoWidth, logoHeight,
+            logoWidth, logoHeight);
 
-            framebuffer.unbindFramebuffer();
+        int barHeight = 20;
+        double newCurrentProgress = progress.getCurrent();
+        double progressDouble = (newCurrentProgress / progress.getMax());
+        progressDouble *= sr.getScaledWidth() / 2f;
+        Gui.drawRect(sr.getScaledWidth() / 4, sr.getScaledHeight() - barHeight,
+            sr.getScaledWidth() / 4 * 3, sr.getScaledHeight(),
+            new Color(0, 0, 0, 100).getRGB());
+        Gui.drawRect(sr.getScaledWidth() / 4, sr.getScaledHeight() - barHeight,
+            (int) (sr.getScaledWidth() / 4 + progressDouble),
+            sr.getScaledHeight(),
+            new Color(201, 57, 53, 200).getRGB());
+
+        HydonFonts.PRODUCT_SANS_REGULAR.drawCenteredStringWithShadow(progress.getText(), sr.getScaledWidth() / 2f, sr.getScaledHeight() - (barHeight + HydonFonts.PRODUCT_SANS_REGULAR.getHeight()) / 2f, 0xffffff);
+
+        framebuffer.unbindFramebuffer();
             framebuffer.framebufferRender(sr.getScaledWidth() * i, sr.getScaledHeight() * i);
             GlStateManager.enableAlpha();
             GlStateManager.alphaFunc(516, 0.1F);

@@ -9,13 +9,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
-import net.hydonclient.Hydon;
-import net.hydonclient.SplashScreen;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
-import net.hydonclient.util.GuiUtils;
+import net.hydonclient.util.AnimationUtil;
+import net.hydonclient.util.Images;
+import net.hydonclient.util.ResolutionUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonLanguage;
 import net.minecraft.client.gui.GuiConfirmOpenLink;
@@ -115,6 +115,8 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
     private GuiButton realmsButton;
     private boolean field_183502_L;
     private GuiScreen field_183503_M;
+
+    private static int yMod = 0;
 
     public GuiHydonMainMenu() {
         this.openGLWarning2 = field_96138_a;
@@ -523,6 +525,8 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         tessellator.draw();
     }
 
+    private double time = 0;
+
     /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
@@ -531,20 +535,25 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         MinecraftFontRenderer fontRenderer = HydonFonts.PRODUCT_SANS_REGULAR;
-        MinecraftFontRenderer boldFontRenderer = HydonFonts.PRODUCT_SANS_BOLD;
 
+        this.mc.getTextureManager().bindTexture(Images.ALT_BG_1.getLocation());
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0,
+            ResolutionUtil.getCurrent().getScaledWidth(),
+            ResolutionUtil.getCurrent().getScaledHeight(),
+            ResolutionUtil.getCurrent().getScaledWidth(),
+            ResolutionUtil.getCurrent().getScaledHeight());
 
-        GlStateManager.disableAlpha();
-        GuiUtils.drawBG();
-        GlStateManager.enableAlpha();
+        fontRenderer.drawString("Hydon (Alpha 0)", 3,
+            scaledResolution.getScaledHeight() - fontRenderer.getHeight() * 2, 0xffffff);
+        fontRenderer.drawString("https://hydonclient.net", 3,
+            scaledResolution.getScaledHeight() - fontRenderer.getHeight(), 0xffffff);
 
-        boldFontRenderer.drawCenteredStringWithShadow("HYDON", scaledResolution.getScaledWidth() / 2f, scaledResolution.getScaledHeight() / 3f, 0xffffff);
-
-        fontRenderer.drawString("Hydon (Alpha 0)", 3, scaledResolution.getScaledHeight() - fontRenderer.getHeight() * 2, 0xffffff);
-        fontRenderer.drawString("https://hydonclient.net", 3, scaledResolution.getScaledHeight() - fontRenderer.getHeight(), 0xffffff);
-
-        fontRenderer.drawString("Not affiliated with", scaledResolution.getScaledWidth() - fontRenderer.getStringWidth("Not affiliated with") - 3, scaledResolution.getScaledHeight() - fontRenderer.getHeight() * 2, 0xffffff);
-        fontRenderer.drawString("M O J A N G     A B", scaledResolution.getScaledWidth() - fontRenderer.getStringWidth("M O J A N G     A B") - 3, scaledResolution.getScaledHeight() - fontRenderer.getHeight(), 0xffffff);
+        fontRenderer.drawString("Not affiliated with",
+            scaledResolution.getScaledWidth() - fontRenderer.getStringWidth("Not affiliated with")
+                - 3, scaledResolution.getScaledHeight() - fontRenderer.getHeight() * 2, 0xffffff);
+        fontRenderer.drawString("M O J A N G     A B",
+            scaledResolution.getScaledWidth() - fontRenderer.getStringWidth("M O J A N G     A B")
+                - 3, scaledResolution.getScaledHeight() - fontRenderer.getHeight(), 0xffffff);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0) {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2,
@@ -556,11 +565,52 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
                 this.buttonList.get(0).yPosition - 12, -1);
         }
 
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         if (this.func_183501_a()) {
             this.field_183503_M.drawScreen(mouseX, mouseY, partialTicks);
         }
+
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+
+        if (yMod < 100) {
+            GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f - 1.0f / 60f * yMod);
+            this.mc.getTextureManager().bindTexture(Images.ALT_BG_1.getLocation());
+            Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0,
+                ResolutionUtil.getCurrent().getScaledWidth(),
+                ResolutionUtil.getCurrent().getScaledHeight(),
+                ResolutionUtil.getCurrent().getScaledWidth(),
+                ResolutionUtil.getCurrent().getScaledHeight());
+        }
+
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+
+        if (time < 40) {
+            yMod = (int) AnimationUtil.easeOut((float) time, 0, 100 - yMod, 40f);
+            time++;
+        }
+
+        GlStateManager.enableAlpha();
+        this.mc.getTextureManager().bindTexture(Images.LOGO.getLocation());
+        double logoScaleFactor = ResolutionUtil.getImageScaleFactor();
+        int logoWidth = (int) (Images.LOGO.getWidth() * logoScaleFactor);
+        int logoHeight = (int) (Images.LOGO.getHeight() * logoScaleFactor);
+        int logoX = (ResolutionUtil.getCurrent().getScaledWidth() - logoWidth) / 2;
+        int logoY = (scaledResolution.getScaledHeight() + logoHeight) / 4 - yMod;
+
+        GlStateManager.color(0.0f, 0.0f, 0.0f, 0.2f);
+        Gui.drawModalRectWithCustomSizedTexture(logoX + 2, logoY + 2, 0, 0, logoWidth, logoHeight,
+            logoWidth, logoHeight);
+
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        Gui.drawModalRectWithCustomSizedTexture(logoX, logoY, 0, 0, logoWidth, logoHeight,
+            logoWidth, logoHeight);
     }
 
     /**
