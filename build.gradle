@@ -45,6 +45,8 @@ minecraft {
     runDir = 'run'
 }
 
+sourceJar.enabled = false
+
 jar {
     dependsOn configurations.compile
 

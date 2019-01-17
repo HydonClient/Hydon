@@ -35,5 +35,10 @@ public class ToggleSprint extends HydonKeyBind {
         if (toggleSprint) {
             ((MixinKeyBinding) Minecraft.getMinecraft().gameSettings.keyBindSprint).setPressed(true);
         }
+
+        /* If the player disables the Togglesprint keybind while it's activated, it'll stop their sprint TODO: (make this an option to toggle on and off) */
+        if (!toggleSprint) {
+            Minecraft.getMinecraft().thePlayer.setSprinting(false);
+        }
     }
 }

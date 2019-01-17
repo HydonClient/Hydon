@@ -25,6 +25,11 @@ public abstract class MixinRenderPlayer extends RendererLivingEntity<AbstractCli
     @Shadow
     public abstract ModelPlayer getMainModel();
 
+    @Inject(method = "doRender", at = @At("HEAD"), cancellable = true)
+    private void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+        impl.doRender(entity, x, y, z, entityYaw, partialTicks, renderManager, ci);
+    }
+
     @Inject(method = "renderRightArm", at = @At(value = "FIELD", ordinal = 3))
     private void renderRightArm(AbstractClientPlayer clientPlayer, CallbackInfo ci) {
         impl.renderRightArm(clientPlayer, ci);
