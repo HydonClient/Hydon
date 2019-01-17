@@ -36,7 +36,7 @@ public class BlurMod extends Mod {
                 return;
             }
             Field field = ReflectionUtils
-                .getField(ShaderGroup.class, new String[]{"field_148031_d", "listShaders"});
+                .getField(ShaderGroup.class, new String[]{"d", "listShaders"});
             assert field != null;
             field.setAccessible(true);
             List<Shader> shaderList = (List<Shader>) field.get(sg);

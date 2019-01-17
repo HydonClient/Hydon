@@ -44,10 +44,11 @@ public class GuiUtils {
 
     public static void applyShader(ResourceLocation path) {
         Method method = ReflectionUtils
-            .getMethod(EntityRenderer.class, new String[]{"loadShader", "func_148057_a"},
+            .getMethod(EntityRenderer.class, new String[]{"loadShader", "a"},
                 new Class[]{ResourceLocation.class});
+        assert method != null;
+        method.setAccessible(true);
         try {
-            assert method != null;
             method.invoke(Minecraft.getMinecraft().entityRenderer,
                 path);
         } catch (IllegalAccessException | InvocationTargetException e) {
