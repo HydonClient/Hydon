@@ -596,6 +596,8 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
             time++;
         }
 
+        GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_NICEST);
+        GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
         GlStateManager.enableAlpha();
         this.mc.getTextureManager().bindTexture(Images.LOGO.getLocation());
         double logoScaleFactor = ResolutionUtil.getImageScaleFactor();
