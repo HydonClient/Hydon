@@ -1,5 +1,7 @@
 package net.hydonclient.mixinsimp.client.gui;
 
+import net.hydonclient.event.EventBus;
+import net.hydonclient.event.events.game.ChatEvent;
 import net.hydonclient.mixins.client.gui.IMixinGuiNewChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -7,6 +9,7 @@ import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
@@ -16,6 +19,21 @@ public class HydonGuiNewChat {
 
     public HydonGuiNewChat(GuiNewChat guiNewChat) {
         this.guiNewChat = guiNewChat;
+    }
+
+    public void printChatMessage(IChatComponent chatComponent, CallbackInfo ci) {
+        ChatEvent event = new ChatEvent(chatComponent);
+
+        EventBus.call(event);
+
+        if (event.isCancelled()) {
+            ci.cancel();
+        } else {
+            if (event.getChat() != chatComponent) {
+                guiNewChat.printChatMessageWithOptionalDeletion(event.getChat(), 0);
+                ci.cancel();
+            }
+        }
     }
 
     public void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly, int scrollPos, boolean isScrolled, List<ChatLine> drawnChatLines, List<ChatLine> chatLines, Minecraft mc) {

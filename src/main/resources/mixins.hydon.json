@@ -13,8 +13,10 @@
     "client.gui.MixinGuiIngame",
     "client.gui.MixinGuiNewChat",
 
+    "client.renderer.IMixinEntityRenderer",
     "client.renderer.IMixinGuiContainer",
     "client.renderer.IMixinInventoryEffectRenderer",
+    "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinInventoryEffectRenderer",
 
     "client.renderer.entity.MixinRenderPlayer",
@@ -45,6 +47,8 @@
     "network.MixinNetworkManager",
 
     "network.play.server.MixinS2EPacketCloseWindow",
+
+    "util.MixinScreenshotHelper",
 
     "world.MixinWorld"
   ]

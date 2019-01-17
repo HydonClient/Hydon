@@ -1,6 +1,9 @@
 package net.hydonclient;
 
 import java.io.File;
+
+import net.hydonclient.event.EventBus;
+import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.staff.StaffManager;
 import net.hydonclient.util.Multithreading;
@@ -27,6 +30,7 @@ public class Hydon {
 
         LOGGER.info("Loading managers");
         HydonManagers.INSTANCE.init();
+        EventBus.register(CompactChat.getInstance());
 
         LOGGER.info("Loading staff");
         Multithreading.run(StaffManager::fetchStaff);
