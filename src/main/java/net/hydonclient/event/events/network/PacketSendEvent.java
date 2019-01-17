@@ -7,6 +7,10 @@ public class PacketSendEvent extends CancellableEvent {
 
     private Packet packet;
 
+    /**
+     * Fired when the client sends a packet
+     * @param packet the packet sent
+     */
     public PacketSendEvent(Packet packet) {
         this.packet = packet;
     }

@@ -7,6 +7,10 @@ public class RenderTickEvent extends Event {
 
     private ScaledResolution scaledResolution;
 
+    /**
+     * Fires every render tick.
+     * @param scaledResolution
+     */
     public RenderTickEvent(ScaledResolution scaledResolution) {
         this.scaledResolution = scaledResolution;
     }
