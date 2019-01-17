@@ -139,7 +139,7 @@ public abstract class MixinMinecraft {
         }
 
         if (guiScreenIn == null && this.theWorld == null) {
-            guiScreenIn = new GuiMainMenu();
+            guiScreenIn = new GuiHydonMainMenu();
         } else if (guiScreenIn == null && this.thePlayer.getHealth() <= 0.0F) {
             guiScreenIn = new GuiGameOver();
         }
