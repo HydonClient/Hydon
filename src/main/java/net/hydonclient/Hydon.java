@@ -2,6 +2,8 @@ package net.hydonclient;
 
 import java.io.File;
 import net.hydonclient.managers.HydonManagers;
+import net.hydonclient.staff.StaffManager;
+import net.hydonclient.util.Multithreading;
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +24,9 @@ public class Hydon {
 
         LOGGER.info("Loading managers");
         HydonManagers.INSTANCE.init();
+
+        LOGGER.info("Loading staff");
+        Multithreading.run(StaffManager::fetchStaff);
 
         LOGGER.info("Done");
     }
