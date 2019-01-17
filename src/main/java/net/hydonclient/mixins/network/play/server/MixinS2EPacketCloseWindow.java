@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinS2EPacketCloseWindow {
 
     /**
-     * @author Somebody on the Hypixel forums - need to credit later
+     * @author Cecer
      * @reason NoCloseMyChat - Stops the server from closing a players chat when something occurs.
      */
     @Inject(method = "processPacket", at = @At("HEAD"), cancellable = true)
