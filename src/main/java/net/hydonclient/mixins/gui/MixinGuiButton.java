@@ -57,9 +57,8 @@ public abstract class MixinGuiButton extends Gui {
             double hoverInc = (System.currentTimeMillis() - prevDeltaTime) / 2f;
             hoverFade = hovered ? Math.min(100, hoverFade + hoverInc) : Math.max(0, hoverFade - hoverInc);
 
-            Gui.drawRect((int) (xPosition + (hoverFade / 10)), yPosition,
-                (int) (xPosition + width - (hoverFade / 10)), yPosition + height, new Color(0, 0, 0,
-                    (int) (60 - (hoverFade / 4))).getRGB());
+            Gui.drawRect(xPosition, yPosition, xPosition + width, yPosition + height, new Color(0, 0, 0,
+                    (int) (100 - (hoverFade / 2))).getRGB());
 
             this.mouseDragged(mc, mouseX, mouseY);
 
