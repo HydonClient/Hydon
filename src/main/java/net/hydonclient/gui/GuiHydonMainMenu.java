@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import net.hydonclient.Hydon;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.AnimationUtil;
@@ -347,7 +349,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
             ResolutionUtil.getCurrent().getScaledWidth(),
             ResolutionUtil.getCurrent().getScaledHeight());
 
-        fontRenderer.drawString("Hydon (Alpha 0)", 3,
+        fontRenderer.drawString("Hydon (" + Hydon.VERSION + ")", 3,
             scaledResolution.getScaledHeight() - fontRenderer.getHeight() * 2, 0xffffff);
         fontRenderer.drawString("https://hydonclient.net", 3,
             scaledResolution.getScaledHeight() - fontRenderer.getHeight(), 0xffffff);
