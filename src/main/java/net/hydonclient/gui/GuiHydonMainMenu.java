@@ -32,7 +32,6 @@ import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.realms.RealmsBridge;
@@ -51,22 +50,9 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
     private static final Logger logger = LogManager.getLogger();
     private static final Random RANDOM = new Random();
     /**
-     * Counts the number of screen updates.
-     */
-    private float updateCounter;
-    /**
      * The splash message.
      */
     private String splashText;
-    private GuiButton buttonResetDemo;
-    /**
-     * Timer used to rotate the panorama, increases every tick.
-     */
-    private int panoramaTimer;
-    /**
-     * Texture allocated for the current viewport of the main menu's panorama background.
-     */
-    private DynamicTexture viewportTexture;
     /**
      * The Object object utilized as a thread lock when performing non thread-safe operations
      */
@@ -84,14 +70,12 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
      */
     private String openGLWarningLink;
     private static final ResourceLocation splashTexts = new ResourceLocation("texts/splashes.txt");
-    public static final String field_96138_a = "Please click " + ChatColor.UNDERLINE + "here" + ChatColor.RESET + " for more information.";
+    private static final String field_96138_a = "Please click " + ChatColor.UNDERLINE + "here" + ChatColor.RESET + " for more information.";
     private int field_92024_r;
-    private int field_92023_s;
     private int field_92022_t;
     private int field_92021_u;
     private int field_92020_v;
     private int field_92019_w;
-    private ResourceLocation backgroundTexture;
     private boolean field_183502_L;
     private GuiScreen field_183503_M;
 
@@ -133,8 +117,6 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
                 }
             }
         }
-
-        this.updateCounter = RANDOM.nextFloat();
         this.openGLWarning1 = "";
 
         if (!GLContext.getCapabilities().OpenGL20 && !OpenGlHelper.areShadersSupported()) {
@@ -152,8 +134,6 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
      * Called from the main game loop to update the screen.
      */
     public void updateScreen() {
-        ++this.panoramaTimer;
-
         if (this.func_183501_a()) {
             this.field_183503_M.updateScreen();
         }
@@ -179,9 +159,6 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
      * displayed and when the window resizes, the buttonList is cleared beforehand.
      */
     public void initGui() {
-        this.viewportTexture = new DynamicTexture(256, 256);
-        this.backgroundTexture = this.mc.getTextureManager()
-            .getDynamicTextureLocation("background", this.viewportTexture);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 
@@ -215,9 +192,9 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 123, j + 44));
 
         synchronized (this.threadLock) {
-            this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
+            int field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
             this.field_92024_r = this.fontRendererObj.getStringWidth(this.openGLWarning2);
-            int k = Math.max(this.field_92023_s, this.field_92024_r);
+            int k = Math.max(field_92023_s, this.field_92024_r);
             this.field_92022_t = (this.width - k) / 2;
             this.field_92021_u = this.buttonList.get(0).yPosition - 24;
             this.field_92020_v = this.field_92022_t + k;
@@ -256,13 +233,14 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
     private void addDemoButtons(int p_73972_1_) {
         this.buttonList.add(new GuiButton(11, this.width / 2 - 100, p_73972_1_,
             I18n.format("menu.playdemo")));
-        this.buttonList.add(this.buttonResetDemo = new GuiButton(12, this.width / 2 - 100,
+        GuiButton buttonResetDemo;
+        this.buttonList.add(buttonResetDemo = new GuiButton(12, this.width / 2 - 100,
             p_73972_1_ + 24, I18n.format("menu.resetdemo")));
         ISaveFormat isaveformat = this.mc.getSaveLoader();
         WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
 
         if (worldinfo == null) {
-            this.buttonResetDemo.enabled = false;
+            buttonResetDemo.enabled = false;
         }
     }
 
