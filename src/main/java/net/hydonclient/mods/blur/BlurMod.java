@@ -59,8 +59,7 @@ public class BlurMod extends Mod {
         } else if (Minecraft.getMinecraft().theWorld != null && Minecraft
             .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer) && !Minecraft.getMinecraft().entityRenderer.isShaderActive()) {
             start = System.currentTimeMillis();
-            GuiUtils
-                .applyShader(new ResourceLocation("minecraft", "shaders/post/fade_in_blur.json"));
+            GuiUtils.applyShader(new ResourceLocation("minecraft", "shaders/post/fade_in_blur.json"));
         }
     }
 }

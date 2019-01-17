@@ -1,21 +1,15 @@
 package net.hydonclient.mixins.entity;
 
-import com.google.common.base.Throwables;
 import com.mojang.authlib.GameProfile;
-import java.util.List;
-import java.util.Objects;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.ChatMessageSendEvent;
 import net.hydonclient.event.events.game.UpdateEvent;
-import net.hydonclient.util.ReflectionUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.shader.Shader;
-import net.minecraft.client.shader.ShaderGroup;
-import net.minecraft.client.shader.ShaderUniform;
+import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,6 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityPlayerSP.class)
 public class MixinEntityPlayerSP extends AbstractClientPlayer {
+
+    @Shadow
+    public float prevTimeInPortal;
+
+    @Shadow
+    public float timeInPortal;
 
     public MixinEntityPlayerSP(World worldIn,
         GameProfile playerProfile) {
@@ -41,5 +41,18 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
         if (chatMessageSendEvent.isCancelled()) {
             callbackInfo.cancel();
         }
+    }
+
+    /**
+     * @author asbyth
+     * @reason Fixes MC-7519 - When you would clear an effect like Nausea, a portal animation would show up
+     */
+    @Override
+    public void removePotionEffectClient(int potionID) {
+        if (potionID == Potion.confusion.id) {
+            prevTimeInPortal = 0.0F;
+            timeInPortal = 0.0F;
+        }
+        removePotionEffect(potionID);
     }
 }

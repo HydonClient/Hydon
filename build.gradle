@@ -29,8 +29,8 @@ repositories {
 dependencies {
     compile 'org.spongepowered:mixin:0.7-SNAPSHOT'
     compile 'com.github.FalseHonesty:reflections:21959e6e'
-    // https://mvnrepository.com/artifact/org.slick2d/slick2d-core
     compile group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
+    compile 'club.minnced:java-discord-rpc:2.0.1'
 }
 
 minecraft {

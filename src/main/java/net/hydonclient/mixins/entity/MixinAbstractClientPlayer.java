@@ -2,8 +2,6 @@ package net.hydonclient.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
 import net.hydonclient.capes.Capes;
-import net.hydonclient.capes.StaffCapes;
-import net.hydonclient.util.Multithreading;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.ResourceLocation;

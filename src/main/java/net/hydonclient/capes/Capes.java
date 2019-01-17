@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import net.hydonclient.staff.StaffManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IImageBuffer;
 import net.minecraft.client.renderer.ThreadDownloadImageData;
@@ -21,7 +22,7 @@ public class Capes {
         }
 
         MinecraftProfileTexture mpt = new MinecraftProfileTexture(
-            StaffCapes.STAFF_CAPES.getOrDefault(uuid, url), new HashMap<>());
+            StaffManager.STAFF_CAPES.getOrDefault(uuid, url), new HashMap<>());
         ResourceLocation rl = new ResourceLocation("skins/" + mpt.getHash());
 
         IImageBuffer iib = new IImageBuffer() {

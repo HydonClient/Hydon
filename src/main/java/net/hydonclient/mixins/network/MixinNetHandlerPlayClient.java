@@ -1,28 +1,47 @@
 package net.hydonclient.mixins.network;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.managers.impl.command.Command;
+import net.hydonclient.util.ChatColor;
 import net.hydonclient.util.ReflectionUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.command.CommandBase;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketThreadUtil;
+import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.S3APacketTabComplete;
+import net.minecraft.network.play.server.S48PacketResourcePackSend;
+import net.minecraft.util.ChatComponentText;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(NetHandlerPlayClient.class)
-public class MixinNetHandlerPlayClient {
+public abstract class MixinNetHandlerPlayClient {
 
     @Shadow
     private Minecraft gameController;
+
+    @Shadow
+    @Final
+    private NetworkManager netManager;
 
     /**
      * @author Koding
@@ -73,5 +92,44 @@ public class MixinNetHandlerPlayClient {
             GuiChat guichat = (GuiChat) this.gameController.currentScreen;
             guichat.onAutocompleteResponse(astring);
         }
+    }
+
+    /**
+     * @author Sk1er
+     * @reason ResourceExploitFix - Fixes an exploit where servers could look at what files you have through Server Resource Packs
+     */
+    @Inject(method = "handleResourcePack", at = @At("HEAD"), cancellable = true)
+    private void handleResourcePack(S48PacketResourcePackSend packetIn, CallbackInfo ci) {
+        if (!validateResourcePackURL(packetIn.getHash(), packetIn.getURL()))
+            ci.cancel();
+    }
+
+    private boolean validateResourcePackURL(String hash, String url) {
+        try {
+            URI uri = new URI(url);
+            String scheme = uri.getScheme();
+            boolean isLevelProtocol = "level".equals(scheme);
+
+            if (!"http".equals(scheme) && !"https".equals(scheme) && !isLevelProtocol) {
+                netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.FAILED_DOWNLOAD));
+                throw new URISyntaxException(url, "Wrong protocol");
+            }
+
+            url = URLDecoder.decode(url.substring("level://".length()), StandardCharsets.UTF_8.toString());
+
+            if (isLevelProtocol && (url.contains("..") || !url.endsWith("/resources.zip"))) {
+                EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+                if (player != null) {
+                    player.addChatMessage(new ChatComponentText(ChatColor.RED + "[EXPLOIT FIX WARNING] The current server has attempted to be malicious but it has been stopped."));
+                }
+                throw new URISyntaxException(url, "Invalid levelstorage resourcepack path");
+            }
+            return true;
+        } catch (URISyntaxException e) {
+            return false;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

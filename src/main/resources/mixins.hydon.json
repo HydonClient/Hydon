@@ -3,16 +3,37 @@
   "package": "net.hydonclient.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "IMixinMinecraft",
     "MixinMinecraft",
 
+    "client.MixinClientBrandRetriever",
+
+    "client.gui.IMixinGuiNewChat",
+    "client.gui.MixinGuiGameOver",
+    "client.gui.MixinGuiIngame",
+    "client.gui.MixinGuiNewChat",
+
+    "client.renderer.IMixinGuiContainer",
+    "client.renderer.IMixinInventoryEffectRenderer",
+    "client.renderer.MixinInventoryEffectRenderer",
+
+    "client.renderer.entity.MixinRenderPlayer",
+
+    "client.resources.IMixinAbstractResourcePack",
+    "client.resources.MixinAbstractResourcePack",
+    "client.resources.MixinLocale",
+
+    "client.settings.MixinKeyBinding",
+
     "entity.MixinAbstractClientPlayer",
+    "entity.MixinEntity",
+    "entity.MixinEntityLivingBase",
     "entity.MixinEntityPlayerSP",
 
     "gui.MixinFontRenderer",
     "gui.MixinGui",
     "gui.MixinGuiButton",
     "gui.MixinGuiButtonLanguage",
-    "gui.MixinGuiIngame",
     "gui.MixinGuiOptionSlider",
     "gui.MixinGuiScreen",
     "gui.MixinGuiSlider",
@@ -21,6 +42,10 @@
     "gui.MixinLoadingScreenRenderer",
 
     "network.MixinNetHandlerPlayClient",
-    "network.MixinNetworkManager"
+    "network.MixinNetworkManager",
+
+    "network.play.server.MixinS2EPacketCloseWindow",
+
+    "world.MixinWorld"
   ]
 }

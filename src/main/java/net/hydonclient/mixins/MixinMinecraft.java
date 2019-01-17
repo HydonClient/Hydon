@@ -6,6 +6,7 @@ import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
 import net.hydonclient.gui.GuiHydonMainMenu;
+import net.hydonclient.mixinsimp.HydonMinecraft;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -20,6 +21,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -44,6 +46,13 @@ public abstract class MixinMinecraft {
     public GuiIngame ingameGUI;
 
     @Shadow
+    public int displayWidth;
+    @Shadow
+    public int displayHeight;
+    @Shadow
+    private boolean fullscreen;
+
+    @Shadow
     public abstract void setIngameNotInFocus();
 
     @Shadow
@@ -53,6 +62,8 @@ public abstract class MixinMinecraft {
 
     @Shadow
     public abstract void setIngameFocus();
+
+    private HydonMinecraft impl = new HydonMinecraft((Minecraft) (Object) this);
 
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
@@ -102,6 +113,16 @@ public abstract class MixinMinecraft {
     @Inject(method = "runGameLoop", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;updateCameraAndRender(FJ)V", shift = Shift.AFTER))
     private void runGameLoop(CallbackInfo callbackInfo) {
         EventBus.call(new RenderTickEvent(new ScaledResolution(Minecraft.getMinecraft())));
+    }
+
+    @Inject(method = "setInitialDisplayMode", at = @At("HEAD"), cancellable = true)
+    private void setInitialDisplayMode(CallbackInfo ci) throws LWJGLException {
+        impl.setInitialDisplayMode(fullscreen, displayWidth, displayHeight, ci);
+    }
+
+    @Inject(method = "toggleFullscreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setVSyncEnabled(Z)V", shift = Shift.AFTER))
+    private void toggleFullscreen(CallbackInfo ci) throws LWJGLException {
+        impl.toggleFullscreen(fullscreen, displayWidth, displayHeight, ci);
     }
 
     /**
