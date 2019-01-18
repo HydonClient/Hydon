@@ -11,6 +11,7 @@
     "client.gui.IMixinGuiNewChat",
     "client.gui.MixinGuiGameOver",
     "client.gui.MixinGuiIngame",
+    "client.gui.MixinGuiIngameMenu",
     "client.gui.MixinGuiNewChat",
 
     "client.renderer.IMixinEntityRenderer",
