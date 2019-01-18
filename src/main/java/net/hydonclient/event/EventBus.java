@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import net.hydonclient.Hydon;
 import net.hydonclient.util.Multithreading;
 import net.hydonclient.util.ReflectionUtils;
@@ -28,10 +29,15 @@ public class EventBus {
         }
 
         return method.isAnnotationPresent(EventListener.class) && method.getParameterCount() == 1
-            && ReflectionUtils
-            .isSubclassOf(paramType, Event.class);
+                && ReflectionUtils
+                .isSubclassOf(paramType, Event.class);
     }
 
+    /**
+     * Register a specified class to listen for events
+     *
+     * @param o - Class Object
+     */
     public static void register(Object o) {
         Class<?> clazz = o.getClass();
         Map<Class<? extends Event>, List<Method>> map = new HashMap<>();
@@ -43,7 +49,7 @@ public class EventBus {
                 }
 
                 Class<? extends Event> eventClass = (Class<? extends Event>) m
-                    .getParameterTypes()[0];
+                        .getParameterTypes()[0];
 
                 map.putIfAbsent(eventClass, new ArrayList<>());
                 List<Method> methods = map.get(eventClass);
@@ -61,14 +67,24 @@ public class EventBus {
         });
     }
 
+    /**
+     * Unregister a specified class
+     *
+     * @param o - Class Object
+     */
     public static void unregister(Object o) {
         registeredClasses.remove(o);
     }
 
+    /**
+     * Used to post events
+     *
+     * @param event - Event being posted
+     */
     public static void call(Event event) {
         isCalling = true;
         for (Map.Entry<Object, Map<Class<? extends Event>, List<Method>>> entry : registeredClasses
-            .entrySet()) {
+                .entrySet()) {
             Map<Class<? extends Event>, List<Method>> map = entry.getValue();
             Object o = entry.getKey();
 

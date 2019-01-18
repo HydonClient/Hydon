@@ -42,4 +42,9 @@ public class MixinEntityRenderer {
     private void updateCameraAndRender2(float partialTicks, long nanoTime, CallbackInfo ci) {
         impl.updateCameraAndRender();
     }
+
+    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=outline"), cancellable = true)
+    public void renderWorldPass(int pass, float part, long nano, CallbackInfo ci) {
+        impl.renderWorldPass(part, mc);
+    }
 }

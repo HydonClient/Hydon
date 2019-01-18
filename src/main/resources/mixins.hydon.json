@@ -14,6 +14,7 @@
     "client.gui.MixinGuiIngame",
     "client.gui.MixinGuiIngameMenu",
     "client.gui.MixinGuiNewChat",
+    "client.gui.MixinGuiOverlayDebug",
     "client.gui.MixinGuiPlayerTabOverlay",
 
     "client.multiplayer.MixinGuiConnecting",
@@ -34,7 +35,7 @@
 
     "entity.MixinAbstractClientPlayer",
     "entity.MixinEntity",
-    "entity.MixinEntityLivingBase",
+    "entity.MixinEntityLivingBase",N
     "entity.MixinEntityPlayerSP",
 
     "gui.MixinFontRenderer",
