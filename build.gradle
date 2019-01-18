@@ -16,10 +16,6 @@ configurations {
     compile.extendsFrom(embed)
 }
 
-plugins {
-    id "io.franzbecker.gradle-lombok" version "1.10"
-}
-
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
