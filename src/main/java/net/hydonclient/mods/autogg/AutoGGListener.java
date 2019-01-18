@@ -15,7 +15,7 @@ public class AutoGGListener {
                 Thread.sleep(
                     HydonManagers.INSTANCE.getModManager().getAutoGGMod().getConfig().DELAY
                         * 1000);
-                ChatUtils.sendChatMessage("gg");
+                ChatUtils.sendChatMessage("/achat gg");
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }

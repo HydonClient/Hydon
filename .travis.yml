@@ -34,3 +34,6 @@ after_failure:
   - chmod +x send.sh
   - ./send.sh failure $WEBHOOK_URL
 if: tag IS blank
+branches:
+  only:
+    - master

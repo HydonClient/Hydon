@@ -12,13 +12,16 @@
     "client.gui.MixinGuiDisconnected",
     "client.gui.MixinGuiGameOver",
     "client.gui.MixinGuiIngame",
+    "client.gui.MixinGuiIngameMenu",
     "client.gui.MixinGuiNewChat",
     "client.gui.MixinGuiPlayerTabOverlay",
 
     "client.multiplayer.MixinGuiConnecting",
 
+    "client.renderer.IMixinEntityRenderer",
     "client.renderer.IMixinGuiContainer",
     "client.renderer.IMixinInventoryEffectRenderer",
+    "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinInventoryEffectRenderer",
 
     "client.renderer.entity.MixinRenderPlayer",
@@ -51,6 +54,8 @@
     "network.play.server.MixinS2EPacketCloseWindow",
 
     "scoreboard.MixinScoreboard",
+
+    "util.MixinScreenshotHelper",
 
     "world.MixinWorld"
   ]
