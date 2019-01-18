@@ -30,4 +30,5 @@ public enum RequestType {
     public Class<?> getReplyClass() {
         return replyClass;
     }
+
 }

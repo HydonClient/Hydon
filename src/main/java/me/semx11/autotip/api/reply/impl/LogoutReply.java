@@ -5,6 +5,9 @@ import me.semx11.autotip.api.reply.Reply;
 
 public class LogoutReply extends Reply {
 
+    public LogoutReply() {
+    }
+
     public LogoutReply(boolean success) {
         super(success);
     }
@@ -13,4 +16,5 @@ public class LogoutReply extends Reply {
     public RequestType getRequestType() {
         return RequestType.LOGOUT;
     }
+
 }

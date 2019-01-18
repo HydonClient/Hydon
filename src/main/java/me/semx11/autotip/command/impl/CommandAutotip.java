@@ -1,5 +1,17 @@
 package me.semx11.autotip.command.impl;
 
+import static net.minecraft.command.CommandBase.getListOfStringsMatchingLastWord;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.chat.MessageOption;
 import me.semx11.autotip.chat.MessageUtil;
@@ -9,23 +21,17 @@ import me.semx11.autotip.config.GlobalSettings;
 import me.semx11.autotip.core.SessionManager;
 import me.semx11.autotip.core.StatsManager;
 import me.semx11.autotip.core.TaskManager;
-import me.semx11.autotip.event.EventClientConnection;
+import me.semx11.autotip.core.TaskManager.TaskType;
+import me.semx11.autotip.event.impl.EventClientConnection;
 import me.semx11.autotip.stats.StatsDaily;
 import me.semx11.autotip.universal.UniversalUtil;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.IChatComponent;
 
 public class CommandAutotip extends CommandAbstract {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy");
+    private static final DateTimeFormatter SESSION_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final DateTimeFormatter WAVE_FORMAT = DateTimeFormatter.ofPattern("mm:ss");
 
     public CommandAutotip(Autotip autotip) {
@@ -39,11 +45,11 @@ public class CommandAutotip extends CommandAbstract {
 
     @Override
     public String getUsage() {
-        return "/autotip";
+        return autotip.getLocaleHolder().getKey("command.usage");
     }
 
     @Override
-    public void onCommand(String[] args) {
+    public void onCommand(ICommandSender sender, String[] args) {
         Config config = autotip.getConfig();
         MessageUtil messageUtil = autotip.getMessageUtil();
         TaskManager taskManager = autotip.getTaskManager();
@@ -81,17 +87,20 @@ public class CommandAutotip extends CommandAbstract {
                     case "w":
                     case "week":
                     case "weekly":
-                        stats.getRange(now.with(DayOfWeek.MONDAY), now.with(DayOfWeek.SUNDAY)).print();
+                        stats.getRange(now.with(DayOfWeek.MONDAY), now.with(DayOfWeek.SUNDAY))
+                            .print();
                         break;
                     case "m":
                     case "month":
                     case "monthly":
-                        stats.getRange(now.withDayOfMonth(1), now.withDayOfMonth(now.lengthOfMonth())).print();
+                        stats.getRange(now.withDayOfMonth(1),
+                            now.withDayOfMonth(now.lengthOfMonth())).print();
                         break;
                     case "y":
                     case "year":
                     case "yearly":
-                        stats.getRange(now.withDayOfYear(1), now.withDayOfYear(now.lengthOfYear())).print();
+                        stats.getRange(now.withDayOfYear(1),
+                            now.withDayOfYear(now.lengthOfYear())).print();
                         break;
                     case "a":
                     case "all":
@@ -103,17 +112,17 @@ public class CommandAutotip extends CommandAbstract {
                     default:
                         if (param.contains("-")) {
                             List<LocalDate> dates = Arrays.stream(param.split("-"))
-                                    .map(string -> {
-                                        try {
-                                            return LocalDate.parse(string, DATE_FORMAT);
-                                        } catch (DateTimeParseException e) {
-                                            return null;
-                                        }
-                                    })
-                                    .filter(Objects::nonNull)
-                                    .limit(2)
-                                    .sorted()
-                                    .collect(Collectors.toList());
+                                .map(string -> {
+                                    try {
+                                        return LocalDate.parse(string, DATE_FORMAT);
+                                    } catch (DateTimeParseException e) {
+                                        return null;
+                                    }
+                                })
+                                .filter(Objects::nonNull)
+                                .limit(2)
+                                .sorted()
+                                .collect(Collectors.toList());
                             if (dates.size() != 2) {
                                 messageUtil.sendKey("command.stats.invalidRange");
                                 return;
@@ -137,17 +146,17 @@ public class CommandAutotip extends CommandAbstract {
             case "info":
                 StatsDaily today = stats.get();
                 messageUtil.getKeyHelper("command.info")
-                        .separator()
-                        .sendKey("version", autotip.getAutoTipVersion())
-                        .withKey("credits", context -> context.getBuilder()
-                                .setHover(context.getKey("creditsHover"))
-                                .send())
-                        .sendKey("status." + (config.isEnabled() ? "enabled" : "disabled"))
-                        .sendKey("messages", config.getMessageOption())
-                        .sendKey("tipsSent", today.getTipsSent())
-                        .sendKey("tipsReceived", today.getTipsReceived())
-                        .sendKey("statsCommand")
-                        .separator();
+                    .separator()
+                    .sendKey("version", autotip.getVersion())
+                    .withKey("credits", context -> context.getBuilder()
+                        .setHover(context.getKey("creditsHover"))
+                        .send())
+                    .sendKey("status." + (config.isEnabled() ? "enabled" : "disabled"))
+                    .sendKey("messages", config.getMessageOption())
+                    .sendKey("tipsSent", today.getTipsSent())
+                    .sendKey("tipsReceived", today.getTipsReceived())
+                    .sendKey("statsCommand")
+                    .separator();
                 break;
             case "m":
             case "messages":
@@ -168,12 +177,12 @@ public class CommandAutotip extends CommandAbstract {
                 if (!manager.isOnHypixel()) {
                     config.toggleEnabled().save();
                     messageUtil.getKeyHelper("command.toggle")
-                            .sendKey(config.isEnabled() ? "enabled" : "disabled");
+                        .sendKey(config.isEnabled() ? "enabled" : "disabled");
                     return;
                 }
                 if (!config.isEnabled()) {
                     if (!manager.isLoggedIn()) {
-                        taskManager.executeTask(TaskManager.TaskType.LOGIN, manager::login);
+                        taskManager.executeTask(TaskType.LOGIN, manager::login);
                         config.setEnabled(true).save();
                         messageUtil.sendKey("command.toggle.enabled");
                     } else {
@@ -181,7 +190,7 @@ public class CommandAutotip extends CommandAbstract {
                     }
                 } else {
                     if (manager.isLoggedIn()) {
-                        taskManager.executeTask(TaskManager.TaskType.LOGOUT, manager::logout);
+                        taskManager.executeTask(TaskType.LOGOUT, manager::logout);
                         config.setEnabled(false).save();
                         messageUtil.sendKey("command.toggle.disabled");
                     } else {
@@ -206,35 +215,35 @@ public class CommandAutotip extends CommandAbstract {
 
                 long t = System.currentTimeMillis();
                 String next = LocalTime.MIN.plusSeconds((manager.getNextTipWave() - t) / 1000 + 1)
-                        .format(WAVE_FORMAT);
+                    .format(WAVE_FORMAT);
                 String last = LocalTime.MIN.plusSeconds((t - manager.getLastTipWave()) / 1000)
-                        .format(WAVE_FORMAT);
+                    .format(WAVE_FORMAT);
 
                 messageUtil.getKeyHelper("command.wave")
-                        .separator()
-                        .sendKey("nextWave", next)
-                        .sendKey("lastWave", last)
-                        .separator();
+                    .separator()
+                    .sendKey("nextWave", next)
+                    .sendKey("lastWave", last)
+                    .separator();
                 break;
             case "changelog":
                 messageUtil.getKeyHelper("command.changelog")
-                        .separator()
-                        .sendKey("version", autotip.getAutoTipVersion())
-                        .withKey("entry", context -> settings.getVersionInfo(autotip.getAutoTipVersion())
-                                .getChangelog()
-                                .forEach(context::send))
-                        .separator();
+                    .separator()
+                    .sendKey("version", autotip.getVersion())
+                    .withKey("entry", context -> settings.getVersionInfo(autotip.getModVersion())
+                        .getChangelog()
+                        .forEach(context::send))
+                    .separator();
                 break;
             case "debug":
                 EventClientConnection event = autotip.getEvent(EventClientConnection.class);
-                Object header = event.getHeader();
+                IChatComponent header = event.getHeader();
                 messageUtil.getKeyHelper("command.debug")
-                        .separator()
-                        .sendKey("serverIp", event.getServerIp())
-                        .sendKey("mcVersion", autotip.getMcVersion())
-                        .sendKey("header." + (header == null ? "none" : "present"),
-                                UniversalUtil.getUnformattedText(header))
-                        .separator();
+                    .separator()
+                    .sendKey("serverIp", event.getServerIp())
+                    .sendKey("mcVersion", autotip.getMcVersion())
+                    .sendKey("header." + (header == null ? "none" : "present"),
+                        UniversalUtil.getUnformattedText(header))
+                    .separator();
                 break;
             case "reload":
                 try {
@@ -246,8 +255,27 @@ public class CommandAutotip extends CommandAbstract {
                 }
                 break;
             default:
-                messageUtil.send(getUsage());
+                messageUtil.send(this.getUsage());
                 break;
         }
     }
+
+    @Override
+    public List<String> onTabComplete(ICommandSender sender, String[] args) {
+        switch (args.length) {
+            case 1:
+                return getListOfStringsMatchingLastWord(args, "stats", "info", "messages", "toggle",
+                    "wave", "changelog");
+            case 2:
+                switch (args[0].toLowerCase()) {
+                    case "s":
+                    case "stats":
+                        return getListOfStringsMatchingLastWord(args, "day", "yesterday", "week",
+                            "month", "year", "lifetime");
+                }
+            default:
+                return Collections.emptyList();
+        }
+    }
+
 }

@@ -1,13 +1,6 @@
 package me.semx11.autotip.core;
 
 import com.google.gson.JsonSyntaxException;
-import me.semx11.autotip.Autotip;
-import me.semx11.autotip.stats.StatsDaily;
-import me.semx11.autotip.stats.StatsRange;
-import me.semx11.autotip.util.FileUtil;
-import net.hydonclient.Hydon;
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,6 +11,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
+import me.semx11.autotip.Autotip;
+import me.semx11.autotip.stats.StatsDaily;
+import me.semx11.autotip.stats.StatsRange;
+import me.semx11.autotip.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 
 public class StatsManager {
 
@@ -109,7 +107,9 @@ public class StatsManager {
         StatsRange range = new StatsRange(autotip, start, end);
         Stream.iterate(start, date -> date.plusDays(1))
                 .limit(ChronoUnit.DAYS.between(start, end) + 1)
-                .forEach(date -> range.merge(this.get(date)));
+                .forEach(date -> {
+                    range.merge(this.get(date));
+                });
         return range;
     }
 
@@ -135,9 +135,9 @@ public class StatsManager {
         try {
             String json = autotip.getGson().toJson(stats);
             FileUtils.writeStringToFile(file, json, StandardCharsets.UTF_8);
-            Hydon.LOGGER.info("Saved " + stats.getFile().getName());
+            Autotip.LOGGER.info("Saved " + stats.getFile().getName());
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not write to " + file, e);
+            Autotip.LOGGER.error("Could not write to " + file, e);
         }
     }
 
@@ -156,9 +156,9 @@ public class StatsManager {
             // Skip
             return stats;
         } catch (JsonSyntaxException | IllegalArgumentException e) {
-            Hydon.LOGGER.warn(file.getName() + " has invalid contents, resetting...");
+            Autotip.LOGGER.warn(file.getName() + " has invalid contents, resetting...");
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not read " + file.getName() + "!", e);
+            Autotip.LOGGER.error("Could not read " + file.getName() + "!", e);
         }
         this.save(stats);
         return stats;
@@ -177,4 +177,5 @@ public class StatsManager {
             ticks.decrementAndGet();
         }
     }
+
 }

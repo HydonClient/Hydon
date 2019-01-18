@@ -1,11 +1,11 @@
-package me.semx11.autotip.event;
+package me.semx11.autotip.event.impl;
 
 import me.semx11.autotip.Autotip;
-import net.hydonclient.event.Event;
+import me.semx11.autotip.event.Event;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.game.UpdateEvent;
 
-public class EventClientTick extends Event {
+public class EventClientTick implements Event {
 
     private final Autotip autotip;
 
@@ -14,11 +14,11 @@ public class EventClientTick extends Event {
     }
 
     @EventListener
-    public void onTick(UpdateEvent event) {
+    public void onClientTick(UpdateEvent event) {
         autotip.getMessageUtil().flushQueues();
-
         if (autotip.isInitialized()) {
             autotip.getStatsManager().saveCycle();
         }
     }
+
 }

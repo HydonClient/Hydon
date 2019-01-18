@@ -1,11 +1,10 @@
 package me.semx11.autotip.message;
 
-import me.semx11.autotip.chat.MessageOption;
-import me.semx11.autotip.gson.exclusion.Exclude;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
+import me.semx11.autotip.chat.MessageOption;
+import me.semx11.autotip.gson.exclusion.Exclude;
 
 public class Message {
 
@@ -16,6 +15,7 @@ public class Message {
     private MessageOption hideFor;
 
     public Message() {
+
     }
 
     public Message(Pattern pattern) {
@@ -43,4 +43,5 @@ public class Message {
     public boolean shouldHide(MessageOption option) {
         return hideFor.compareTo(option) <= 0;
     }
+
 }

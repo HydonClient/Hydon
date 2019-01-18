@@ -1,21 +1,21 @@
-package me.semx11.autotip.event;
+package me.semx11.autotip.event.impl;
 
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.chat.MessageOption;
 import me.semx11.autotip.command.impl.CommandLimbo;
 import me.semx11.autotip.config.Config;
 import me.semx11.autotip.config.GlobalSettings;
+import me.semx11.autotip.event.Event;
 import me.semx11.autotip.message.Message;
 import me.semx11.autotip.message.MessageMatcher;
 import me.semx11.autotip.message.StatsMessage;
 import me.semx11.autotip.message.StatsMessageMatcher;
 import me.semx11.autotip.stats.StatsDaily;
 import me.semx11.autotip.universal.UniversalUtil;
-import net.hydonclient.event.Event;
 import net.hydonclient.event.EventListener;
-import net.hydonclient.event.events.network.chat.ServerChatEvent;
+import net.hydonclient.event.events.game.ChatMessageReceivedEvent;
 
-public class EventChatReceived extends Event {
+public class EventChatReceived implements Event {
 
     private final Autotip autotip;
 
@@ -24,7 +24,7 @@ public class EventChatReceived extends Event {
     }
 
     @EventListener
-    public void onChat(ServerChatEvent event) {
+    public void onChat(ChatMessageReceivedEvent event) {
         Config config = autotip.getConfig();
 
         if (!autotip.getSessionManager().isOnHypixel()) {
@@ -35,7 +35,7 @@ public class EventChatReceived extends Event {
 
         CommandLimbo limboCommand = autotip.getCommand(CommandLimbo.class);
         if (limboCommand.hasExecuted()) {
-            if (msg.startsWith("A kick occured in your connection")) {
+            if (msg.startsWith("A kick occurred in your connection")) {
                 event.setCancelled(true);
             } else if (msg.startsWith("Illegal characters in chat")) {
                 event.setCancelled(true);
@@ -59,13 +59,13 @@ public class EventChatReceived extends Event {
         }
 
         String hover = UniversalUtil.getHoverText(event);
+
         for (StatsMessage message : settings.getStatsMessages()) {
             StatsMessageMatcher matcher = message.getMatcherFor(msg);
             if (!matcher.matches()) {
                 continue;
             }
-
-            StatsDaily stats = getStats();
+            StatsDaily stats = this.getStats();
             matcher.applyStats(stats);
             message.applyHoverStats(hover, stats);
             event.setCancelled(message.shouldHide(option));
@@ -73,6 +73,7 @@ public class EventChatReceived extends Event {
     }
 
     private StatsDaily getStats() {
-        return autotip.getStatsManager().getToday();
+        return this.autotip.getStatsManager().getToday();
     }
+
 }

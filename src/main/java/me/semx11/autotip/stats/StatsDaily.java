@@ -1,11 +1,5 @@
 package me.semx11.autotip.stats;
 
-import me.semx11.autotip.Autotip;
-import me.semx11.autotip.config.GlobalSettings;
-import me.semx11.autotip.core.MigrationManager;
-import me.semx11.autotip.util.FileUtil;
-import net.hydonclient.Hydon;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +8,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import me.semx11.autotip.Autotip;
+import me.semx11.autotip.config.GlobalSettings.GameAlias;
+import me.semx11.autotip.config.GlobalSettings.GameGroup;
+import me.semx11.autotip.core.MigrationManager.LegacyState;
+import me.semx11.autotip.util.FileUtil;
 
 public class StatsDaily extends Stats {
 
@@ -75,7 +74,7 @@ public class StatsDaily extends Stats {
             return;
         }
 
-        MigrationManager.LegacyState state = autotip.getMigrationManager().getLegacyState(date);
+        LegacyState state = autotip.getMigrationManager().getLegacyState(date);
 
         try {
             // Reads the contents of the file. If the file has less than 2 lines, ignore file.
@@ -95,14 +94,14 @@ public class StatsDaily extends Stats {
             }
 
             // This is to fix the wrong tips count in the period between the XP change, and the Autotip fix.
-            if (state == MigrationManager.LegacyState.BACKTRACK) {
+            if (state == LegacyState.BACKTRACK) {
                 this.tipsReceived /= 2;
             }
 
             // Every tip you send is worth 50 XP.
             this.xpSent = tipsSent * 50;
             // This is to account for tips received before the XP change, as they gave you 30 XP, not 60 XP.
-            this.xpReceived = (state == MigrationManager.LegacyState.BEFORE ? 30 : 60) * tipsReceived;
+            this.xpReceived = (state == LegacyState.BEFORE ? 30 : 60) * tipsReceived;
 
             // Parses each line with game-data (e.g. "Arcade:2900:2400") to a Map.
             this.gameStatistics = lines.stream()
@@ -118,7 +117,7 @@ public class StatsDaily extends Stats {
                             }));
 
             // Remove grouped stats
-            for (GlobalSettings.GameGroup group : settings.getGameGroups()) {
+            for (GameGroup group : settings.getGameGroups()) {
                 if (gameStatistics.containsKey(group.getName())) {
                     Coins coins = gameStatistics.get(group.getName());
                     for (String game : group.getGames()) {
@@ -128,7 +127,7 @@ public class StatsDaily extends Stats {
             }
 
             // Convert aliases
-            for (GlobalSettings.GameAlias alias : settings.getGameAliases()) {
+            for (GameAlias alias : settings.getGameAliases()) {
                 for (String aliasAlias : alias.getAliases()) {
                     if (gameStatistics.containsKey(aliasAlias)) {
                         Coins coins = gameStatistics.get(aliasAlias);
@@ -142,11 +141,12 @@ public class StatsDaily extends Stats {
             // Deletes old file to complete migration.
             fileUtil.delete(file);
 
-            Hydon.LOGGER.info("Migrated legacy stats file " + file.getName());
+            Autotip.LOGGER.info("Migrated legacy stats file " + file.getName());
             this.save();
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not read file " + file.getName(), e);
+            Autotip.LOGGER.error("Could not read file " + file.getName(), e);
             this.save();
         }
     }
+
 }

@@ -12,7 +12,7 @@ public class ChatComponentBuilder {
     private String url;
 
     private ChatComponentBuilder(boolean prefix, String text, Object... params) {
-        text = StringUtil.params((prefix ? PREFIX : "") + text, params);
+        this.text = StringUtil.params((prefix ? PREFIX : "") + text, params);
     }
 
     public static ChatComponentBuilder of(String text, Object... params) {
@@ -24,16 +24,17 @@ public class ChatComponentBuilder {
     }
 
     public ChatComponentBuilder setUrl(String url, Object... params) {
-        url = StringUtil.params(url, false, params);
+        this.url = StringUtil.params(url, false, params);
         return this;
     }
 
     public ChatComponentBuilder setHover(String hoverText, Object... params) {
-        hoverText = StringUtil.params(hoverText, params);
+        this.hoverText = StringUtil.params(hoverText, params);
         return this;
     }
 
     public void send() {
         UniversalUtil.addChatMessage(text, url, hoverText);
     }
+
 }

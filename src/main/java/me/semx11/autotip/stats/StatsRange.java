@@ -1,8 +1,7 @@
 package me.semx11.autotip.stats;
 
-import me.semx11.autotip.Autotip;
-
 import java.time.LocalDate;
+import me.semx11.autotip.Autotip;
 
 public class StatsRange extends Stats {
 
@@ -50,4 +49,5 @@ public class StatsRange extends Stats {
         super.merge(that);
         return this;
     }
+
 }

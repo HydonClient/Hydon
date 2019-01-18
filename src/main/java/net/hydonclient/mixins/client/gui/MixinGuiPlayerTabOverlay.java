@@ -1,6 +1,7 @@
 package net.hydonclient.mixins.client.gui;
 
 import me.semx11.autotip.Autotip;
+import me.semx11.autotip.event.impl.EventClientConnection;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.util.IChatComponent;
@@ -15,6 +16,6 @@ public class MixinGuiPlayerTabOverlay extends Gui {
 
     @Inject(method = "setHeader", at = @At("HEAD"))
     private void setHeader(IChatComponent headerIn, CallbackInfo ci) {
-        Autotip.tabHeader = headerIn;
+        EventClientConnection.header = headerIn;
     }
 }

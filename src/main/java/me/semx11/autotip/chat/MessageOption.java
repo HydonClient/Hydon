@@ -30,11 +30,15 @@ public enum MessageOption {
     }
 
     public static MessageOption valueOfIgnoreCase(String name) {
-        return Arrays.stream(MessageOption.values()).filter(e -> e.name().equalsIgnoreCase(name)).findFirst().orElseThrow(IllegalArgumentException::new);
+        return Arrays.stream(MessageOption.values())
+                .filter(e -> e.name().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
     public String toString() {
         return format;
     }
+
 }

@@ -23,4 +23,5 @@ public abstract class Reply {
     }
 
     public abstract RequestType getRequestType();
+
 }

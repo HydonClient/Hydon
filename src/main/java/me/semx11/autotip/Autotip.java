@@ -3,54 +3,50 @@ package me.semx11.autotip;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.authlib.GameProfile;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import me.semx11.autotip.api.RequestHandler;
 import me.semx11.autotip.api.reply.impl.LocaleReply;
 import me.semx11.autotip.api.reply.impl.SettingsReply;
 import me.semx11.autotip.api.request.impl.LocaleRequest;
 import me.semx11.autotip.api.request.impl.SettingsRequest;
 import me.semx11.autotip.chat.LocaleHolder;
+import me.semx11.autotip.chat.MessageUtil;
 import me.semx11.autotip.command.CommandAbstract;
 import me.semx11.autotip.command.impl.CommandAutotip;
 import me.semx11.autotip.command.impl.CommandLimbo;
 import me.semx11.autotip.config.Config;
 import me.semx11.autotip.config.GlobalSettings;
-import me.semx11.autotip.event.EventChatReceived;
-import me.semx11.autotip.event.EventClientConnection;
-import me.semx11.autotip.event.EventClientTick;
-import me.semx11.autotip.gson.creator.ConfigCreator;
-import me.semx11.autotip.gson.creator.StatsDailyCreator;
-import me.semx11.autotip.gson.exclusion.AnnotationExclusiveStrategy;
 import me.semx11.autotip.core.MigrationManager;
 import me.semx11.autotip.core.SessionManager;
 import me.semx11.autotip.core.StatsManager;
 import me.semx11.autotip.core.TaskManager;
+import me.semx11.autotip.event.Event;
+import me.semx11.autotip.event.impl.EventChatReceived;
+import me.semx11.autotip.event.impl.EventClientConnection;
+import me.semx11.autotip.event.impl.EventClientTick;
+import me.semx11.autotip.gson.creator.ConfigCreator;
+import me.semx11.autotip.gson.creator.StatsDailyCreator;
+import me.semx11.autotip.gson.exclusion.AnnotationExclusionStrategy;
 import me.semx11.autotip.stats.StatsDaily;
 import me.semx11.autotip.universal.UniversalUtil;
-import me.semx11.autotip.util.AutoTipVersion;
 import me.semx11.autotip.util.ErrorReport;
 import me.semx11.autotip.util.FileUtil;
-import me.semx11.autotip.chat.MessageUtil;
 import me.semx11.autotip.util.MinecraftVersion;
-import net.hydonclient.Hydon;
-import net.hydonclient.event.Event;
+import me.semx11.autotip.util.Version;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.managers.HydonManagers;
-import net.hydonclient.managers.impl.command.Command;
 import net.hydonclient.mods.Mod;
 import net.hydonclient.mods.Mod.Info;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.IChatComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-@Info(name = "Autotip", author = "Semx11", version = "3.0")
+@Info(name = "Auto Tip", author = "Semex11", version = "3.0")
 public class Autotip extends Mod {
 
-    static final String VERSION = "3.0";
-
-    public static IChatComponent tabHeader;
+    public static final Logger LOGGER = LogManager.getLogger("Autotip");
 
     private final List<Event> events = new ArrayList<>();
     private final List<CommandAbstract> commands = new ArrayList<>();
@@ -59,7 +55,6 @@ public class Autotip extends Mod {
 
     private Minecraft minecraft;
     private MinecraftVersion mcVersion;
-    private AutoTipVersion autoTipVersion;
 
     private Gson gson;
 
@@ -89,10 +84,6 @@ public class Autotip extends Mod {
 
     public MinecraftVersion getMcVersion() {
         return mcVersion;
-    }
-
-    public AutoTipVersion getAutoTipVersion() {
-        return autoTipVersion;
     }
 
     public Gson getGson() {
@@ -141,50 +132,45 @@ public class Autotip extends Mod {
         RequestHandler.setAutotip(this);
         UniversalUtil.setAutotip(this);
 
-        minecraft = Minecraft.getMinecraft();
-        mcVersion = UniversalUtil.getMinecraftVersion();
-        autoTipVersion = new AutoTipVersion(VERSION);
+        this.minecraft = Minecraft.getMinecraft();
+        this.mcVersion = UniversalUtil.getMinecraftVersion();
 
-        messageUtil = new MessageUtil(this);
+        this.messageUtil = new MessageUtil(this);
         this.registerEvents(new EventClientTick(this));
 
-        HydonManagers.INSTANCE.getConfigManager().register(config);
-
         try {
-            fileUtil = new FileUtil(this);
-            gson = new GsonBuilder()
-                    .registerTypeAdapter(Config.class, new ConfigCreator(this))
-                    .registerTypeAdapter(StatsDaily.class, new StatsDailyCreator(this))
-                    .setExclusionStrategies(new AnnotationExclusiveStrategy())
-                    .setPrettyPrinting()
-                    .create();
+            this.fileUtil = new FileUtil(this);
+            this.gson = new GsonBuilder()
+                .registerTypeAdapter(Config.class, new ConfigCreator(this))
+                .registerTypeAdapter(StatsDaily.class, new StatsDailyCreator(this))
+                .setExclusionStrategies(new AnnotationExclusionStrategy())
+                .setPrettyPrinting()
+                .create();
 
-            config = new Config(this);
-            reloadGlobalSettings();
-            reloadLocale();
+            this.config = new Config(this);
+            this.reloadGlobalSettings();
+            this.reloadLocale();
 
-            taskManager = new TaskManager();
-            sessionManager = new SessionManager(this);
-            statsManager = new StatsManager(this);
-            migrationManager = new MigrationManager(this);
+            this.taskManager = new TaskManager();
+            this.sessionManager = new SessionManager(this);
+            this.statsManager = new StatsManager(this);
+            this.migrationManager = new MigrationManager(this);
 
-            fileUtil.createDirectories();
-            config.load();
-            taskManager.getExecutor().execute(() -> migrationManager.migrateLegacyFiles());
+            this.fileUtil.createDirectories();
+            this.config.load();
+            this.taskManager.getExecutor()
+                .execute(() -> this.migrationManager.migrateLegacyFiles());
 
             this.registerEvents(
-                    new EventClientConnection(this),
-                    new EventChatReceived(this)
+                new EventClientConnection(this),
+                new EventChatReceived(this)
             );
-
             this.registerCommands(
-                    new CommandAutotip(this),
-                    new CommandLimbo(this)
+                new CommandAutotip(this),
+                new CommandLimbo(this)
             );
-
             Runtime.getRuntime().addShutdownHook(new Thread(sessionManager::logout));
-            initialized = true;
-
+            this.initialized = true;
         } catch (IOException e) {
             messageUtil.send("Autotip is disabled because it couldn't create the required files.");
             ErrorReport.reportException(e);
@@ -199,7 +185,7 @@ public class Autotip extends Mod {
         if (!reply.isSuccess()) {
             throw new IllegalStateException("Connection error while fetching global settings");
         }
-        globalSettings = reply.getSettings();
+        this.globalSettings = reply.getSettings();
     }
 
     public void reloadLocale() {
@@ -207,22 +193,28 @@ public class Autotip extends Mod {
         if (!reply.isSuccess()) {
             throw new IllegalStateException("Could not fetch locale");
         }
-        localeHolder = reply.getLocaleHolder();
+        this.localeHolder = reply.getLocaleHolder();
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Event> T getEvent(Class<T> clazz) {
-        return (T) events.stream().filter(event -> event.getClass().equals(clazz)).findFirst().orElse(null);
+        return (T) events.stream()
+            .filter(event -> event.getClass().equals(clazz))
+            .findFirst()
+            .orElse(null);
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Command> T getCommand(Class<T> clazz) {
-        return (T) commands.stream().filter(command -> command.getClass().equals(clazz)).findFirst().orElse(null);
+    public <T extends CommandAbstract> T getCommand(Class<T> clazz) {
+        return (T) commands.stream()
+            .filter(command -> command.getClass().equals(clazz))
+            .findFirst()
+            .orElse(null);
     }
 
     private void registerEvents(Event... events) {
         for (Event event : events) {
-            EventBus.call(event);
+            EventBus.register(event); // 1.8.9 - 1.12.2
             this.events.add(event);
         }
     }
@@ -233,4 +225,9 @@ public class Autotip extends Mod {
             this.commands.add(command);
         }
     }
+
+    public Version getModVersion() {
+        return new Version("3.0");
+    }
+
 }

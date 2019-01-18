@@ -1,8 +1,6 @@
 package me.semx11.autotip.util;
 
-import me.semx11.autotip.Autotip;
-import net.hydonclient.Hydon;
-import org.apache.commons.io.FilenameUtils;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +11,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
-
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+import me.semx11.autotip.Autotip;
+import org.apache.commons.io.FilenameUtils;
 
 public class FileUtil {
 
@@ -26,7 +24,7 @@ public class FileUtil {
     private LocalDate firstDate;
 
     public FileUtil(Autotip autotip) {
-        this.userDir = this.getRawPath("Hydon/autotip/" + autotip.getGameProfile().getId());
+        this.userDir = this.getRawPath("mods/autotip/" + autotip.getGameProfile().getId());
         this.statsDir = this.getPath("stats");
     }
 
@@ -34,6 +32,10 @@ public class FileUtil {
         if (!Files.exists(statsDir)) {
             Files.createDirectories(statsDir);
         }
+    }
+
+    public Path getUserDir() {
+        return userDir;
     }
 
     public Path getStatsDir() {
@@ -52,11 +54,11 @@ public class FileUtil {
         this.delete(file.toPath());
     }
 
-    private void delete(Path path) {
+    public void delete(Path path) {
         try {
             Files.delete(path);
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not delete file " + path);
+            Autotip.LOGGER.error("Could not delete file " + path);
         }
     }
 
@@ -79,7 +81,7 @@ public class FileUtil {
                     .findFirst()
                     .orElseGet(LocalDate::now);
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not list files in stats dir.");
+            Autotip.LOGGER.error("Could not list files in stats dir.");
             return LocalDate.now();
         }
     }
@@ -116,4 +118,5 @@ public class FileUtil {
     private String separator(String s) {
         return s.replaceAll("///", File.separator);
     }
+
 }

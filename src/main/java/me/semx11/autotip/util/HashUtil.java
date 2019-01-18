@@ -28,4 +28,5 @@ public class HashUtil {
         byte[] strBytes = str.getBytes(StandardCharsets.UTF_8);
         return md.digest(strBytes);
     }
+
 }

@@ -1,15 +1,6 @@
 package me.semx11.autotip.config;
 
 import com.google.gson.JsonSyntaxException;
-import me.semx11.autotip.Autotip;
-import me.semx11.autotip.chat.MessageOption;
-import me.semx11.autotip.gson.exclusion.Exclude;
-import me.semx11.autotip.util.FileUtil;
-import net.hydonclient.Hydon;
-import net.hydonclient.managers.impl.config.SaveVal;
-import org.apache.commons.io.FileUtils;
-
-import javax.annotation.CheckReturnValue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +8,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.CheckReturnValue;
+import me.semx11.autotip.Autotip;
+import me.semx11.autotip.chat.MessageOption;
+import me.semx11.autotip.gson.exclusion.Exclude;
+import me.semx11.autotip.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 
 public class Config {
 
@@ -81,7 +78,7 @@ public class Config {
             String json = autotip.getGson().toJson(this);
             FileUtils.writeStringToFile(configFile, json, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not write config to " + configFile, e);
+            Autotip.LOGGER.error("Could not write config to " + configFile, e);
         }
         return this;
     }
@@ -91,11 +88,11 @@ public class Config {
             String json = FileUtils.readFileToString(configFile);
             return this.merge(autotip.getGson().fromJson(json, Config.class)).save();
         } catch (FileNotFoundException e) {
-            Hydon.LOGGER.info("config.at does not exist, creating...");
+            Autotip.LOGGER.info("config.at does not exist, creating...");
         } catch (JsonSyntaxException e) {
-            Hydon.LOGGER.warn("config.at has invalid contents, resetting...");
+            Autotip.LOGGER.warn("config.at has invalid contents, resetting...");
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not read config.at!", e);
+            Autotip.LOGGER.error("Could not read config.at!", e);
         }
         return this.save();
     }
@@ -127,7 +124,7 @@ public class Config {
 
             return this.save();
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not read legacy options.at file!");
+            Autotip.LOGGER.error("Could not read legacy options.at file!");
             return this.save();
         }
     }
@@ -138,4 +135,5 @@ public class Config {
         this.messageOption = that.messageOption == null ? this.messageOption : that.messageOption;
         return this;
     }
+
 }

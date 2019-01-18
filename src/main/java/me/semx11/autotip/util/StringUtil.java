@@ -16,11 +16,9 @@ public class StringUtil {
         if (color) {
             input = format(input);
         }
-
         if (params == null) {
             return input;
         }
-
         for (Object o : params) {
             if (o != null) {
                 String replacement = Matcher.quoteReplacement(format(o.toString()));
@@ -33,4 +31,5 @@ public class StringUtil {
     public static String format(String msg) {
         return msg.contains("&") ? FORMAT_PATTERN.matcher(msg).replaceAll("\u00a7$1") : msg;
     }
+
 }

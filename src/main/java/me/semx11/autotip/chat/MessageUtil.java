@@ -1,13 +1,11 @@
 package me.semx11.autotip.chat;
 
 import com.google.common.collect.Queues;
+import java.util.Queue;
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.universal.UniversalUtil;
 import me.semx11.autotip.util.StringUtil;
-import net.hydonclient.Hydon;
 import net.minecraft.client.Minecraft;
-
-import java.util.Queue;
 
 public class MessageUtil {
 
@@ -46,6 +44,11 @@ public class MessageUtil {
         this.sendRaw(PREFIX + msg, params);
     }
 
+    public void send(String msg, String url, String hoverText, Object... params) {
+        UniversalUtil.addChatMessage(StringUtil.params(PREFIX + msg, params), url,
+                StringUtil.format(hoverText));
+    }
+
     public void separator() {
         this.sendRaw("&6&m&l----------------------------------");
     }
@@ -57,7 +60,7 @@ public class MessageUtil {
             UniversalUtil.addChatMessage(msg);
         } else {
             chatQueue.add(msg);
-            Hydon.LOGGER.info("Queued chat message: " + msg);
+            Autotip.LOGGER.info("Queued chat message: " + msg);
         }
     }
 
@@ -67,7 +70,7 @@ public class MessageUtil {
             autotip.getMinecraft().thePlayer.sendChatMessage(command);
         } else {
             cmdQueue.add(command);
-            Hydon.LOGGER.info("Queued command: " + command);
+            Autotip.LOGGER.info("Queued command: " + command);
         }
     }
 
@@ -91,4 +94,5 @@ public class MessageUtil {
         Minecraft minecraft = autotip.getMinecraft();
         return minecraft != null && minecraft.thePlayer != null;
     }
+
 }

@@ -1,15 +1,14 @@
 package me.semx11.autotip.message;
 
-import me.semx11.autotip.chat.MessageOption;
-import me.semx11.autotip.gson.exclusion.Exclude;
-import me.semx11.autotip.stats.StatsDaily;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import me.semx11.autotip.chat.MessageOption;
+import me.semx11.autotip.gson.exclusion.Exclude;
+import me.semx11.autotip.stats.StatsDaily;
 
 public class StatsMessage extends Message {
 

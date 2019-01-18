@@ -1,8 +1,7 @@
 package me.semx11.autotip.message;
 
-import me.semx11.autotip.stats.StatsDaily;
-
 import java.util.regex.Pattern;
+import me.semx11.autotip.stats.StatsDaily;
 
 public class StatsMessageMatcher extends MessageMatcher {
 
@@ -16,4 +15,5 @@ public class StatsMessageMatcher extends MessageMatcher {
     public void applyStats(StatsDaily stats) {
         statsType.getConsumer().accept(stats, this);
     }
+
 }

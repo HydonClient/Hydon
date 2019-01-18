@@ -1,12 +1,12 @@
 package me.semx11.autotip.util;
 
-public class AutoTipVersion implements Comparable<AutoTipVersion> {
+public class Version implements Comparable<Version> {
 
     private String version;
 
-    public AutoTipVersion(String version) {
+    public Version(String version) {
         if (version == null) {
-            throw new IllegalArgumentException("AutoTipVersion can not be null");
+            throw new IllegalArgumentException("Version can not be null");
         }
         if (!version.matches("[0-9]+(\\.[0-9]+)*")) {
             throw new IllegalArgumentException("Invalid version format");
@@ -19,7 +19,7 @@ public class AutoTipVersion implements Comparable<AutoTipVersion> {
     }
 
     @Override
-    public int compareTo(AutoTipVersion that) {
+    public int compareTo(Version that) {
         if (that == null) {
             return 1;
         }
@@ -44,11 +44,12 @@ public class AutoTipVersion implements Comparable<AutoTipVersion> {
     @Override
     public boolean equals(Object that) {
         return this == that || that != null && this.getClass() == that.getClass()
-                && this.compareTo((AutoTipVersion) that) == 0;
+                && this.compareTo((Version) that) == 0;
     }
 
     @Override
     public String toString() {
         return this.get();
     }
+
 }

@@ -1,28 +1,27 @@
 package me.semx11.autotip.util;
 
-import me.semx11.autotip.chat.ChatColor;
-
 import java.util.Arrays;
 import java.util.List;
+import me.semx11.autotip.chat.ChatColor;
 
 public class VersionInfo {
 
-    private AutoTipVersion autoTipVersion;
+    private Version version;
     private Severity severity;
     private List<String> changelog;
 
-    public VersionInfo(AutoTipVersion autoTipVersion, Severity severity, String... changelog) {
-        this(autoTipVersion, severity, Arrays.asList(changelog));
+    public VersionInfo(Version version, Severity severity, String... changelog) {
+        this(version, severity, Arrays.asList(changelog));
     }
 
-    public VersionInfo(AutoTipVersion autoTipVersion, Severity severity, List<String> changelog) {
-        this.autoTipVersion = autoTipVersion;
+    public VersionInfo(Version version, Severity severity, List<String> changelog) {
+        this.version = version;
         this.severity = severity;
         this.changelog = changelog;
     }
 
-    public AutoTipVersion getAutoTipVersion() {
-        return autoTipVersion;
+    public Version getVersion() {
+        return version;
     }
 
     public Severity getSeverity() {
@@ -53,4 +52,5 @@ public class VersionInfo {
             return color + this.toString();
         }
     }
+
 }

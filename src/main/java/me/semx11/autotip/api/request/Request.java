@@ -8,4 +8,5 @@ public interface Request<T extends Reply> {
     T execute();
 
     RequestType getType();
+
 }

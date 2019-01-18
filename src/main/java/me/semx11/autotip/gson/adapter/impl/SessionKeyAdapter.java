@@ -6,6 +6,7 @@ import me.semx11.autotip.api.SessionKey;
 import me.semx11.autotip.gson.adapter.TypeAdapter;
 
 public class SessionKeyAdapter implements TypeAdapter<SessionKey> {
+
     @Override
     public SessionKey deserialize(JsonElement json) {
         return new SessionKey(json.getAsString());
@@ -15,4 +16,5 @@ public class SessionKeyAdapter implements TypeAdapter<SessionKey> {
     public JsonElement serialize(SessionKey src) {
         return new JsonPrimitive(src.getKey());
     }
+
 }

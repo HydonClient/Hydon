@@ -1,13 +1,5 @@
 package me.semx11.autotip.core;
 
-import me.semx11.autotip.Autotip;
-import me.semx11.autotip.config.Config;
-import me.semx11.autotip.stats.StatsDaily;
-import me.semx11.autotip.util.FileUtil;
-import net.hydonclient.Hydon;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +8,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
+import me.semx11.autotip.Autotip;
+import me.semx11.autotip.config.Config;
+import me.semx11.autotip.stats.StatsDaily;
+import me.semx11.autotip.util.FileUtil;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 public class MigrationManager {
 
@@ -65,7 +63,7 @@ public class MigrationManager {
                     .map(Optional::get)
                     .forEach(date -> new StatsDaily(autotip, (LocalDate) date).migrate());
         } catch (IOException e) {
-            Hydon.LOGGER.error("Could not migrate stats files", e);
+            Autotip.LOGGER.error("Could not migrate stats files", e);
         }
     }
 
@@ -94,4 +92,5 @@ public class MigrationManager {
     public enum LegacyState {
         BEFORE, BACKTRACK, AFTER
     }
+
 }

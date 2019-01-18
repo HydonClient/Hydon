@@ -63,4 +63,5 @@ public class Coins implements Comparable<Coins> {
     public int compareTo(Coins that) {
         return Integer.compare(this.getTotalInt(), that.getTotalInt());
     }
+
 }

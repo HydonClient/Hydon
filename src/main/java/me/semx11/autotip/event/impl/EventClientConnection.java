@@ -1,17 +1,21 @@
-package me.semx11.autotip.event;
+package me.semx11.autotip.event.impl;
 
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.core.SessionManager;
 import me.semx11.autotip.core.TaskManager;
+import me.semx11.autotip.core.TaskManager.TaskType;
+import me.semx11.autotip.event.Event;
 import me.semx11.autotip.universal.UniversalUtil;
-import net.hydonclient.event.Event;
+import me.semx11.autotip.util.ErrorReport;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.network.ServerJoinEvent;
 import net.hydonclient.event.events.network.ServerLeaveEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IChatComponent;
 
-public class EventClientConnection extends Event {
+public class EventClientConnection implements Event {
+
+    public static IChatComponent header;
 
     private final Autotip autotip;
     private final String hypixelHeader;
@@ -32,16 +36,17 @@ public class EventClientConnection extends Event {
         return lastLogin;
     }
 
-    public Object getHeader() {
-        return Autotip.tabHeader;
-    }
-
-    public void setHeader(IChatComponent component) {
-        Minecraft.getMinecraft().ingameGUI.getTabList().setHeader(component);
+    public IChatComponent getHeader() {
+        try {
+            return header;
+        } catch (NullPointerException e) {
+            ErrorReport.reportException(e);
+            return null;
+        }
     }
 
     private void resetHeader() {
-        setHeader(null);
+        header = null;
     }
 
     @EventListener
@@ -51,11 +56,11 @@ public class EventClientConnection extends Event {
 
         autotip.getMessageUtil().clearQueues();
 
-        this.serverIp = UniversalUtil.getRemoteAddress(event).toLowerCase();
+        this.serverIp = Minecraft.getMinecraft().getCurrentServerData().serverIP;
         this.lastLogin = System.currentTimeMillis();
 
         taskManager.getExecutor().execute(() -> {
-            Object header;
+            IChatComponent header;
             int attempts = 0;
             while ((header = this.getHeader()) == null) {
                 if (attempts > 15) {
@@ -71,7 +76,7 @@ public class EventClientConnection extends Event {
             if (UniversalUtil.getUnformattedText(header).equals(hypixelHeader)) {
                 manager.setOnHypixel(true);
                 if (autotip.getConfig().isEnabled()) {
-                    taskManager.executeTask(TaskManager.TaskType.LOGIN, manager::login);
+                    taskManager.executeTask(TaskType.LOGIN, manager::login);
                     taskManager.schedule(manager::checkVersions, 5);
                 }
             } else {
@@ -85,7 +90,8 @@ public class EventClientConnection extends Event {
         TaskManager taskManager = autotip.getTaskManager();
         SessionManager manager = autotip.getSessionManager();
         manager.setOnHypixel(false);
-        taskManager.executeTask(TaskManager.TaskType.LOGOUT, manager::logout);
+        taskManager.executeTask(TaskType.LOGOUT, manager::logout);
         this.resetHeader();
     }
+
 }

@@ -2,12 +2,11 @@ package me.semx11.autotip.chat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import me.semx11.autotip.util.ErrorReport;
-
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
+import me.semx11.autotip.util.ErrorReport;
 
 public class LocaleHolder {
 
@@ -27,18 +26,20 @@ public class LocaleHolder {
         return locale;
     }
 
+    public JsonObject getRoot() {
+        return root;
+    }
+
     public String getKey(String key) {
         if (cache.containsKey(key)) {
             return cache.get(key);
         }
-
         String value = "<" + key + ">";
         try {
             value = this.resolveKey(key);
         } catch (IllegalArgumentException e) {
             ErrorReport.reportException(e);
         }
-
         cache.put(key, value);
         return value;
     }
@@ -49,7 +50,6 @@ public class LocaleHolder {
             if (!obj.has(path)) {
                 throw new IllegalArgumentException("Invalid key: " + key);
             }
-
             JsonElement value = obj.get(path);
             if (value.isJsonObject()) {
                 obj = value.getAsJsonObject();
@@ -57,10 +57,10 @@ public class LocaleHolder {
             }
             return value.getAsString();
         }
-
         if (!obj.isJsonPrimitive()) {
             throw new IllegalArgumentException("Incomplete key: " + key);
         }
         return obj.getAsString();
     }
+
 }

@@ -1,5 +1,6 @@
 package me.semx11.autotip.api.request.impl;
 
+import java.util.Optional;
 import me.semx11.autotip.api.GetBuilder;
 import me.semx11.autotip.api.RequestHandler;
 import me.semx11.autotip.api.RequestType;
@@ -8,8 +9,6 @@ import me.semx11.autotip.api.reply.Reply;
 import me.semx11.autotip.api.reply.impl.KeepAliveReply;
 import me.semx11.autotip.api.request.Request;
 import org.apache.http.client.methods.HttpUriRequest;
-
-import java.util.Optional;
 
 public class KeepAliveRequest implements Request<KeepAliveReply> {
 
@@ -39,4 +38,5 @@ public class KeepAliveRequest implements Request<KeepAliveReply> {
     public RequestType getType() {
         return RequestType.KEEP_ALIVE;
     }
+
 }

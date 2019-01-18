@@ -1,10 +1,9 @@
 package me.semx11.autotip.message;
 
-import me.semx11.autotip.gson.exclusion.Exclude;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
+import me.semx11.autotip.gson.exclusion.Exclude;
 
 public class HoverMessage extends Message {
 
@@ -30,4 +29,5 @@ public class HoverMessage extends Message {
         hoverMessageCache.put(input, matcher);
         return matcher;
     }
+
 }

@@ -26,4 +26,5 @@ public class GetBuilder {
     public HttpUriRequest build() {
         return this.builder.build();
     }
+
 }

@@ -1,18 +1,16 @@
 package me.semx11.autotip.util;
 
 import com.google.gson.JsonObject;
-import me.semx11.autotip.Autotip;
-import me.semx11.autotip.event.EventClientConnection;
-import net.hydonclient.Hydon;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import me.semx11.autotip.Autotip;
+import me.semx11.autotip.event.impl.EventClientConnection;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class ErrorReport {
 
@@ -23,7 +21,7 @@ public class ErrorReport {
     }
 
     public static void reportException(Throwable t) {
-        Hydon.LOGGER.error(t.getMessage(), t);
+        Autotip.LOGGER.error(t.getMessage(), t);
         try {
             URL url = new URL("https://api.autotip.pro/error_report.php");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -32,26 +30,26 @@ public class ErrorReport {
             conn.setDoOutput(true);
 
             JsonObjectBuilder builder = JsonObjectBuilder.newBuilder()
-                    .addString("username", autotip.getGameProfile().getName())
-                    .addString("uuid", autotip.getGameProfile().getId())
-                    .addString("v", autotip.getAutoTipVersion())
-                    .addString("mc", autotip.getMcVersion())
-                    .addString("os", System.getProperty("os.name"))
-                    .addString("forge", "hyperium")
-                    .addString("stackTrace", ExceptionUtils.getStackTrace(t))
-                    .addNumber("time", System.currentTimeMillis());
+                .addString("username", autotip.getGameProfile().getName())
+                .addString("uuid", autotip.getGameProfile().getId())
+                .addString("v", autotip.getVersion())
+                .addString("mc", autotip.getMcVersion())
+                .addString("os", System.getProperty("os.name"))
+                .addString("forge", "1.8.9")
+                .addString("stackTrace", ExceptionUtils.getStackTrace(t))
+                .addNumber("time", System.currentTimeMillis());
 
             if (autotip.isInitialized()) {
                 EventClientConnection event = autotip.getEvent(EventClientConnection.class);
                 builder.addString("sessionKey", autotip.getSessionManager().getKey())
-                        .addString("serverIp", event.getServerIp());
+                    .addString("serverIp", event.getServerIp());
             }
 
             byte[] jsonBytes = builder.build().toString().getBytes(StandardCharsets.UTF_8);
 
             conn.setFixedLengthStreamingMode(jsonBytes.length);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            conn.setRequestProperty("User-Agent", "Autotip v" + autotip.getAutoTipVersion());
+            conn.setRequestProperty("User-Agent", "Autotip v" + autotip.getVersion());
             conn.connect();
 
             try (OutputStream out = conn.getOutputStream()) {
@@ -65,7 +63,7 @@ public class ErrorReport {
                 input = conn.getErrorStream();
             }
             String json = IOUtils.toString(input, StandardCharsets.UTF_8);
-            Hydon.LOGGER.info("Error JSON: " + json);
+            Autotip.LOGGER.info("Error JSON: " + json);
 
         } catch (IOException e) {
             // Hmm... what would happen if I were to report this one?
@@ -100,4 +98,5 @@ public class ErrorReport {
         }
 
     }
+
 }

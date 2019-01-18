@@ -11,6 +11,9 @@ public class LoginReply extends Reply {
     private long tipWaveRate;
     private long tipCycleRate;
 
+    public LoginReply() {
+    }
+
     public LoginReply(boolean success) {
         super(success);
     }
@@ -35,4 +38,5 @@ public class LoginReply extends Reply {
     public RequestType getRequestType() {
         return RequestType.LOGIN;
     }
+
 }

@@ -1,5 +1,6 @@
 package me.semx11.autotip.api.request.impl;
 
+import java.util.Optional;
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.api.GetBuilder;
 import me.semx11.autotip.api.RequestHandler;
@@ -7,17 +8,15 @@ import me.semx11.autotip.api.RequestType;
 import me.semx11.autotip.api.reply.Reply;
 import me.semx11.autotip.api.reply.impl.SettingsReply;
 import me.semx11.autotip.api.request.Request;
-import me.semx11.autotip.util.AutoTipVersion;
+import me.semx11.autotip.util.Version;
 import org.apache.http.client.methods.HttpUriRequest;
-
-import java.util.Optional;
 
 public class SettingsRequest implements Request<SettingsReply> {
 
-    private final AutoTipVersion autoTipVersion;
+    private final Version version;
 
     private SettingsRequest(Autotip autotip) {
-        this.autoTipVersion = autotip.getAutoTipVersion();
+        this.version = autotip.getModVersion();
     }
 
     public static SettingsRequest of(Autotip autotip) {
@@ -27,7 +26,7 @@ public class SettingsRequest implements Request<SettingsReply> {
     @Override
     public SettingsReply execute() {
         HttpUriRequest request = GetBuilder.of(this)
-                .addParameter("v", this.autoTipVersion.get())
+                .addParameter("v", this.version.get())
                 .build();
 
         Optional<Reply> optional = RequestHandler.getReply(this, request.getURI());
