@@ -17,7 +17,7 @@ public class PerspectiveKeyBind extends HydonKeyBind {
     // TODO: Add a toggle between if you want the keybind to activate by being held, or by being pressed once
 
     public PerspectiveKeyBind() {
-        super("PerspectiveKeyBind", Keyboard.KEY_V);
+        super("Perspective", Keyboard.KEY_V);
         EventBus.register(this);
     }
 

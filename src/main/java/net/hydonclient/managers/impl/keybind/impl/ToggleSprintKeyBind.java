@@ -14,7 +14,7 @@ public class ToggleSprintKeyBind extends HydonKeyBind {
     private static boolean toggleSprint = false;
 
     public ToggleSprintKeyBind() {
-        super("ToggleSprintKeyBind", Keyboard.KEY_R);
+        super("Toggle Sprint", Keyboard.KEY_R);
         EventBus.register(this);
     }
 

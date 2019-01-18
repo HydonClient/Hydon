@@ -7,7 +7,7 @@ import org.lwjgl.input.Keyboard;
 public class RearCamKeyBind extends HydonKeyBind {
 
     public RearCamKeyBind() {
-        super("RearCamKeyBind", Keyboard.KEY_C);
+        super("Rear Cam", Keyboard.KEY_R);
     }
 
     @Override
