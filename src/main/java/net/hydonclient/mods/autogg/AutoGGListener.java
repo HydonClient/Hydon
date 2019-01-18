@@ -1,8 +1,8 @@
 package net.hydonclient.mods.autogg;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.hypixel.GameEndEvent;
-import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.util.ChatUtils;
 import net.hydonclient.util.Multithreading;
 
@@ -12,9 +12,7 @@ public class AutoGGListener {
     public void onGameEnd(GameEndEvent e) {
         Multithreading.run(() -> {
             try {
-                Thread.sleep(
-                    HydonManagers.INSTANCE.getModManager().getAutoGGMod().getConfig().DELAY
-                        * 1000);
+                Thread.sleep(Hydon.SETTINGS.autoGGDelay * 1000);
                 ChatUtils.sendChatMessage("/achat gg");
             } catch (InterruptedException e1) {
                 e1.printStackTrace();

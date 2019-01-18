@@ -1,5 +1,6 @@
 package net.hydonclient.mixinsimp.client.gui;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.minecraft.client.Minecraft;
@@ -21,7 +22,7 @@ public class HydonGuiIngame {
     }
 
     public void showCrosshair(CallbackInfoReturnable<Boolean> cir) {
-        if (Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) {
+        if (!Hydon.SETTINGS.thirdPersonCrosshair && Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) {
             cir.setReturnValue(false);
         }
     }

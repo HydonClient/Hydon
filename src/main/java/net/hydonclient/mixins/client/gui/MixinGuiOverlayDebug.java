@@ -33,14 +33,15 @@ public abstract class MixinGuiOverlayDebug {
     @Shadow
     protected abstract void renderLagometer();
 
-    // TODO: Add a toggle for this (code for when toggle added below)
-
-    /*
+    /**
+     * @author Mojang
+     * @reason 1.7 Debug Overlay
+     */
     @Overwrite
     public void renderDebugInfo(ScaledResolution scaledResolutionIn) {
         this.mc.mcProfiler.startSection("debug");
         GlStateManager.pushMatrix();
-        if (setting here) {
+        if (Hydon.SETTINGS.oldDebugMenu) {
             this.renderOldDebugInfoLeft(scaledResolutionIn);
             this.renderOldDebugInfoRight(scaledResolutionIn);
             GlStateManager.popMatrix();
@@ -55,26 +56,7 @@ public abstract class MixinGuiOverlayDebug {
         }
         this.mc.mcProfiler.endSection();
     }
-    */
 
-    /**
-     * @author Mojang
-     * @reason 1.7 Debug Overlay
-     */
-    @Overwrite
-    public void renderDebugInfo(ScaledResolution scaledResolutionIn) {
-        mc.mcProfiler.startSection("debug");
-        GlStateManager.pushMatrix();
-        renderOldDebugInfoLeft(scaledResolutionIn);
-        renderOldDebugInfoRight(scaledResolutionIn);
-        GlStateManager.popMatrix();
-        mc.mcProfiler.endSection();
-
-        if (mc.gameSettings.showLagometer) {
-            renderLagometer();
-        }
-        mc.mcProfiler.endSection();
-    }
 
     private void renderOldDebugInfoLeft(ScaledResolution scaledResolutionIn) {
         FontRenderer fontRenderer = mc.fontRendererObj;

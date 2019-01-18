@@ -3,10 +3,13 @@ package net.hydonclient.mods.blur;
 import com.google.common.base.Throwables;
 import java.lang.reflect.Field;
 import java.util.List;
+
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
+import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.mods.Mod;
 import net.hydonclient.mods.Mod.Info;
 import net.hydonclient.util.GuiUtils;
@@ -30,25 +33,27 @@ public class BlurMod extends Mod {
 
     @EventListener
     public void onRenderTick(RenderTickEvent e) {
-        ShaderGroup sg = Minecraft.getMinecraft().entityRenderer.getShaderGroup();
-        try {
-            if (!Minecraft.getMinecraft().entityRenderer.isShaderActive()) {
-                return;
-            }
-            Field field = ReflectionUtils
-                .getField(ShaderGroup.class, new String[]{"d", "listShaders"});
-            assert field != null;
-            field.setAccessible(true);
-            List<Shader> shaderList = (List<Shader>) field.get(sg);
-            for (Shader s : shaderList) {
-                ShaderUniform su = s.getShaderManager().getShaderUniform("Progress");
-                if (su != null) {
-                    int fadeTime = 350;
-                    su.set(Math.min((System.currentTimeMillis() - start) / (float) fadeTime, 1));
+        if (Hydon.SETTINGS.blurEnabled) {
+            ShaderGroup sg = Minecraft.getMinecraft().entityRenderer.getShaderGroup();
+            try {
+                if (!Minecraft.getMinecraft().entityRenderer.isShaderActive()) {
+                    return;
                 }
+                Field field = ReflectionUtils
+                        .getField(ShaderGroup.class, new String[]{"d", "listShaders"});
+                assert field != null;
+                field.setAccessible(true);
+                List<Shader> shaderList = (List<Shader>) field.get(sg);
+                for (Shader s : shaderList) {
+                    ShaderUniform su = s.getShaderManager().getShaderUniform("Progress");
+                    if (su != null) {
+                        int fadeTime = 350;
+                        su.set(Math.min((System.currentTimeMillis() - start) / (float) fadeTime, 1));
+                    }
+                }
+            } catch (IllegalArgumentException | IllegalAccessException ex) {
+                Throwables.propagate(ex);
             }
-        } catch (IllegalArgumentException | IllegalAccessException ex) {
-            Throwables.propagate(ex);
         }
     }
 

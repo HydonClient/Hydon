@@ -1,5 +1,6 @@
 package net.hydonclient.managers.impl.keybind.impl;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.game.UpdateEvent;
@@ -11,7 +12,7 @@ import org.lwjgl.input.Keyboard;
 
 public class ToggleSprintKeyBind extends HydonKeyBind {
 
-    private static boolean toggleSprint = false;
+    private static boolean sprinting = false;
 
     public ToggleSprintKeyBind() {
         super("Toggle Sprint", Keyboard.KEY_V);
@@ -20,25 +21,29 @@ public class ToggleSprintKeyBind extends HydonKeyBind {
 
     @Override
     public void onPress() {
-        if (toggleSprint) {
-            ((MixinKeyBinding) Minecraft.getMinecraft().gameSettings.keyBindSprint).setPressed(false);
-            ChatUtils.addChatMessage("§7ToggleSprint §cdisabled§7.");
-        } else {
-            ((MixinKeyBinding) Minecraft.getMinecraft().gameSettings.keyBindSprint).setPressed(true);
-            ChatUtils.addChatMessage("§7ToggleSprint §aenabled§7.");
+        if (Hydon.SETTINGS.togglesprintEnabled) {
+            if (sprinting) {
+                ((MixinKeyBinding) Minecraft.getMinecraft().gameSettings.keyBindSprint).setPressed(false);
+                ChatUtils.addChatMessage("§7ToggleSprint §cdisabled§7.");
+            } else {
+                ((MixinKeyBinding) Minecraft.getMinecraft().gameSettings.keyBindSprint).setPressed(true);
+                ChatUtils.addChatMessage("§7ToggleSprint §aenabled§7.");
+            }
+            sprinting = !sprinting;
         }
-        toggleSprint = !toggleSprint;
     }
 
     @EventListener
     public void onTick(UpdateEvent event) {
-        if (toggleSprint) {
-            ((MixinKeyBinding) Minecraft.getMinecraft().gameSettings.keyBindSprint).setPressed(true);
-        }
+        if (Hydon.SETTINGS.togglesprintEnabled) {
+            if (sprinting) {
+                ((MixinKeyBinding) Minecraft.getMinecraft().gameSettings.keyBindSprint).setPressed(true);
+            }
 
-        /* If the player disables the Togglesprint keybind while it's activated, it'll stop their sprint TODO: (make this an option to toggle on and off) */
-        if (!toggleSprint) {
-            Minecraft.getMinecraft().thePlayer.setSprinting(false);
+            /* If the player disables the Togglesprint keybind while it's activated, it'll stop their sprinting */
+            if (!sprinting && Hydon.SETTINGS.stopSprintingAfterReleased) {
+                Minecraft.getMinecraft().thePlayer.setSprinting(false);
+            }
         }
     }
 }

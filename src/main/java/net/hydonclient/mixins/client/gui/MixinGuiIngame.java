@@ -22,7 +22,6 @@ public class MixinGuiIngame extends Gui {
     /**
      * @author asbyth
      * @reason Disable Crosshair in Third Person
-     * TODO: Add an option for this (Vanilla Enhancements?)
      */
     @Inject(method = "showCrosshair", at = @At("HEAD"), cancellable = true)
     private void showCrosshair(CallbackInfoReturnable<Boolean> cir) {

@@ -1,5 +1,6 @@
 package net.hydonclient.cosmetics.wings;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderPlayerEvent;
 import net.hydonclient.staff.StaffManager;
@@ -44,7 +45,7 @@ public class WingsRenderer extends ModelBase {
     @EventListener
     public void onPlayerRender(RenderPlayerEvent event) {
         EntityPlayer player = event.getEntity();
-        if (StaffManager.STAFF_WINGS.contains(player.getUniqueID()) && !player.isInvisible()) {
+        if (StaffManager.STAFF_WINGS.contains(player.getUniqueID()) && !player.isInvisible() && Hydon.SETTINGS.wingsEnabled) {
             renderWings(player, event.getPartialTicks(), event.getX(), event.getY(), event.getZ());
         }
     }

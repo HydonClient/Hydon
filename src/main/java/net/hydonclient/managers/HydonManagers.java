@@ -2,6 +2,7 @@ package net.hydonclient.managers;
 
 import java.io.File;
 import net.hydonclient.Hydon;
+import net.hydonclient.Settings;
 import net.hydonclient.managers.impl.CommandManager;
 import net.hydonclient.managers.impl.KeybindHandler;
 import net.hydonclient.managers.impl.ModManager;
@@ -22,6 +23,7 @@ public class HydonManagers {
      */
     public void init() {
         configManager = new ConfigManager(new File(Hydon.STORAGE_FOLDER, "config.json"));
+        configManager.register(Hydon.SETTINGS);
 
         commandManager = new CommandManager();
         commandManager.load();
