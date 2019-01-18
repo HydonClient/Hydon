@@ -3,6 +3,7 @@ buildscript {
         mavenCentral()
         maven { url 'https://files.minecraftforge.net/maven' }
         maven { url 'https://repo.spongepowered.org/maven' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/"}
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
@@ -13,6 +14,10 @@ buildscript {
 configurations {
     embed
     compile.extendsFrom(embed)
+}
+
+plugins {
+    id "io.franzbecker.gradle-lombok" version "1.10"
 }
 
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
