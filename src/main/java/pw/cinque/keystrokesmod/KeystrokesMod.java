@@ -66,7 +66,7 @@ public class KeystrokesMod extends Mod {
         }
     }
 
-    void openGui() {
+    public void openGui() {
         showGui = true;
     }
 

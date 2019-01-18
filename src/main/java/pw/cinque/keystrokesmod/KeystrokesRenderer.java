@@ -1,5 +1,6 @@
 package pw.cinque.keystrokesmod;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
@@ -20,9 +21,8 @@ public class KeystrokesRenderer {
 
     @EventListener
     public void onRenderTick(RenderTickEvent event) {
-        if (Minecraft.getMinecraft().inGameHasFocus) {
+        if (Minecraft.getMinecraft().inGameHasFocus && !Minecraft.getMinecraft().gameSettings.showDebugInfo && Hydon.SETTINGS.enableKeystrokes) {
             keystrokesMod.getKeyHolder().draw(0, 0, -1, -1);
         }
     }
-
 }
