@@ -1,5 +1,6 @@
 package net.hydonclient.mixinsimp;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.mixins.IMixinMinecraft;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.LWJGLException;
@@ -17,15 +18,22 @@ public class HydonMinecraft {
 
     public void setInitialDisplayMode(boolean fullscreen, int displayWidth, int displayHeight, CallbackInfo ci) throws LWJGLException {
         Display.setFullscreen(false);
-
         if (fullscreen) {
-            Display.setFullscreen(true);
-            DisplayMode mode = Display.getDisplayMode();
+            if (Hydon.SETTINGS.windowedFullscreen) {
+                System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+            } else {
+                Display.setFullscreen(true);
+                DisplayMode mode = Display.getDisplayMode();
 
-            ((IMixinMinecraft) minecraft).setDisplayWidth(Math.max(1, mode.getWidth()));
-            ((IMixinMinecraft) minecraft).setDisplayHeight(Math.max(1, mode.getHeight()));
+                ((IMixinMinecraft) minecraft).setDisplayWidth(Math.max(1, mode.getWidth()));
+                ((IMixinMinecraft) minecraft).setDisplayHeight(Math.max(1, mode.getHeight()));
+            }
         } else {
-            Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
+            if (Hydon.SETTINGS.windowedFullscreen) {
+                System.setProperty("org.lwjgl.opengl.Window.undecorated", "false");
+            } else {
+                Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
+            }
         }
 
         Display.setResizable(false);
@@ -35,12 +43,24 @@ public class HydonMinecraft {
     }
 
     public void toggleFullscreen(boolean fullscreen, int displayWidth, int displayHeight, CallbackInfo ci) throws LWJGLException {
-        if (!fullscreen) {
-            Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
-            Display.setResizable(false);
-            Display.setResizable(true);
+        if (Hydon.SETTINGS.windowedFullscreen) {
+            if (fullscreen) {
+                System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+
+                Display.setDisplayMode(Display.getDesktopDisplayMode());
+                Display.setLocation(0, 0);
+
+                Display.setFullscreen(false);
+            } else {
+                System.setProperty("org.lwjgl.opengl.Window.undecorated", "false");
+                Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
+            }
         } else {
-            Display.setFullscreen(true);
+            Display.setFullscreen(fullscreen);
+            System.setProperty("org.lwjgl.opengl.Window.undecorated", "false");
         }
+
+        Display.setResizable(false);
+        Display.setResizable(true);
     }
 }

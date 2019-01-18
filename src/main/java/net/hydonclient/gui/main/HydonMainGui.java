@@ -1,6 +1,7 @@
 package net.hydonclient.gui.main;
 
 import java.io.IOException;
+
 import net.hydonclient.Hydon;
 import net.hydonclient.gui.main.element.impl.SettingsToggle;
 import net.hydonclient.gui.main.tab.SettingController;
@@ -53,6 +54,7 @@ public class HydonMainGui extends GuiScreen {
 
         controller.addElements(generalElement);
 
+        /* Old Animations Configuration */
         SettingsDropdownElement oldAnimationsElement = new SettingsDropdownElement("Animations");
 
         SettingGroup animationElements = new SettingGroup("HUD Items");
@@ -64,6 +66,7 @@ public class HydonMainGui extends GuiScreen {
         oldAnimationsElement.addElements(animationElements);
 
         controller.addElements(oldAnimationsElement);
+
 
         SettingsDropdownElement autoGGElement = new SettingsDropdownElement("Auto GG");
 
@@ -77,6 +80,7 @@ public class HydonMainGui extends GuiScreen {
 
         controller.addElements(autoGGElement);
 
+
         SettingsDropdownElement cosmeticElement = new SettingsDropdownElement("Cosmetics");
 
         SettingGroup staffCosmetics = new SettingGroup("Staff Modules");
@@ -89,8 +93,41 @@ public class HydonMainGui extends GuiScreen {
 
         controller.addElements(cosmeticElement);
 
+
+        /* Improvements Configuration */
+        SettingsDropdownElement improvements = new SettingsDropdownElement("Improvements");
+        SettingGroup framerateImprovements = new SettingGroup("Framerate");
+        SettingGroup generalImprovements = new SettingGroup("General");
+
+        /*
+         * Framerate Improvements
+         * Anything that would generally improve framerate should go here
+         */
+        framerateImprovements.addElements(
+                new SettingsToggle("Hide Armorstands", Hydon.SETTINGS.disableArmorstands, result -> Hydon.SETTINGS.disableArmorstands = result));
+        framerateImprovements.addElements(
+                new SettingsToggle("Hide Signs", Hydon.SETTINGS.disableSigns, result -> Hydon.SETTINGS.disableSigns = result));
+        framerateImprovements.addElements(
+                new SettingsToggle("Hide Item Frames", Hydon.SETTINGS.disableItemFrames, result -> Hydon.SETTINGS.disableItemFrames = result));
+
+        /*
+         * General Improvements
+         * Anything that would aid someone in ease of access should go here
+         */
+        generalImprovements.addElements(
+                new SettingsToggle("Windowed Fullscreen", Hydon.SETTINGS.windowedFullscreen, result -> Hydon.SETTINGS.windowedFullscreen = result));
+
+        improvements.addElements(framerateImprovements, generalImprovements);
+        controller.addElements(improvements);
+
+
+        /* Vanilla Enhancements Configuration */
         SettingsDropdownElement veElement = new SettingsDropdownElement("Vanilla Enhancements");
 
+        /*
+         * Hotbar Elements
+         * Anything that would show up on the Hotbar should show up here
+         */
         SettingGroup hotBarElements = new SettingGroup("Hotbar Elements");
 
         hotBarElements.addElements(
@@ -103,6 +140,10 @@ public class HydonMainGui extends GuiScreen {
             new SettingsToggle("Damage Preview", VEConfiguration.DAMAGE_PREVIEW,
                 result -> VEConfiguration.DAMAGE_PREVIEW = result));
 
+        /*
+         * Inventory Elements
+         * Anything that would show up in the inventory should show up here
+         */
         SettingGroup inventoryElements = new SettingGroup("Inventory Elements");
         inventoryElements.addElements(
             new SettingsToggle("Protection Potential", VEConfiguration.ARMOR_PROT_POTENTIAL,
@@ -112,6 +153,10 @@ public class HydonMainGui extends GuiScreen {
                 VEConfiguration.ARMOR_PROJ_PROT_POTENTIAL,
                 result -> VEConfiguration.ARMOR_PROJ_PROT_POTENTIAL = result));
 
+        /*
+         * Other Elements
+         * Anything that shows up outside of the inventory and isn't on the Hotbar should show up here
+         */
         SettingGroup miscElements = new SettingGroup("Other Elements");
         miscElements.addElements(
             new SettingsToggle("Third Person Crosshair", VEConfiguration.THIRD_PERSON_CROSSHAIR,
@@ -130,7 +175,7 @@ public class HydonMainGui extends GuiScreen {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
         this.buttonList.add(new GuiButton(1, scaledResolution.getScaledWidth() / 2 - 40,
-            scaledResolution.getScaledHeight() - 20, 80, 20, "Back"));
+                scaledResolution.getScaledHeight() - 20, 80, 20, "Back"));
     }
 
     @Override

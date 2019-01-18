@@ -3,12 +3,13 @@ package net.hydonclient.mods.blur;
 import com.google.common.base.Throwables;
 import java.lang.reflect.Field;
 import java.util.List;
+
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
 import net.hydonclient.managers.HydonManagers;
-import net.hydonclient.managers.impl.config.SaveVal;
 import net.hydonclient.mods.Mod;
 import net.hydonclient.mods.Mod.Info;
 import net.hydonclient.util.GuiUtils;
@@ -25,18 +26,14 @@ public class BlurMod extends Mod {
 
     private long start;
 
-    @SaveVal
-    public static boolean BLUR_ENABLED = true;
-
     @Override
     public void load() {
         EventBus.register(this);
-        HydonManagers.INSTANCE.getConfigManager().register(this);
     }
 
     @EventListener
     public void onRenderTick(RenderTickEvent e) {
-        if (BLUR_ENABLED) {
+        if (Hydon.SETTINGS.blurEnabled) {
             ShaderGroup sg = Minecraft.getMinecraft().entityRenderer.getShaderGroup();
             try {
                 if (!Minecraft.getMinecraft().entityRenderer.isShaderActive()) {

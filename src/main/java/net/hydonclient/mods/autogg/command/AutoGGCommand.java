@@ -1,8 +1,7 @@
 package net.hydonclient.mods.autogg.command;
 
-import net.hydonclient.managers.HydonManagers;
+import net.hydonclient.Hydon;
 import net.hydonclient.managers.impl.command.Command;
-import net.hydonclient.mods.autogg.config.AutoGGConfig;
 import net.hydonclient.util.ChatColor;
 
 public class AutoGGCommand extends Command {
@@ -22,19 +21,19 @@ public class AutoGGCommand extends Command {
         if (args.length <= 0) {
             sendMsg(ChatColor.RED + getUsage());
         } else if (args[0].equalsIgnoreCase("toggle")) {
-            AutoGGConfig.ENABLED = !AutoGGConfig.ENABLED;
-            sendMsg((AutoGGConfig.ENABLED ? "Enabled" : "Disabled") + " AutoGG.");
+            Hydon.SETTINGS.autoGGEnabled = !Hydon.SETTINGS.autoGGEnabled;
+            sendMsg((Hydon.SETTINGS.autoGGEnabled ? "Enabled" : "Disabled") + " AutoGG.");
         } else if (args[0].equalsIgnoreCase("delay")) {
             if (args.length == 1) {
-                sendMsg("The current delay is " + AutoGGConfig.DELAY + " seconds.");
+                sendMsg("The current delay is " + Hydon.SETTINGS.autoGGDelay + " seconds.");
             } else {
                 try {
                     int length = Integer.parseInt(args[1]);
                     if (length > 10 || length < 0) {
                         sendMsg(ChatColor.RED + "Please enter a number 1 - 10.");
                     } else {
-                        AutoGGConfig.DELAY = length;
-                        sendMsg("Set the delay to " + AutoGGConfig.DELAY + " seconds.");
+                        Hydon.SETTINGS.autoGGDelay = length;
+                        sendMsg("Set the delay to " + Hydon.SETTINGS.autoGGDelay + " seconds.");
                     }
                 } catch (NumberFormatException e) {
                     sendMsg(ChatColor.RED + "Please enter a valid number.");

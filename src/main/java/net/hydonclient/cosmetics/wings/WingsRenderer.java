@@ -1,8 +1,8 @@
 package net.hydonclient.cosmetics.wings;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderPlayerEvent;
-import net.hydonclient.mods.wings.Wings;
 import net.hydonclient.staff.StaffManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -45,7 +45,7 @@ public class WingsRenderer extends ModelBase {
     @EventListener
     public void onPlayerRender(RenderPlayerEvent event) {
         EntityPlayer player = event.getEntity();
-        if (StaffManager.STAFF_WINGS.contains(player.getUniqueID()) && !player.isInvisible() && Wings.WINGS_ENABLED) {
+        if (StaffManager.STAFF_WINGS.contains(player.getUniqueID()) && !player.isInvisible() && Hydon.SETTINGS.wingsEnabled) {
             renderWings(player, event.getPartialTicks(), event.getX(), event.getY(), event.getZ());
         }
     }

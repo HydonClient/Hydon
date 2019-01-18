@@ -1,9 +1,9 @@
 package net.hydonclient.mods.vanillaenhancements.renderer;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.gui.GuiDrawScreenEvent;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
-import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,7 +24,7 @@ public class ArmorPotential {
 
     @EventListener
     public void onRenderArmor(GuiDrawScreenEvent event) {
-        if (VEConfiguration.ARMOR_PROT_POTENTIAL || VEConfiguration.ARMOR_PROJ_PROT_POTENTIAL) {
+        if (Hydon.SETTINGS.protPotential || Hydon.SETTINGS.projPotential) {
             if (event.getScreen() instanceof GuiInventory || event.getScreen() instanceof GuiContainerCreative) {
                 String percentage = getArmorString();
                 lastMessage = percentage;
@@ -44,9 +44,9 @@ public class ArmorPotential {
         double ap = roundDecimals(getArmorPotentional(false), 2);
         double app = roundDecimals(getArmorPotentional(true), 2);
 
-        if (VEConfiguration.ARMOR_PROT_POTENTIAL || VEConfiguration.ARMOR_PROJ_PROT_POTENTIAL) {
+        if (Hydon.SETTINGS.protPotential || Hydon.SETTINGS.projPotential) {
             String lastMessage;
-            String percent = VEConfiguration.ARMOR_PROT_POTENTIAL ? (lastMessage = ap + "%") : (lastMessage = app + "%");
+            String percent = Hydon.SETTINGS.protPotential ? (lastMessage = ap + "%") : (lastMessage = app + "%");
             this.lastMessage = lastMessage;
             return percent;
         }

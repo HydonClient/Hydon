@@ -1,8 +1,8 @@
 package net.hydonclient.integrations.compactchat;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.game.ChatEvent;
-import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
 import net.hydonclient.util.ChatColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
@@ -29,7 +29,7 @@ public class CompactChat {
      */
     @EventListener
     public void onChat(ChatEvent event) {
-        if (VEConfiguration.COMPACT_CHAT) {
+        if (Hydon.SETTINGS.compactChat) {
             if (!event.isCancelled()) {
                 GuiNewChat guiNewChat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
 

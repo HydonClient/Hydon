@@ -1,9 +1,9 @@
 package net.hydonclient.mods.vanillaenhancements.renderer;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
-import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ public class ArrowCounter {
 
     @EventListener
     public void renderArrowCount(RenderGameOverlayEvent event) {
-        if (VEConfiguration.ARROW_COUNTER) {
+        if (Hydon.SETTINGS.arrowCounter) {
             EntityPlayerSP player = core.getMinecraft().thePlayer;
             if (player != null) {
                 ItemStack heldItem = player.getHeldItem();

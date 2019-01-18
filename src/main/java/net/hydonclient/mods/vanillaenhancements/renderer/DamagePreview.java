@@ -1,9 +1,9 @@
 package net.hydonclient.mods.vanillaenhancements.renderer;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
-import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
@@ -17,7 +17,7 @@ public class DamagePreview {
 
     @EventListener
     public void renderDamage(RenderGameOverlayEvent event) {
-        if (VEConfiguration.DAMAGE_PREVIEW) {
+        if (Hydon.SETTINGS.damagePreview) {
             ItemStack stack = core.getMinecraft().thePlayer.inventory.getCurrentItem();
 
             if (stack != null) {

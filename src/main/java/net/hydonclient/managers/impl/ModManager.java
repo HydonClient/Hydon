@@ -42,23 +42,18 @@ public class ModManager {
     public AutoGGMod getAutoGGMod() {
         return autoGGMod;
     }
-
     public BlurMod getBlurMod() {
         return blurMod;
     }
-
     public Autotip getAutotip() {
         return autotip;
     }
-
     public Wings getWings() {
         return wings;
     }
-
     public VanillaEnhancements getVanillaEnhancements() {
         return vanillaEnhancements;
     }
-
     public OldAnimations getOldAnimations() {
         return oldAnimations;
     }

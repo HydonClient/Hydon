@@ -26,7 +26,11 @@
     "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinInventoryEffectRenderer",
 
+    "client.renderer.entity.MixinRendererLivingEntity",
     "client.renderer.entity.MixinRenderPlayer",
+
+    "client.renderer.tileentity.MixinRenderItemFrame",
+    "client.renderer.tileentity.MixinTileEntitySignRenderer",
 
     "client.resources.IMixinAbstractResourcePack",
     "client.resources.MixinAbstractResourcePack",

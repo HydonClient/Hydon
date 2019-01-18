@@ -1,8 +1,6 @@
 package net.hydonclient.mixins.client.gui;
 
 import net.hydonclient.Hydon;
-import net.hydonclient.mods.oldanimations.OldAnimations;
-import net.hydonclient.mods.oldanimations.config.OldAnimationsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiOverlayDebug;
@@ -43,7 +41,7 @@ public abstract class MixinGuiOverlayDebug {
     public void renderDebugInfo(ScaledResolution scaledResolutionIn) {
         this.mc.mcProfiler.startSection("debug");
         GlStateManager.pushMatrix();
-        if (OldAnimationsConfig.OLD_DEBUG_MENU) {
+        if (Hydon.SETTINGS.oldDebugMenu) {
             this.renderOldDebugInfoLeft(scaledResolutionIn);
             this.renderOldDebugInfoRight(scaledResolutionIn);
             GlStateManager.popMatrix();

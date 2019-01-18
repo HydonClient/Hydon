@@ -1,9 +1,9 @@
 package net.hydonclient.mods.vanillaenhancements.renderer;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
-import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
 import net.hydonclient.util.ChatColor;
 import net.hydonclient.util.ItemMaps;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -26,7 +26,7 @@ public class AmplifierPreview {
 
     @EventListener
     public void renderEnchantments(RenderGameOverlayEvent event) {
-        if (VEConfiguration.AMPLIFIER_PREVIEW) {
+        if (Hydon.SETTINGS.ampPreview) {
             ItemStack heldItem = core.getMinecraft().thePlayer.inventory.getCurrentItem();
 
             if (heldItem != null) {

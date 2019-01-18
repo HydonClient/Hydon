@@ -1,10 +1,8 @@
 package net.hydonclient.mods.vanillaenhancements;
 
 import net.hydonclient.event.EventBus;
-import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.mods.Mod;
 import net.hydonclient.mods.Mod.Info;
-import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
 import net.hydonclient.mods.vanillaenhancements.renderer.ArmorPotential;
 import net.hydonclient.mods.vanillaenhancements.renderer.ArrowCounter;
 import net.hydonclient.mods.vanillaenhancements.renderer.AmplifierPreview;
@@ -23,7 +21,6 @@ public class VanillaEnhancements extends Mod {
         EventBus.register(new ArrowCounter(this));
         EventBus.register(new AmplifierPreview(this));
         EventBus.register(new DamagePreview(this));
-        HydonManagers.INSTANCE.getConfigManager().register(new VEConfiguration());
     }
 
     public Minecraft getMinecraft() {
