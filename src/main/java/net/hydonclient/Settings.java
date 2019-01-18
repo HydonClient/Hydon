@@ -72,4 +72,10 @@ public class Settings {
 
     @SaveVal
     public boolean enableKeystrokes = false;
+
+    @SaveVal
+    public boolean disableBossFooter = false;
+
+    @SaveVal
+    public boolean disableBossBar = false;
 }
