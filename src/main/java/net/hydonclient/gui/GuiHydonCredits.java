@@ -97,7 +97,7 @@ public class GuiHydonCredits extends GuiScreen {
                 .containsKey(jsonObject.get("login").getAsString())) {
                 try {
                     DynamicImageUtil.addTexture(jsonObject.get("login").getAsString(),
-                        ImageIO.read(new URL(jsonObject.get("avatar_url").getAsString())));
+                        ImageIO.read(new URL(jsonObject.get("avatar_url").getAsString() + "&size=40")));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
