@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.hydonclient.Hydon;
+import net.hydonclient.gui.main.HydonMainGui;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.AnimationUtil;
@@ -276,6 +277,10 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         if (button.id == 6) {
             this.mc.displayGuiScreen(new GuiHydonCredits());
+        }
+
+        if (button.id == 10) {
+            this.mc.displayGuiScreen(HydonMainGui.INSTANCE);
         }
 
         if (button.id == 12) {
