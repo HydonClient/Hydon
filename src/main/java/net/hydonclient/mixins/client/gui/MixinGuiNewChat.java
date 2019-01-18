@@ -1,5 +1,6 @@
 package net.hydonclient.mixins.client.gui;
 
+import java.util.List;
 import net.hydonclient.mixinsimp.client.gui.HydonGuiNewChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -12,8 +13,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
 
 @Mixin(GuiNewChat.class)
 public abstract class MixinGuiNewChat {
@@ -51,7 +50,17 @@ public abstract class MixinGuiNewChat {
      * @reason Changes the default chat-scrolling limit of 100 -> 512
      */
     @Overwrite
-    private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly) {
-        impl.setChatLine(chatComponent, chatLineId, updateCounter, displayOnly, scrollPos, isScrolled, drawnChatLines, chatLines, mc);
+    private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter,
+        boolean displayOnly) {
+        impl.setChatLine(chatComponent, chatLineId, updateCounter, displayOnly, scrollPos,
+            isScrolled, drawnChatLines, chatLines, mc);
+    }
+
+    /**
+     * @author Koding
+     */
+    @Overwrite
+    public void drawChat(int updateCounter) {
+        impl.drawChat(updateCounter);
     }
 }

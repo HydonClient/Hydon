@@ -37,10 +37,7 @@ public class StaffManager {
                 if (jsonObject.has("cape")) {
                     STAFF_CAPES.put(uuid, jsonObject.get("cape").getAsString());
                 }
-                System.out.println(jsonObject.has("wings"));
-                System.out.println(jsonObject.get("wings").getAsBoolean());
                 if (jsonObject.has("wings") && jsonObject.get("wings").getAsBoolean()) {
-                    System.out.println("Wings: " + uuid);
                     STAFF_WINGS.add(uuid);
                 }
             });
