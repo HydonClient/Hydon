@@ -193,7 +193,7 @@ public class MinecraftFontRenderer extends CFont {
                 }
             }
 
-            GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_DONT_CARE);
+//            GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_DONT_CARE);
             GL11.glPopMatrix();
         }
 

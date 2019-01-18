@@ -43,6 +43,7 @@
     "gui.MixinGui",
     "gui.MixinGuiButton",
     "gui.MixinGuiButtonLanguage",
+    "gui.MixinGuiDownloadTerrain",
     "gui.MixinGuiOptionSlider",
     "gui.MixinGuiScreen",
     "gui.MixinGuiSlider",
