@@ -31,7 +31,8 @@ public class GuiUtils {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
 
         if (!(Minecraft.getMinecraft().theWorld != null && Minecraft
-            .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer)) || overrideWorldCheck) {
+            .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer))
+            || overrideWorldCheck) {
             Minecraft.getMinecraft().getTextureManager()
                 .bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, sr.getScaledWidth(),
@@ -75,13 +76,17 @@ public class GuiUtils {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
 
         mc.getTextureManager().bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
-        Gui.drawModalRectWithCustomSizedTexture(0, startY, 0, startY, sr.getScaledWidth(), endY, sr.getScaledWidth(), sr.getScaledHeight());
+        Gui.drawModalRectWithCustomSizedTexture(0, startY, 0, startY, sr.getScaledWidth(), endY,
+            sr.getScaledWidth(), sr.getScaledHeight());
     }
 
     public static Point getMouse() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-        int i = Mouse.getEventX() * scaledResolution.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-        int j = scaledResolution.getScaledHeight() - Mouse.getEventY() * scaledResolution.getScaledHeight() / Minecraft.getMinecraft().displayHeight - 1;
+        int i = Mouse.getEventX() * scaledResolution.getScaledWidth() / Minecraft
+            .getMinecraft().displayWidth;
+        int j = scaledResolution.getScaledHeight()
+            - Mouse.getEventY() * scaledResolution.getScaledHeight() / Minecraft
+            .getMinecraft().displayHeight - 1;
         return new Point(i, j);
     }
 
@@ -130,6 +135,12 @@ public class GuiUtils {
             exp.printStackTrace();
         }
         return color;
+    }
+
+    public static Color rainbowColor(int delay) {
+        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
+        rainbowState %= 360;
+        return Color.getHSBColor((float) (rainbowState / 360.0f), 0.8f, 0.7f);
     }
 
 }

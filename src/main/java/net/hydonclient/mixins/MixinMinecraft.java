@@ -4,6 +4,7 @@ import net.hydonclient.Hydon;
 import net.hydonclient.SplashScreen;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
+import net.hydonclient.event.events.gui.MouseInputEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
 import net.hydonclient.gui.GuiHydonMainMenu;
 import net.hydonclient.mixinsimp.HydonMinecraft;
@@ -19,6 +20,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -176,6 +178,11 @@ public abstract class MixinMinecraft {
     @Inject(method = "shutdown", at = @At("HEAD"))
     private void shutdown(CallbackInfo callbackInfo) {
         Hydon.INSTANCE.stop();
+    }
+
+    @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;next()Z", shift = Shift.BEFORE))
+    private void runTick(CallbackInfo callbackInfo) {
+        EventBus.call(new MouseInputEvent());
     }
 
     /**

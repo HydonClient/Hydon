@@ -60,4 +60,10 @@ public class Settings {
 
     @SaveVal
     public boolean wingsEnabled = true;
+
+    @SaveVal
+    public boolean keyStrokesChroma = true;
+
+    @SaveVal
+    public boolean keyStrokesOutline = true;
 }

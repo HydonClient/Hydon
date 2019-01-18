@@ -7,6 +7,7 @@ import net.hydonclient.mods.blur.BlurMod;
 import net.hydonclient.mods.oldanimations.OldAnimations;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
 import net.hydonclient.mods.wings.Wings;
+import pw.cinque.keystrokesmod.KeystrokesMod;
 
 public class ModManager {
 
@@ -16,6 +17,7 @@ public class ModManager {
     private Wings wings;
     private VanillaEnhancements vanillaEnhancements;
     private OldAnimations oldAnimations;
+    private KeystrokesMod keystrokesMod;
 
     public void init() {
         Hydon.LOGGER.info("Loading mods");
@@ -37,24 +39,36 @@ public class ModManager {
 
         oldAnimations = new OldAnimations();
         oldAnimations.load();
+
+        keystrokesMod = new KeystrokesMod();
+        keystrokesMod.load();
     }
 
     public AutoGGMod getAutoGGMod() {
         return autoGGMod;
     }
+
     public BlurMod getBlurMod() {
         return blurMod;
     }
+
     public Autotip getAutotip() {
         return autotip;
     }
+
     public Wings getWings() {
         return wings;
     }
+
     public VanillaEnhancements getVanillaEnhancements() {
         return vanillaEnhancements;
     }
+
     public OldAnimations getOldAnimations() {
         return oldAnimations;
+    }
+
+    public KeystrokesMod getKeystrokesMod() {
+        return keystrokesMod;
     }
 }

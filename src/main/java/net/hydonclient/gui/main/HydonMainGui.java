@@ -6,6 +6,7 @@ import net.hydonclient.gui.main.element.impl.SettingsToggle;
 import net.hydonclient.gui.main.tab.SettingController;
 import net.hydonclient.gui.main.tab.SettingGroup;
 import net.hydonclient.gui.main.tab.SettingsDropdownElement;
+import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -22,6 +23,8 @@ public class HydonMainGui extends GuiScreen {
     public SettingGroup currentGroup = null;
     public int leftSideOffset, rightSideOffset = 0;
     private SettingController controller = new SettingController();
+
+    private SettingGroup keyStrokesElements;
 
     private HydonMainGui() {
         /* the top boye because he is most important */
@@ -148,6 +151,21 @@ public class HydonMainGui extends GuiScreen {
                 Hydon.SETTINGS.projPotential,
                 result -> Hydon.SETTINGS.protPotential = result));
 
+        SettingsDropdownElement modElement = new SettingsDropdownElement("Mods");
+
+        /*
+         * Keystrokes Mod
+         */
+        keyStrokesElements = new SettingGroup("Key Strokes");
+        keyStrokesElements.addElements(new SettingsToggle("Chroma", Hydon.SETTINGS.keyStrokesChroma,
+            result -> Hydon.SETTINGS.keyStrokesChroma = result));
+        keyStrokesElements.addElements(
+            new SettingsToggle("Outline", Hydon.SETTINGS.keyStrokesOutline,
+                result -> Hydon.SETTINGS.keyStrokesOutline = result));
+
+        modElement.addElements(keyStrokesElements);
+        controller.addElements(modElement);
+
         /*
          * Other Elements
          * Anything that shows up outside of the inventory and isn't on the Hotbar should show up here
@@ -177,10 +195,16 @@ public class HydonMainGui extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
 
+        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+
         GuiUtils.drawBG();
         controller.draw();
         if (currentGroup != null) {
             currentGroup.draw();
+
+            if (currentGroup == keyStrokesElements) {
+                HydonManagers.INSTANCE.getModManager().getKeystrokesMod().getKeyHolder().draw(0, 0, scaledResolution.getScaledWidth() / 2 - 40, scaledResolution.getScaledHeight() / 2 - 40);
+            }
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);
