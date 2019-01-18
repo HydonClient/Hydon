@@ -2,6 +2,8 @@ package net.hydonclient.mixinsimp.client.gui;
 
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
+import net.hydonclient.managers.impl.config.SaveVal;
+import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
@@ -21,7 +23,7 @@ public class HydonGuiIngame {
     }
 
     public void showCrosshair(CallbackInfoReturnable<Boolean> cir) {
-        if (Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) {
+        if (!VEConfiguration.THIRD_PERSON_CROSSHAIR && Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) {
             cir.setReturnValue(false);
         }
     }

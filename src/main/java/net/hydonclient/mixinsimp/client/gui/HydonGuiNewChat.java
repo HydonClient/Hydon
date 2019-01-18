@@ -1,6 +1,7 @@
 package net.hydonclient.mixinsimp.client.gui;
 
 import java.util.List;
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.ChatEvent;
 import net.hydonclient.mixins.client.gui.IMixinGuiNewChat;
@@ -118,7 +119,7 @@ public class HydonGuiNewChat {
                             if (l1 > 3) {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
-                                if (false) {
+                                if (!Hydon.SETTINGS.fastChat) {
                                     Gui.drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 }
                                 String s = chatline.getChatComponent().getFormattedText();

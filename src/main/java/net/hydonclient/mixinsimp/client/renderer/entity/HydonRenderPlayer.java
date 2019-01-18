@@ -4,6 +4,7 @@ import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.render.RenderPlayerEvent;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

@@ -1,11 +1,19 @@
 package net.hydonclient.gui.main;
 
 import java.io.IOException;
+import net.hydonclient.Hydon;
 import net.hydonclient.gui.main.element.impl.SettingsButton;
 import net.hydonclient.gui.main.element.impl.SettingsToggle;
 import net.hydonclient.gui.main.tab.SettingController;
 import net.hydonclient.gui.main.tab.SettingGroup;
 import net.hydonclient.gui.main.tab.SettingsDropdownElement;
+import net.hydonclient.managers.impl.keybind.impl.ToggleSprintKeyBind;
+import net.hydonclient.mods.autogg.config.AutoGGConfig;
+import net.hydonclient.mods.blur.BlurMod;
+import net.hydonclient.mods.oldanimations.OldAnimations;
+import net.hydonclient.mods.oldanimations.config.OldAnimationsConfig;
+import net.hydonclient.mods.vanillaenhancements.config.VEConfiguration;
+import net.hydonclient.mods.wings.Wings;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -23,7 +31,7 @@ public class HydonMainGui extends GuiScreen {
     public int leftSideOffset, rightSideOffset = 0;
     private SettingController controller = new SettingController();
 
-    private HydonMainGui() {
+    public HydonMainGui() {
         SettingsDropdownElement dropdownElement = new SettingsDropdownElement("Dropdown 1");
 
         SettingGroup testGroupOne = new SettingGroup("Test 1");
@@ -46,6 +54,89 @@ public class HydonMainGui extends GuiScreen {
         dropdownElementTwo.addElements(testGroupOne, testGroupTwo);
 
         controller.addElements(dropdownElement, dropdownElementTwo);
+
+        /* the top boye because he is most important */
+        SettingsDropdownElement generalElement = new SettingsDropdownElement("General");
+
+        SettingGroup misc = new SettingGroup("Miscellaneous");
+        SettingGroup togglesprint = new SettingGroup("Togglesprint");
+
+        misc.addElements(new SettingsToggle("Fast Chat", Hydon.SETTINGS.fastChat, result -> Hydon.SETTINGS.fastChat = result));
+        misc.addElements(
+                new SettingsToggle("GUI Blur", BlurMod.BLUR_ENABLED, result -> BlurMod.BLUR_ENABLED = result));
+
+        togglesprint.addElements(
+                new SettingsToggle("Togglesprint", ToggleSprintKeyBind.ENABLE_TOGGLESPRINT, result -> ToggleSprintKeyBind.ENABLE_TOGGLESPRINT = result));
+        togglesprint.addElements(
+                new SettingsToggle("Stop after released", ToggleSprintKeyBind.STOP_SPRINT_AFTER_RELEASE, result -> ToggleSprintKeyBind.STOP_SPRINT_AFTER_RELEASE = result));
+
+        generalElement.addElements(misc, togglesprint);
+
+        controller.addElements(generalElement);
+
+
+        SettingsDropdownElement oldAnimationsElement = new SettingsDropdownElement("Animations");
+
+        SettingGroup animationElements = new SettingGroup("HUD Items");
+
+        animationElements.addElements(
+                new SettingsToggle("1.7 Debug", OldAnimationsConfig.OLD_DEBUG_MENU, result -> OldAnimationsConfig.OLD_DEBUG_MENU = result));
+
+        oldAnimationsElement.addElements(animationElements);
+
+        controller.addElements(oldAnimationsElement);
+
+
+        SettingsDropdownElement autoGGElement = new SettingsDropdownElement("Auto GG");
+
+        SettingGroup autoGG = new SettingGroup("AutoGG");
+
+        autoGG.addElements(
+                new SettingsToggle("AutoGG", AutoGGConfig.ENABLED, result -> AutoGGConfig.ENABLED = result));
+
+        autoGGElement.addElements(autoGG);
+
+        controller.addElements(autoGGElement);
+
+
+        SettingsDropdownElement cosmeticElement = new SettingsDropdownElement("Cosmetics");
+
+        SettingGroup staffCosmetics = new SettingGroup("Staff Modules");
+
+        staffCosmetics.addElements(
+                new SettingsToggle("Wings", Wings.WINGS_ENABLED, result -> Wings.WINGS_ENABLED = result));
+
+        cosmeticElement.addElements(staffCosmetics);
+
+        controller.addElements(cosmeticElement);
+
+
+        SettingsDropdownElement veElement = new SettingsDropdownElement("Vanilla Enhancements");
+
+        SettingGroup hotBarElements = new SettingGroup("Hotbar Elements");
+
+        hotBarElements.addElements(
+                new SettingsToggle("Amplifier Preview", VEConfiguration.AMPLIFIER_PREVIEW, result -> VEConfiguration.AMPLIFIER_PREVIEW = result));
+        hotBarElements.addElements(
+                new SettingsToggle("Arrow Counter", VEConfiguration.ARROW_COUNTER, result -> VEConfiguration.ARROW_COUNTER = result));
+        hotBarElements.addElements(
+                new SettingsToggle("Damage Preview", VEConfiguration.DAMAGE_PREVIEW, result -> VEConfiguration.DAMAGE_PREVIEW = result));
+
+        SettingGroup inventoryElements = new SettingGroup("Inventory Elements");
+        inventoryElements.addElements(
+                new SettingsToggle("Protection Potential", VEConfiguration.ARMOR_PROT_POTENTIAL, result -> VEConfiguration.ARMOR_PROT_POTENTIAL = result));
+        inventoryElements.addElements(
+                new SettingsToggle("Proj. Protection Potential", VEConfiguration.ARMOR_PROJ_PROT_POTENTIAL, result -> VEConfiguration.ARMOR_PROJ_PROT_POTENTIAL = result));
+
+        SettingGroup miscElements = new SettingGroup("Other Elements");
+        miscElements.addElements(
+                new SettingsToggle("Third Person Crosshair", VEConfiguration.THIRD_PERSON_CROSSHAIR, result -> VEConfiguration.THIRD_PERSON_CROSSHAIR = result));
+        miscElements.addElements(
+                new SettingsToggle("Compact Chat", VEConfiguration.COMPACT_CHAT, result -> VEConfiguration.COMPACT_CHAT = result));
+
+        veElement.addElements(hotBarElements, inventoryElements, miscElements);
+
+        controller.addElements(veElement);
     }
 
     @Override
@@ -58,6 +149,8 @@ public class HydonMainGui extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        drawDefaultBackground();
+
         GuiUtils.drawBG();
         controller.draw();
         if (currentGroup != null) {

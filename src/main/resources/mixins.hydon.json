@@ -16,6 +16,7 @@
     "client.gui.MixinGuiNewChat",
     "client.gui.MixinGuiOverlayDebug",
     "client.gui.MixinGuiPlayerTabOverlay",
+    "client.gui.MixinGuiScreen",
 
     "client.multiplayer.MixinGuiConnecting",
 

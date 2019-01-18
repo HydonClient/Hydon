@@ -1,8 +1,6 @@
 package net.hydonclient.mixins.gui;
 
 import com.google.common.base.CharMatcher;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import net.hydonclient.ttf.HydonFonts;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
