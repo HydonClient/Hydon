@@ -5,8 +5,8 @@ import net.hydonclient.managers.impl.config.SaveVal;
 public class AutoGGConfig {
 
   @SaveVal
-  public boolean ENABLED = true;
+  public static boolean ENABLED = true;
   @SaveVal
-  public int DELAY = 2;
+  public static int DELAY = 2;
 
 }

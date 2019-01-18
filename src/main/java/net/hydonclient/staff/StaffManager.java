@@ -3,11 +3,13 @@ package net.hydonclient.staff;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import net.hydonclient.util.WebUtil;
 
 public class StaffManager {
@@ -34,13 +36,17 @@ public class StaffManager {
 
                 UUID uuid = UUID.fromString(jsonObject.get("uuid").getAsString());
 
+                /*
+                 * If the player matches a UUID on the capes file, give them the cape
+                 */
                 if (jsonObject.has("cape")) {
                     STAFF_CAPES.put(uuid, jsonObject.get("cape").getAsString());
                 }
-                System.out.println(jsonObject.has("wings"));
-                System.out.println(jsonObject.get("wings").getAsBoolean());
+
+                /*
+                 * If the player matches a UUID on the wings file, give them the wings
+                 */
                 if (jsonObject.has("wings") && jsonObject.get("wings").getAsBoolean()) {
-                    System.out.println("Wings: " + uuid);
                     STAFF_WINGS.add(uuid);
                 }
             });
