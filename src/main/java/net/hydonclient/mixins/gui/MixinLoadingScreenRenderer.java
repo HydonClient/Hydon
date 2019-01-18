@@ -1,8 +1,11 @@
 package net.hydonclient.mixins.gui;
 
 import net.hydonclient.util.GuiUtils;
+import net.hydonclient.util.Images;
+import net.hydonclient.util.ResolutionUtil;
 import net.minecraft.client.LoadingScreenRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -64,11 +67,28 @@ public class MixinLoadingScreenRenderer {
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
-            if (Minecraft.getMinecraft().theWorld != null && Minecraft
-                .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer)) {
-                GuiUtils.drawIngameGuiGradient();
-            } else {
-                GuiUtils.drawBG();
+            GuiUtils.drawBG(true);
+
+            if (this.currentlyDisplayedText.isEmpty() && this.message.isEmpty()) {
+                GlStateManager.enableAlpha();
+                this.mc.getTextureManager().bindTexture(Images.LOGO.getLocation());
+                double logoScaleFactor = ResolutionUtil.getImageScaleFactor();
+                int logoWidth = (int) (Images.LOGO.getWidth() * logoScaleFactor);
+                int logoHeight = (int) (Images.LOGO.getHeight() * logoScaleFactor);
+                int logoX = (ResolutionUtil.getCurrent().getScaledWidth() - logoWidth) / 2;
+                int logoY = (ResolutionUtil.getCurrent().getScaledHeight() + logoHeight) / 4;
+
+                GlStateManager.enableBlend();
+                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+
+                GlStateManager.color(0.0f, 0.0f, 0.0f, 0.2f);
+                Gui.drawModalRectWithCustomSizedTexture(logoX + 2, logoY + 2, 0, 0, logoWidth,
+                    logoHeight,
+                    logoWidth, logoHeight);
+
+                GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+                Gui.drawModalRectWithCustomSizedTexture(logoX, logoY, 0, 0, logoWidth, logoHeight,
+                    logoWidth, logoHeight);
             }
 
             if (progress >= 0) {

@@ -2,15 +2,8 @@ package net.hydonclient.mixins.gui;
 
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.GuiListExtended;
-import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
-import net.minecraft.client.gui.GuiShareToLan;
-import net.minecraft.client.gui.achievement.GuiAchievement;
-import net.minecraft.client.gui.achievement.GuiAchievements;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
