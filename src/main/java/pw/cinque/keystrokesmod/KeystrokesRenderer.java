@@ -2,7 +2,6 @@ package pw.cinque.keystrokesmod;
 
 import net.hydonclient.Hydon;
 import net.hydonclient.event.EventListener;
-import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
 import net.minecraft.client.Minecraft;
 import pw.cinque.keystrokesmod.gui.GuiKeystrokes;
