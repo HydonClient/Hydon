@@ -27,4 +27,9 @@ public class MixinGuiIngame extends Gui {
     private void showCrosshair(CallbackInfoReturnable<Boolean> cir) {
         impl.showCrosshair(cir);
     }
+
+    @Inject(method = "displayTitle", at = @At("HEAD"), cancellable = true)
+    public void displayTitle(String title, String subTitle, int timeFadeIn, int displayTime, int timeFadeOut, CallbackInfo ci) {
+        impl.displayTitle(title, subTitle, timeFadeIn, displayTime, timeFadeOut, ci);
+    }
 }

@@ -26,4 +26,10 @@ public class HydonGuiIngame {
             cir.setReturnValue(false);
         }
     }
+
+    public void displayTitle(String title, String subTitle, int timeFadeIn, int displayTime, int timeFadeOut, CallbackInfo ci) {
+        if (Hydon.SETTINGS.disableTitles) {
+            ci.cancel();
+        }
+    }
 }

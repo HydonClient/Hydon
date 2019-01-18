@@ -66,4 +66,10 @@ public class Settings {
 
     @SaveVal
     public boolean keyStrokesOutline = true;
+
+    @SaveVal
+    public boolean disableTitles = false;
+
+    @SaveVal
+    public boolean enableKeystrokes = false;
 }
