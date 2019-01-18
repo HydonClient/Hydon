@@ -1,4 +1,4 @@
-package net.hydonclient.capes;
+package net.hydonclient.cosmetics.capes;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import java.awt.Graphics;

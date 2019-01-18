@@ -16,7 +16,7 @@ public class HydonRenderPlayer {
         this.renderPlayer = renderPlayer;
     }
 
-    public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, RenderManager renderManager, CallbackInfo ci) {
+    public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci, RenderManager renderManager) {
         EventBus.call(new RenderPlayerEvent(entity, renderManager, x, y, z, partialTicks));
     }
 
