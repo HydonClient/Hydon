@@ -129,7 +129,6 @@ public class Autotip extends Mod {
 
     @Override
     public void load() {
-        System.out.println("Loading autotip");
         ErrorReport.setAutotip(this);
         RequestHandler.setAutotip(this);
         UniversalUtil.setAutotip(this);
@@ -179,9 +178,6 @@ public class Autotip extends Mod {
         } catch (IllegalStateException e) {
             messageUtil.send("Autotip is disabled because it couldn't connect to the API.");
             ErrorReport.reportException(e);
-        }
-        for (Command command : HydonManagers.INSTANCE.getCommandManager().getCommands()) {
-            System.out.println(command.getName());
         }
     }
 
