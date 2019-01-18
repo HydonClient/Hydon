@@ -7,7 +7,7 @@ import net.hydonclient.util.ChatUtils;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
-public class Perspective extends HydonKeyBind {
+public class PerspectiveKeyBind extends HydonKeyBind {
 
     public static boolean toggled = false;
 
@@ -16,14 +16,14 @@ public class Perspective extends HydonKeyBind {
 
     // TODO: Add a toggle between if you want the keybind to activate by being held, or by being pressed once
 
-    public Perspective() {
-        super("Perspective", Keyboard.KEY_V);
+    public PerspectiveKeyBind() {
+        super("PerspectiveKeyBind", Keyboard.KEY_V);
         EventBus.register(this);
     }
 
     public static void enable() {
         if (!toggled) {
-            ChatUtils.addChatMessage("360 Degree Perspective " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + ".");
+            ChatUtils.addChatMessage("360 Degree PerspectiveKeyBind " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + ".");
             Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
             toggled = true;
 
@@ -36,7 +36,7 @@ public class Perspective extends HydonKeyBind {
 
     public static void disable() {
         if (toggled) {
-            ChatUtils.addChatMessage("360 Degree Perspective " + ChatColor.RED + "disabled" + ChatColor.GRAY + ".");
+            ChatUtils.addChatMessage("360 Degree PerspectiveKeyBind " + ChatColor.RED + "disabled" + ChatColor.GRAY + ".");
             Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
             toggled = false;
         } else {

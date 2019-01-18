@@ -35,7 +35,7 @@
 
     "entity.MixinAbstractClientPlayer",
     "entity.MixinEntity",
-    "entity.MixinEntityLivingBase",N
+    "entity.MixinEntityLivingBase",
     "entity.MixinEntityPlayerSP",
 
     "gui.MixinFontRenderer",

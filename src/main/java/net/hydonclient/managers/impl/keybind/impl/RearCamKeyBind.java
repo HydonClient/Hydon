@@ -4,10 +4,10 @@ import net.hydonclient.managers.impl.keybind.HydonKeyBind;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
-public class RearCam extends HydonKeyBind {
+public class RearCamKeyBind extends HydonKeyBind {
 
-    public RearCam() {
-        super("RearCam", Keyboard.KEY_C);
+    public RearCamKeyBind() {
+        super("RearCamKeyBind", Keyboard.KEY_C);
     }
 
     @Override

@@ -2,7 +2,7 @@ package net.hydonclient.mixinsimp.client.renderer;
 
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.render.DrawBlockHighlightEvent;
-import net.hydonclient.managers.impl.keybind.impl.Perspective;
+import net.hydonclient.managers.impl.keybind.impl.PerspectiveKeyBind;
 import net.hydonclient.mixins.client.renderer.IMixinEntityRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -66,9 +66,9 @@ public class HydonEntityRenderer {
                 float yaw = entity.rotationYaw;
                 float pitch = entity.rotationPitch;
 
-                if (Perspective.toggled) {
-                    yaw = Perspective.modifiedYaw;
-                    pitch = Perspective.modifiedPitch;
+                if (PerspectiveKeyBind.toggled) {
+                    yaw = PerspectiveKeyBind.modifiedYaw;
+                    pitch = PerspectiveKeyBind.modifiedPitch;
                 }
 
                 if (mc.gameSettings.thirdPersonView == 2) {
@@ -104,14 +104,14 @@ public class HydonEntityRenderer {
                     GlStateManager.rotate(180.0f, 0.0f, 1.0f, 0.0f);
                 }
 
-                if (Perspective.toggled) {
-                    GlStateManager.rotate(Perspective.modifiedPitch - pitch, 1.0f, 0.0f, 0.0f);
-                    GlStateManager.rotate(Perspective.modifiedYaw - yaw, 0.0f, 1.0f, 0.0f);
+                if (PerspectiveKeyBind.toggled) {
+                    GlStateManager.rotate(PerspectiveKeyBind.modifiedPitch - pitch, 1.0f, 0.0f, 0.0f);
+                    GlStateManager.rotate(PerspectiveKeyBind.modifiedYaw - yaw, 0.0f, 1.0f, 0.0f);
 
                     GlStateManager.translate(0.0f, 0.0f, (float) (-playerFOV));
 
-                    GlStateManager.rotate(yaw - Perspective.modifiedYaw, 0.0f, 1.0f, 0.0f);
-                    GlStateManager.rotate(pitch - Perspective.modifiedPitch, 1.0f, 0.0f, 0.0f);
+                    GlStateManager.rotate(yaw - PerspectiveKeyBind.modifiedYaw, 0.0f, 1.0f, 0.0f);
+                    GlStateManager.rotate(pitch - PerspectiveKeyBind.modifiedPitch, 1.0f, 0.0f, 0.0f);
                 } else {
                     GlStateManager.rotate(entity.rotationPitch - pitch, 1.0f, 0.0f, 0.0f);
                     GlStateManager.rotate(entity.rotationYaw - yaw, 0.0f, 1.0f, 0.0f);
@@ -136,10 +136,10 @@ public class HydonEntityRenderer {
                 yaw = entityanimal.prevRotationYawHead + (entityanimal.rotationYawHead - entityanimal.prevRotationYawHead) * partialTicks + 180.0f;
             }
 
-            if (Perspective.toggled) {
+            if (PerspectiveKeyBind.toggled) {
                 GlStateManager.rotate(roll, 0.0f, 0.0f, 1.0f);
-                GlStateManager.rotate(Perspective.modifiedPitch, 1.0f, 0.0f, 0.0f);
-                GlStateManager.rotate(Perspective.modifiedYaw + 180.0f, 0.0f, 1.0f, 0.0f);
+                GlStateManager.rotate(PerspectiveKeyBind.modifiedPitch, 1.0f, 0.0f, 0.0f);
+                GlStateManager.rotate(PerspectiveKeyBind.modifiedYaw + 180.0f, 0.0f, 1.0f, 0.0f);
 
             } else {
                 GlStateManager.rotate(roll, 0.0f, 0.0f, 1.0f);
@@ -160,11 +160,11 @@ public class HydonEntityRenderer {
     public void updateCameraAndRender() {
         boolean bool = Display.isActive();
         if (Minecraft.getMinecraft().inGameHasFocus && bool) {
-            if (Perspective.toggled && Minecraft.getMinecraft().gameSettings.thirdPersonView != 1) {
-                Perspective.disable();
+            if (PerspectiveKeyBind.toggled && Minecraft.getMinecraft().gameSettings.thirdPersonView != 1) {
+                PerspectiveKeyBind.disable();
             }
 
-            if (Perspective.toggled) {
+            if (PerspectiveKeyBind.toggled) {
                 Minecraft.getMinecraft().mouseHelper.mouseXYChange();
 
                 float f = Minecraft.getMinecraft().gameSettings.mouseSensitivity * 0.6F + 0.2F;
@@ -173,14 +173,14 @@ public class HydonEntityRenderer {
                 float f2 = (float) Minecraft.getMinecraft().mouseHelper.deltaX * f1;
                 float f3 = (float) Minecraft.getMinecraft().mouseHelper.deltaY * f1;
 
-                Perspective.modifiedYaw += f2 / 8.0F;
-                Perspective.modifiedPitch += f3 / 8.0F;
+                PerspectiveKeyBind.modifiedYaw += f2 / 8.0F;
+                PerspectiveKeyBind.modifiedPitch += f3 / 8.0F;
 
-                if (Math.abs(Perspective.modifiedPitch) > 90.0F) {
-                    if (Perspective.modifiedPitch > 0.0F) {
-                        Perspective.modifiedPitch = 90.0F;
+                if (Math.abs(PerspectiveKeyBind.modifiedPitch) > 90.0F) {
+                    if (PerspectiveKeyBind.modifiedPitch > 0.0F) {
+                        PerspectiveKeyBind.modifiedPitch = 90.0F;
                     } else {
-                        Perspective.modifiedPitch = -90.0F;
+                        PerspectiveKeyBind.modifiedPitch = -90.0F;
                     }
                 }
             }

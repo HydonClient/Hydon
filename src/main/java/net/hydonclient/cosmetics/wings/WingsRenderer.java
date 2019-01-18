@@ -2,6 +2,7 @@ package net.hydonclient.cosmetics.wings;
 
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderPlayerEvent;
+import net.hydonclient.staff.StaffManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -43,16 +44,18 @@ public class WingsRenderer extends ModelBase {
     @EventListener
     public void onPlayerRender(RenderPlayerEvent event) {
         EntityPlayer player = event.getEntity();
-        if (player.equals(mc.thePlayer) && !player.isInvisible()) {
+        if (StaffManager.STAFF_WINGS.contains(player.getUniqueID()) && !player.isInvisible()) {
             renderWings(player, event.getPartialTicks(), event.getX(), event.getY(), event.getZ());
         }
     }
 
     // TODO: adjustable scale & complete rework of this for a fully custom one
 
-    private void renderWings(EntityPlayer player, float partialTicks, double x, double y, double z) {
+    private void renderWings(EntityPlayer player, float partialTicks, double x, double y,
+        double z) {
         double scale = 80.0 / 100.0;
-        double rotate = this.interpolate(player.prevRenderYawOffset, player.renderYawOffset, partialTicks);
+        double rotate = this
+            .interpolate(player.prevRenderYawOffset, player.renderYawOffset, partialTicks);
         GL11.glPushMatrix();
         GL11.glScaled(-scale, -scale, scale);
         GL11.glRotated(180.0 + rotate, 0.0, 1.0, 0.0);
@@ -74,10 +77,11 @@ public class WingsRenderer extends ModelBase {
             if (j == 0) {
                 GL11.glCullFace(1028);
             }
+            GL11.glDisable(2884);
         }
         GL11.glCullFace(1029);
         GL11.glDisable(2884);
-        GL11.glColor3f(255.0f, 255.0f, 255.0f);
+//        GL11.glColor3f(255.0f, 255.0f, 255.0f);
         GL11.glPopMatrix();
     }
 

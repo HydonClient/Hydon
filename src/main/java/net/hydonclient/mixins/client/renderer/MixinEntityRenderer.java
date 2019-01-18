@@ -31,7 +31,7 @@ public class MixinEntityRenderer {
 
     /**
      * @author Canalex
-     * @reason 360 Perspective Degree mod
+     * @reason 360 PerspectiveKeyBind Degree mod
      */
     @Overwrite
     private void orientCamera(float partialTicks) {

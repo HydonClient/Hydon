@@ -9,12 +9,12 @@ import net.hydonclient.util.ChatUtils;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
-public class ToggleSprint extends HydonKeyBind {
+public class ToggleSprintKeyBind extends HydonKeyBind {
 
     private static boolean toggleSprint = false;
 
-    public ToggleSprint() {
-        super("ToggleSprint", Keyboard.KEY_R);
+    public ToggleSprintKeyBind() {
+        super("ToggleSprintKeyBind", Keyboard.KEY_R);
         EventBus.register(this);
     }
 
