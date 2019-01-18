@@ -10,7 +10,7 @@ public class SettingsToggle extends SettingsElement {
 
     private String label;
     private boolean toggled;
-    private int progress;
+    private int progress = 50;
     private Result resultCallback;
 
     public SettingsToggle(String label, boolean toggled, Result resultCallback) {

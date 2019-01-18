@@ -20,7 +20,7 @@ public class KeystrokesRenderer {
 
     @EventListener
     public void onRenderTick(RenderTickEvent event) {
-        if (Minecraft.getMinecraft().inGameHasFocus) {
+        if (Minecraft.getMinecraft().inGameHasFocus && !Minecraft.getMinecraft().gameSettings.showDebugInfo) {
             keystrokesMod.getKeyHolder().draw(0, 0, -1, -1);
         }
     }
