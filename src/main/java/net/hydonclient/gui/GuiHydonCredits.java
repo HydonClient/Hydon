@@ -3,7 +3,10 @@ package net.hydonclient.gui;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,8 +39,11 @@ public class GuiHydonCredits extends GuiScreen {
     public void initGui() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
-        this.buttonList.add(new GuiButton(1, scaledResolution.getScaledWidth() / 4,
-            scaledResolution.getScaledHeight() - 30, scaledResolution.getScaledWidth() / 2, 20,
+        this.buttonList.add(new GuiButton(2, 30,
+            scaledResolution.getScaledHeight() - 30, scaledResolution.getScaledWidth() / 2 - 42, 20,
+            "Open Repository"));
+        this.buttonList.add(new GuiButton(1, scaledResolution.getScaledWidth() / 2 + 2,
+            scaledResolution.getScaledHeight() - 30, scaledResolution.getScaledWidth() / 2 - 42, 20,
             "Back"));
 
         Multithreading.run(() -> {
@@ -146,6 +152,15 @@ public class GuiHydonCredits extends GuiScreen {
     protected void actionPerformed(GuiButton button) {
         if (button.id == 1) {
             Minecraft.getMinecraft().displayGuiScreen(null);
+        } else if (button.id == 2) {
+            if (!Desktop.isDesktopSupported()) {
+                return;
+            }
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/HydonClient/Hydon"));
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
