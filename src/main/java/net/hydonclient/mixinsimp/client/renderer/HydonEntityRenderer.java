@@ -1,5 +1,7 @@
 package net.hydonclient.mixinsimp.client.renderer;
 
+import net.hydonclient.event.EventBus;
+import net.hydonclient.event.events.render.DrawBlockHighlightEvent;
 import net.hydonclient.managers.impl.keybind.impl.Perspective;
 import net.hydonclient.mixins.client.renderer.IMixinEntityRenderer;
 import net.minecraft.block.Block;
@@ -11,6 +13,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -21,6 +24,8 @@ import org.lwjgl.opengl.Display;
 public class HydonEntityRenderer {
 
     private EntityRenderer entityRenderer;
+
+    static boolean isCancelBox;
 
     public HydonEntityRenderer(EntityRenderer entityRenderer) {
         this.entityRenderer = entityRenderer;
@@ -179,6 +184,16 @@ public class HydonEntityRenderer {
                     }
                 }
             }
+        }
+    }
+
+    public void renderWorldPass(float partialTicks, Minecraft mc) {
+        DrawBlockHighlightEvent event = new DrawBlockHighlightEvent(((EntityPlayer) mc.getRenderViewEntity()), mc.objectMouseOver, partialTicks);
+
+        EventBus.call(event);
+
+        if (event.isCancelled()) {
+            isCancelBox = true;
         }
     }
 }
