@@ -9,6 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import net.hydonclient.event.EventBus;
+import net.hydonclient.event.events.network.chat.ServerChatEvent;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.managers.impl.command.Command;
 import net.hydonclient.util.ChatColor;
@@ -21,7 +24,9 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.command.CommandBase;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketThreadUtil;
+import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
+import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
 import net.minecraft.util.ChatComponentText;
@@ -42,6 +47,9 @@ public abstract class MixinNetHandlerPlayClient {
     @Shadow
     @Final
     private NetworkManager netManager;
+
+    @Shadow
+    public abstract NetworkManager getNetworkManager();
 
     /**
      * @author Koding
@@ -131,5 +139,33 @@ public abstract class MixinNetHandlerPlayClient {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Byte values for the event
+     * 0 : Standard text message, displayed in chat
+     * 1: 'System' message, displayed as standard text in chat
+     * 2: 'Status' message, displayed as an action bar above the hotbar
+     *
+     * @author boomboompower
+     * @reason Detect incoming chat packets being sent from the server
+     */
+    @Overwrite
+    public void handleChat(S02PacketChat packetIn) {
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, (INetHandlerPlayClient) getNetworkManager().getNetHandler(), this.gameController);
+
+        ServerChatEvent event = new ServerChatEvent(packetIn.getType(), packetIn.getChatComponent());
+
+        EventBus.call(event);
+
+        if (event.isCancelled() || event.getChat().getFormattedText().isEmpty()) {
+            return;
+        }
+
+        if (packetIn.getType() == 2) {
+            gameController.ingameGUI.setRecordPlaying(event.getChat(), false);
+        } else {
+            gameController.ingameGUI.getChatGUI().printChatMessage(event.getChat());
+        }
     }
 }

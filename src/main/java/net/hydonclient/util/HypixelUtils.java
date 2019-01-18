@@ -56,7 +56,7 @@ public class HypixelUtils {
     }
 
     public static boolean isConnectedToHypixel() {
-        return Minecraft.getMinecraft().getCurrentServerData() != null && Minecraft.getMinecraft().getCurrentServerData().serverIP.toLowerCase().contains(".hypixel.net");
+        return Minecraft.getMinecraft().getCurrentServerData() != null && Minecraft.getMinecraft().getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net");
     }
 
 }

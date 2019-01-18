@@ -84,12 +84,12 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "startGame", at = @At(value = "NEW", target = "net/minecraft/client/resources/model/ModelManager", shift = At.Shift.AFTER))
     private void loadingStartGame4(CallbackInfo callbackInfo) {
-        SplashScreen.advanceProgress("Loading model manager...");
+        SplashScreen.advanceProgress("Loading model core...");
     }
 
     @Inject(method = "startGame", at = @At(value = "NEW", target = "net/minecraft/client/renderer/entity/RenderManager", shift = At.Shift.AFTER))
     private void loadingStartGame5(CallbackInfo callbackInfo) {
-        SplashScreen.advanceProgress("Loading render manager...");
+        SplashScreen.advanceProgress("Loading render core...");
     }
 
     @Inject(method = "startGame", at = @At(value = "NEW", target = "net/minecraft/client/renderer/EntityRenderer", shift = At.Shift.AFTER))

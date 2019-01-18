@@ -19,11 +19,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(NetworkManager.class)
 public class MixinNetworkManager {
 
-    @Inject(method = "channelRead0", at = @At("HEAD"))
+    @Inject(method = "channelRead0", at = @At("HEAD"), cancellable = true)
     private void channelRead0(ChannelHandlerContext channelHandlerContext, Packet packet, CallbackInfo callbackInfo) {
         if (packet instanceof S02PacketChat) {
             String message = ((S02PacketChat) packet).getChatComponent().getUnformattedText();
-            EventBus.call(new ChatMessageReceivedEvent(message));
+
+            ChatMessageReceivedEvent chatMessageReceivedEvent = new ChatMessageReceivedEvent(message, ((S02PacketChat) packet).getChatComponent());
+            EventBus.call(chatMessageReceivedEvent);
+            if (chatMessageReceivedEvent.isCancelled()) {
+                callbackInfo.cancel();
+            }
 
             if (HypixelUtils.hasGameEnded(message)) {
                 EventBus.call(new GameEndEvent());

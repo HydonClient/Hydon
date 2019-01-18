@@ -9,10 +9,14 @@
     "client.MixinClientBrandRetriever",
 
     "client.gui.IMixinGuiNewChat",
+    "client.gui.MixinGuiDisconnected",
     "client.gui.MixinGuiGameOver",
     "client.gui.MixinGuiIngame",
     "client.gui.MixinGuiIngameMenu",
     "client.gui.MixinGuiNewChat",
+    "client.gui.MixinGuiPlayerTabOverlay",
+
+    "client.multiplayer.MixinGuiConnecting",
 
     "client.renderer.IMixinEntityRenderer",
     "client.renderer.IMixinGuiContainer",
@@ -48,6 +52,8 @@
     "network.MixinNetworkManager",
 
     "network.play.server.MixinS2EPacketCloseWindow",
+
+    "scoreboard.MixinScoreboard",
 
     "util.MixinScreenshotHelper",
 
