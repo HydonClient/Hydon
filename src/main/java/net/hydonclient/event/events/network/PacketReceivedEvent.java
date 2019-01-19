@@ -1,9 +1,9 @@
 package net.hydonclient.event.events.network;
 
-import net.hydonclient.event.Event;
+import net.hydonclient.event.CancellableEvent;
 import net.minecraft.network.Packet;
 
-public class PacketReceivedEvent extends Event {
+public class PacketReceivedEvent extends CancellableEvent {
 
     private Packet packet;
 

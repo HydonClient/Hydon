@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.NumberFormat;
+import net.hydonclient.Hydon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -34,7 +35,7 @@ public class GuiUtils {
             .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer))
             || overrideWorldCheck) {
             Minecraft.getMinecraft().getTextureManager()
-                .bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
+                .bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, sr.getScaledWidth(),
                 sr.getScaledHeight(),
                 sr.getScaledWidth(), sr.getScaledHeight());
@@ -75,7 +76,7 @@ public class GuiUtils {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
 
-        mc.getTextureManager().bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
+        mc.getTextureManager().bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
         Gui.drawModalRectWithCustomSizedTexture(0, startY, 0, startY, sr.getScaledWidth(), endY,
             sr.getScaledWidth(), sr.getScaledHeight());
     }

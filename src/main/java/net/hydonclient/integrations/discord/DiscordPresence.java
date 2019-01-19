@@ -54,7 +54,7 @@ public class DiscordPresence {
                 new DiscordRichPresence.Builder("Main menu")
                     .setDetails(details)
                     .setStartTimestamps(startTime)
-                    .setBigImage("hydon", "Hydon")
+                    .setBigImage("assets/hydon", "Hydon")
                     .build()
             );
         } else if (e.getGuiScreen() instanceof GuiMultiplayer) {
@@ -62,7 +62,7 @@ public class DiscordPresence {
                 new DiscordRichPresence.Builder("Browsing servers")
                     .setDetails(details)
                     .setStartTimestamps(startTime)
-                    .setBigImage("hydon", "Hydon")
+                    .setBigImage("assets/hydon", "Hydon")
                     .build()
             );
         } else if (e.getGuiScreen() instanceof GuiChat) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import me.aycy.blockoverlay.utils.BlockOverlayMode;
 import net.hydonclient.Hydon;
+import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.gui.main.element.impl.SettingsButton;
 import net.hydonclient.gui.main.element.impl.SettingsSlider;
 import net.hydonclient.gui.main.element.impl.SettingsToggle;
@@ -12,11 +13,13 @@ import net.hydonclient.gui.main.tab.SettingGroup;
 import net.hydonclient.gui.main.tab.SettingsDropdownElement;
 import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
+import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -30,8 +33,12 @@ public class HydonMainGui extends GuiScreen {
     private SettingController controller = new SettingController();
 
     private SettingGroup keyStrokesElements;
+    private SettingGroup coordsElements = new SettingGroup("Coordinates");
+    private SettingGroup fpsElements = new SettingGroup("FPS");
 
-    public static SettingsButton outlineModeButton;
+    public static SettingsButton outlineModeButton, currentBackgroundButton;
+
+    private HydonHUD hud = HydonManagers.INSTANCE.getModManager().getHydonHUD();
 
     /**
      * All the Hydon Settings will go here Categories are placed as the code is Never make any
@@ -45,8 +52,13 @@ public class HydonMainGui extends GuiScreen {
 
         SettingGroup toggleSprint = new SettingGroup("Togglesprint");
 
-        misc.addElements(new SettingsToggle("Fast Chat", Hydon.SETTINGS.fastChat,
-                result -> Hydon.SETTINGS.fastChat = result));
+        currentBackgroundButton = new SettingsButton(
+                "Current Background: " + (Hydon.SETTINGS.getCurrentBackground().ordinal() + 1),
+                EnumBackground::cycleBackground);
+        misc.addElements(currentBackgroundButton);
+        misc.addElements(
+                new SettingsToggle("Fast Chat", Hydon.SETTINGS.fastChat,
+                        result -> Hydon.SETTINGS.fastChat = result));
         misc.addElements(
                 new SettingsToggle("GUI Blur", Hydon.SETTINGS.blurEnabled,
                         result -> Hydon.SETTINGS.blurEnabled = result));
@@ -81,7 +93,7 @@ public class HydonMainGui extends GuiScreen {
         SettingGroup animationElements = new SettingGroup("HUD Items");
 
         animationElements.addElements(
-                new SettingsToggle("1.7 Debug", Hydon.SETTINGS.oldDebugMenu,
+                new SettingsToggle(I18n.format("oldanimations.setting.olddebug"), Hydon.SETTINGS.oldDebugMenu,
                         result -> Hydon.SETTINGS.oldDebugMenu = result));
 
         oldAnimationsElement.addElements(animationElements);
@@ -176,6 +188,21 @@ public class HydonMainGui extends GuiScreen {
                         Hydon.SETTINGS.projPotential,
                         result -> Hydon.SETTINGS.protPotential = result));
 
+        /*
+         * Other Elements
+         * Anything that shows up outside of the inventory and isn't on the Hotbar should show up here
+         */
+        SettingGroup miscElements = new SettingGroup("Other Elements");
+        miscElements.addElements(
+                new SettingsToggle("Third Person Crosshair", Hydon.SETTINGS.thirdPersonCrosshair,
+                        result -> Hydon.SETTINGS.thirdPersonCrosshair = result));
+        miscElements.addElements(
+                new SettingsToggle("Compact Chat", Hydon.SETTINGS.compactChat,
+                        result -> Hydon.SETTINGS.compactChat = result));
+
+        veElement.addElements(hotBarElements, inventoryElements, miscElements);
+        controller.addElements(veElement);
+
         SettingsDropdownElement modElement = new SettingsDropdownElement("Mods");
 
         /*
@@ -200,7 +227,8 @@ public class HydonMainGui extends GuiScreen {
          * BlockOverlay Mod
          */
         SettingGroup blockOverlayElements = new SettingGroup("Block Overlay");
-        outlineModeButton = new SettingsButton("Outline Mode: " + Hydon.SETTINGS.getBoMode().getName(),
+        outlineModeButton = new SettingsButton(
+                "Outline Mode: " + Hydon.SETTINGS.getBoMode().getName(),
                 BlockOverlayMode::cycleNextMode);
         blockOverlayElements.addElements(
                 outlineModeButton
@@ -237,7 +265,7 @@ public class HydonMainGui extends GuiScreen {
                         value -> Hydon.SETTINGS.boAlpha = (int) value));
         blockOverlayElements.addElements(
                 new SettingsSlider("Chroma Speed: ", "",
-                        1, 5, Hydon.SETTINGS.boChromaSpeed, false,
+                        0, 5, Hydon.SETTINGS.boChromaSpeed, false,
                         value -> Hydon.SETTINGS.boChromaSpeed = (int) value));
 
 
@@ -255,23 +283,52 @@ public class HydonMainGui extends GuiScreen {
                 new SettingsToggle("Outline", Hydon.SETTINGS.keyStrokesOutline,
                         result -> Hydon.SETTINGS.keyStrokesOutline = result));
 
-        modElement.addElements(autoGG, blockOverlayElements, keyStrokesElements);
+
+        /*
+         * Perspective Mod
+         */
+        SettingGroup perspectiveElements = new SettingGroup("Perspective");
+        perspectiveElements.addElements(
+                new SettingsToggle("Held Keybind", Hydon.SETTINGS.heldPerspective,
+                        result -> Hydon.SETTINGS.heldPerspective = result));
+
+        modElement.addElements(autoGG, blockOverlayElements, keyStrokesElements, perspectiveElements);
         controller.addElements(modElement);
 
         /*
-         * Other Elements
-         * Anything that shows up outside of the inventory and isn't on the Hotbar should show up here
+         * Hydon HUD
+         * TODO: make it less retarded
          */
-        SettingGroup miscElements = new SettingGroup("Other Elements");
-        miscElements.addElements(
-                new SettingsToggle("Third Person Crosshair", Hydon.SETTINGS.thirdPersonCrosshair,
-                        result -> Hydon.SETTINGS.thirdPersonCrosshair = result));
-        miscElements.addElements(
-                new SettingsToggle("Compact Chat", Hydon.SETTINGS.compactChat,
-                        result -> Hydon.SETTINGS.compactChat = result));
+        SettingsDropdownElement hudItems = new SettingsDropdownElement("Hydon HUD");
 
-        veElement.addElements(hotBarElements, inventoryElements, miscElements);
-        controller.addElements(veElement);
+        coordsElements.addElements(
+                new SettingsToggle("Coordinates", hud.getConfig().COORDINATES,
+                        result -> hud.getConfig().COORDINATES = result));
+        coordsElements.addElements(
+                new SettingsToggle("Shadow", hud.getConfig().SHADOW,
+                        result -> hud.getConfig().SHADOW = result));
+        coordsElements.addElements(
+                new SettingsSlider("Precision: ", "",
+                        1, 5, hud.getConfig().PRECISION, false,
+                        value -> hud.getConfig().PRECISION = (int) value));
+        coordsElements.addElements(
+                new SettingsSlider("Brackets: ", "",
+                        0, 1, hud.getConfig().SURROUNDING_CHARS, false,
+                        value -> hud.getConfig().SURROUNDING_CHARS = (int) value));
+
+        fpsElements.addElements(
+                new SettingsToggle("FPS", hud.getConfig().FPS,
+                        result -> hud.getConfig().FPS = result));
+        fpsElements.addElements(
+                new SettingsToggle("Shadow", hud.getConfig().SHADOW,
+                        result -> hud.getConfig().SHADOW = result));
+        fpsElements.addElements(
+                new SettingsSlider("Brackets: ", "",
+                        0, 1, hud.getConfig().SURROUNDING_CHARS, false,
+                        value -> hud.getConfig().SURROUNDING_CHARS = (int) value));
+
+        hudItems.addElements(coordsElements, fpsElements);
+        controller.addElements(hudItems);
     }
 
     @Override
@@ -297,6 +354,16 @@ public class HydonMainGui extends GuiScreen {
                 HydonManagers.INSTANCE.getModManager().getKeystrokesMod().getKeyHolder()
                         .draw(0, 0, scaledResolution.getScaledWidth() / 2 - 40,
                                 scaledResolution.getScaledHeight() / 2 - 40);
+            }
+
+            if (currentGroup == coordsElements) {
+                if (hud.getConfig().SHADOW) {
+                    mc.fontRendererObj.drawStringWithShadow("Preview", scaledResolution.getScaledWidth() / 2 - 40,
+                            scaledResolution.getScaledHeight() / 2 - 40, 16777215);
+                } else {
+                    mc.fontRendererObj.drawString("Preview", scaledResolution.getScaledWidth() / 2 - 40,
+                            scaledResolution.getScaledHeight() / 2 - 40, 16777215);
+                }
             }
         }
 

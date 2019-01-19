@@ -6,8 +6,6 @@ import net.minecraft.util.ResourceLocation;
 
 public enum Images {
 
-    ALT_BG_1(new ResourceLocation("textures/alt-bg-1.png"), 1920, 1080),
-    ALT_BG_2(new ResourceLocation("textures/alt-bg-2.png"), 2560, 1600),
     LOGO(new ResourceLocation("textures/logo.png"), 1920, 1080);
 
     private ResourceLocation location;

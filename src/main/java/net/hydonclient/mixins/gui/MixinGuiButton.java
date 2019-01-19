@@ -1,9 +1,9 @@
 package net.hydonclient.mixins.gui;
 
 import java.awt.Color;
+
 import net.hydonclient.ttf.HydonFonts;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -50,9 +50,9 @@ public abstract class MixinGuiButton extends Gui {
         if (this.visible) {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered =
-                mouseX >= this.xPosition && mouseY >= this.yPosition
-                    && mouseX < this.xPosition + this.width
-                    && mouseY < this.yPosition + this.height;
+                    mouseX >= this.xPosition && mouseY >= this.yPosition
+                            && mouseX < this.xPosition + this.width
+                            && mouseY < this.yPosition + this.height;
 
             double hoverInc = (System.currentTimeMillis() - prevDeltaTime) / 2f;
             hoverFade = hovered ? Math.min(100, hoverFade + hoverInc) : Math.max(0, hoverFade - hoverInc);
@@ -65,12 +65,11 @@ public abstract class MixinGuiButton extends Gui {
             int textColor = enabled ? 255 : 180;
 
             HydonFonts.PRODUCT_SANS_REGULAR
-                .drawCenteredString(this.displayString, this.xPosition + this.width / 2f,
-                    this.yPosition + (this.height - 8) / 2f,
-                    new Color(textColor, textColor, textColor, 255).getRGB());
+                    .drawCenteredString(this.displayString, this.xPosition + this.width / 2f,
+                            this.yPosition + (this.height - 8) / 2f,
+                            new Color(textColor, textColor, textColor, 255).getRGB());
 
             prevDeltaTime = System.currentTimeMillis();
         }
     }
-
 }

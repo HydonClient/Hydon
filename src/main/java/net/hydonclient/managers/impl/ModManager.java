@@ -5,7 +5,9 @@ import me.semx11.autotip.Autotip;
 import net.hydonclient.Hydon;
 import net.hydonclient.mods.autogg.AutoGGMod;
 import net.hydonclient.mods.blur.BlurMod;
+import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.hydonclient.mods.oldanimations.OldAnimations;
+import net.hydonclient.mods.timechanger.TimeChangerMod;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
 import net.hydonclient.mods.wings.Wings;
 import pw.cinque.keystrokesmod.KeystrokesMod;
@@ -20,6 +22,8 @@ public class ModManager {
     private OldAnimations oldAnimations;
     private KeystrokesMod keystrokesMod;
     private BlockOverlay blockOverlay;
+    private TimeChangerMod timeChangerMod;
+    private HydonHUD hydonHUD;
 
     public void init() {
         Hydon.LOGGER.info("Loading mods");
@@ -47,6 +51,12 @@ public class ModManager {
 
         blockOverlay = new BlockOverlay();
         blockOverlay.load();
+
+        timeChangerMod = new TimeChangerMod();
+        timeChangerMod.load();
+
+        hydonHUD = new HydonHUD();
+        hydonHUD.load();
     }
 
     public AutoGGMod getAutoGGMod() {
@@ -79,5 +89,13 @@ public class ModManager {
 
     public BlockOverlay getBlockOverlay() {
         return blockOverlay;
+    }
+
+    public TimeChangerMod getTimeChangerMod() {
+        return timeChangerMod;
+    }
+
+    public HydonHUD getHydonHUD() {
+        return hydonHUD;
     }
 }

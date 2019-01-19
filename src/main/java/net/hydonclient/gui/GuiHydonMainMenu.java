@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.hydonclient.Hydon;
+import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.gui.main.HydonMainGui;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
@@ -81,6 +82,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
     private GuiScreen field_183503_M;
 
     private static int yMod = 0;
+    private static boolean doneOnce;
 
     public GuiHydonMainMenu() {
         this.openGLWarning2 = field_96138_a;
@@ -305,9 +307,9 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
             if (result) {
                 try {
                     Class<?> oclass = Class.forName("java.awt.Desktop");
-                    Object object = oclass.getMethod("getDesktop", new Class[0])
+                    Object object = oclass.getMethod("getDesktop")
                         .invoke(null);
-                    oclass.getMethod("browse", new Class[]{URI.class})
+                    oclass.getMethod("browse", URI.class)
                         .invoke(object, new URI(this.openGLWarningLink));
                 } catch (Throwable throwable) {
                     logger.error("Couldn\'t open link", throwable);
@@ -329,7 +331,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         MinecraftFontRenderer fontRenderer = HydonFonts.PRODUCT_SANS_REGULAR;
 
-        this.mc.getTextureManager().bindTexture(Images.ALT_BG_1.getLocation());
+        this.mc.getTextureManager().bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0,
             ResolutionUtil.getCurrent().getScaledWidth(),
             ResolutionUtil.getCurrent().getScaledHeight(),
@@ -372,9 +374,12 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 
-        if (yMod < 100) {
-            GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f - 1.0f / 60f * yMod);
-            this.mc.getTextureManager().bindTexture(Images.ALT_BG_1.getLocation());
+        if (yMod == 50) {
+            doneOnce = true;
+        }
+        if (yMod < 100 && !doneOnce) {
+            GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f - (1.0f / 100 * yMod * 2));
+            this.mc.getTextureManager().bindTexture(EnumBackground.BACKGROUND_1.getLocation());
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0,
                 ResolutionUtil.getCurrent().getScaledWidth(),
                 ResolutionUtil.getCurrent().getScaledHeight(),
@@ -389,8 +394,6 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
             time++;
         }
 
-//        GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT, GL11.GL_NICEST);
-//        GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
         GlStateManager.enableAlpha();
         this.mc.getTextureManager().bindTexture(Images.LOGO.getLocation());
         double logoScaleFactor = ResolutionUtil.getImageScaleFactor();

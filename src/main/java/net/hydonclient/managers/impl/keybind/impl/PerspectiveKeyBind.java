@@ -1,5 +1,6 @@
 package net.hydonclient.managers.impl.keybind.impl;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.managers.impl.keybind.HydonKeyBind;
 import net.hydonclient.util.ChatColor;
@@ -21,9 +22,9 @@ public class PerspectiveKeyBind extends HydonKeyBind {
         EventBus.register(this);
     }
 
-    public static void enable() {
+    private static void enable() {
         if (!toggled) {
-            ChatUtils.addChatMessage("360 Degree PerspectiveKeyBind " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + ".");
+            ChatUtils.addChatMessage("360 Degree Perspective " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + ".");
             Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
             toggled = true;
 
@@ -36,7 +37,7 @@ public class PerspectiveKeyBind extends HydonKeyBind {
 
     public static void disable() {
         if (toggled) {
-            ChatUtils.addChatMessage("360 Degree PerspectiveKeyBind " + ChatColor.RED + "disabled" + ChatColor.GRAY + ".");
+            ChatUtils.addChatMessage("360 Degree Perspective " + ChatColor.RED + "disabled" + ChatColor.GRAY + ".");
             Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
             toggled = false;
         } else {
@@ -48,11 +49,15 @@ public class PerspectiveKeyBind extends HydonKeyBind {
     public void onPress() {
         if (!toggled) {
             enable();
+        } else if (!Hydon.SETTINGS.heldPerspective) {
+            disable();
         }
     }
 
     @Override
     public void onRelease() {
-        disable();
+        if (Hydon.SETTINGS.heldPerspective) {
+            disable();
+        }
     }
 }

@@ -17,6 +17,7 @@
     "client.gui.MixinGuiOverlayDebug",
     "client.gui.MixinGuiPlayerTabOverlay",
     "client.gui.MixinGuiScreen",
+    "client.gui.MixinGuiUtilRenderComponents",
 
     "client.multiplayer.MixinGuiConnecting",
 
