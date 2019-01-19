@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.hydonclient.event.EventBus;
 import net.hydonclient.integrations.compactchat.CompactChat;
+import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.staff.StaffManager;
 import net.hydonclient.util.Multithreading;
@@ -36,6 +37,10 @@ public class Hydon {
         LOGGER.info("Loading staff");
         Multithreading.run(StaffManager::fetchStaff);
 
+        LOGGER.info("Loading Discord RPC");
+        EventBus.register(DiscordPresence.getInstance());
+        DiscordPresence.getInstance().load();
+
         LOGGER.info("Done");
     }
 
@@ -47,6 +52,9 @@ public class Hydon {
 
         LOGGER.info("Stopping managers");
         HydonManagers.INSTANCE.close();
+
+        LOGGER.info("Stopping Discord RPC");
+        DiscordPresence.getInstance().shutdown();
 
         LOGGER.info("Done");
     }

@@ -6,6 +6,7 @@ import net.hydonclient.gui.main.element.impl.SettingsToggle;
 import net.hydonclient.gui.main.tab.SettingController;
 import net.hydonclient.gui.main.tab.SettingGroup;
 import net.hydonclient.gui.main.tab.SettingsDropdownElement;
+import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
@@ -31,6 +32,15 @@ public class HydonMainGui extends GuiScreen {
         SettingsDropdownElement generalElement = new SettingsDropdownElement("General");
 
         SettingGroup misc = new SettingGroup("Miscellaneous");
+
+        misc.addElements(new SettingsToggle("Discord Rich Presence", Hydon.SETTINGS.discordRichPresence, result -> {
+            Hydon.SETTINGS.discordRichPresence = result;
+            if (result) {
+                DiscordPresence.getInstance().load();
+            } else {
+                DiscordPresence.getInstance().shutdown();
+            }
+        }));
 
         SettingGroup toggleSprint = new SettingGroup("Togglesprint");
 

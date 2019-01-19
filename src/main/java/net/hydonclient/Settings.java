@@ -78,4 +78,7 @@ public class Settings {
 
     @SaveVal
     public boolean disableBossBar = false;
+
+    @SaveVal
+    public boolean discordRichPresence = true;
 }
