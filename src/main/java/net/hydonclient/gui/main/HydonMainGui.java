@@ -33,14 +33,16 @@ public class HydonMainGui extends GuiScreen {
 
         SettingGroup misc = new SettingGroup("Miscellaneous");
 
-        misc.addElements(new SettingsToggle("Discord Rich Presence", Hydon.SETTINGS.discordRichPresence, result -> {
-            Hydon.SETTINGS.discordRichPresence = result;
-            if (result) {
-                DiscordPresence.getInstance().load();
-            } else {
-                DiscordPresence.getInstance().shutdown();
-            }
-        }));
+        misc.addElements(
+            new SettingsToggle("Discord Rich Presence", Hydon.SETTINGS.discordRichPresence,
+                result -> {
+                    Hydon.SETTINGS.discordRichPresence = result;
+                    if (result) {
+                        DiscordPresence.getInstance().load();
+                    } else {
+                        DiscordPresence.getInstance().shutdown();
+                    }
+                }));
 
         SettingGroup toggleSprint = new SettingGroup("Togglesprint");
 

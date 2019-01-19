@@ -25,6 +25,7 @@
     "client.renderer.IMixinInventoryEffectRenderer",
     "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinInventoryEffectRenderer",
+    "client.renderer.MixinOpenGlHelper",
 
     "client.renderer.entity.MixinRendererLivingEntity",
     "client.renderer.entity.MixinRenderPlayer",
