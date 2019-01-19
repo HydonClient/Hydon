@@ -1,6 +1,7 @@
 package net.hydonclient.gui.main;
 
 import java.io.IOException;
+
 import me.aycy.blockoverlay.utils.BlockOverlayMode;
 import net.hydonclient.Hydon;
 import net.hydonclient.gui.enums.EnumBackground;
@@ -221,11 +222,14 @@ public class HydonMainGui extends GuiScreen {
             "Outline Mode: " + Hydon.SETTINGS.getBoMode().getName(),
             BlockOverlayMode::cycleNextMode);
         blockOverlayElements.addElements(
-            outlineModeButton
+                outlineModeButton
         );
         blockOverlayElements.addElements(
-            new SettingsToggle("Persistent", Hydon.SETTINGS.boPersistent,
-                result -> Hydon.SETTINGS.boPersistent = result));
+                new SettingsToggle("Persistent", Hydon.SETTINGS.boPersistent,
+                        result -> Hydon.SETTINGS.boPersistent = result));
+        blockOverlayElements.addElements(
+                new SettingsToggle("Ignore Depth", Hydon.SETTINGS.boIgnoreDepth,
+                        result -> Hydon.SETTINGS.boIgnoreDepth = result));
         blockOverlayElements.addElements(
             new SettingsToggle("Chroma", Hydon.SETTINGS.boChroma,
                 result -> Hydon.SETTINGS.boChroma = result));
@@ -255,7 +259,22 @@ public class HydonMainGui extends GuiScreen {
                 0, 5, Hydon.SETTINGS.boChromaSpeed, false,
                 value -> Hydon.SETTINGS.boChromaSpeed = (int) value));
 
-        modElement.addElements(keyStrokesElements, blockOverlayElements);
+
+        /*
+         * Keystrokes Mod
+         */
+        keyStrokesElements = new SettingGroup("Key Strokes");
+        keyStrokesElements.addElements(
+                new SettingsToggle("Enabled", Hydon.SETTINGS.enableKeystrokes,
+                        result -> Hydon.SETTINGS.enableKeystrokes = result));
+        keyStrokesElements.addElements(
+                new SettingsToggle("Chroma", Hydon.SETTINGS.keyStrokesChroma,
+                        result -> Hydon.SETTINGS.keyStrokesChroma = result));
+        keyStrokesElements.addElements(
+                new SettingsToggle("Outline", Hydon.SETTINGS.keyStrokesOutline,
+                        result -> Hydon.SETTINGS.keyStrokesOutline = result));
+
+        modElement.addElements(autoGG, blockOverlayElements, keyStrokesElements);
         controller.addElements(modElement);
 
         /*
