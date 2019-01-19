@@ -1,5 +1,7 @@
 package net.hydonclient.mixins.client.renderer;
 
+import net.hydonclient.event.EventBus;
+import net.hydonclient.event.events.render.RenderWorldLastEvent;
 import net.hydonclient.mixinsimp.client.renderer.HydonEntityRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -7,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -44,7 +47,12 @@ public class MixinEntityRenderer {
     }
 
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=outline"), cancellable = true)
-    public void renderWorldPass(int pass, float part, long nano, CallbackInfo ci) {
+    private void renderWorldPass(int pass, float part, long nano, CallbackInfo ci) {
         impl.renderWorldPass(part, mc);
+    }
+
+    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=hand", shift = Shift.BEFORE))
+    private void renderWorldPass2(int pass, float part, long nano, CallbackInfo ci) {
+        EventBus.call(new RenderWorldLastEvent());
     }
 }
