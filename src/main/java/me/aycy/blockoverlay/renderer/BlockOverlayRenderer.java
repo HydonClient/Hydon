@@ -1,33 +1,37 @@
 package me.aycy.blockoverlay.renderer;
 
 import java.awt.Color;
-
+import me.aycy.blockoverlay.BlockOverlay;
+import me.aycy.blockoverlay.utils.BlockOverlayMode;
+import me.aycy.blockoverlay.utils.ColorUtil;
+import me.aycy.blockoverlay.utils.RenderUtil;
 import net.hydonclient.Hydon;
+import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.DrawBlockHighlightEvent;
 import net.hydonclient.event.events.render.RenderWorldLastEvent;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderGlobal;
-import me.aycy.blockoverlay.utils.RenderUtil;
-import org.lwjgl.opengl.GL11;
-import net.minecraft.client.renderer.GlStateManager;
-import me.aycy.blockoverlay.utils.ColorUtil;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.MovingObjectPosition;
-import net.hydonclient.event.EventListener;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.WorldSettings;
-import me.aycy.blockoverlay.utils.BlockOverlayMode;
-import me.aycy.blockoverlay.BlockOverlay;
+import org.lwjgl.opengl.GL11;
 
 public class BlockOverlayRenderer {
+
     @EventListener
     public void onDrawBlockHighlight(DrawBlockHighlightEvent event) {
-        if (BlockOverlay.mc.thePlayer != null && BlockOverlay.mc.theWorld != null && Hydon.SETTINGS.boMode != BlockOverlayMode.DEFAULT && (BlockOverlay.mc.playerController.getCurrentGameType() == WorldSettings.GameType.SURVIVAL || Minecraft.getMinecraft().playerController.getCurrentGameType() == WorldSettings.GameType.CREATIVE)) {
+        if (BlockOverlay.mc.thePlayer != null && BlockOverlay.mc.theWorld != null
+            && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.DEFAULT && (
+            BlockOverlay.mc.playerController.getCurrentGameType() == WorldSettings.GameType.SURVIVAL
+                || Minecraft.getMinecraft().playerController.getCurrentGameType()
+                == WorldSettings.GameType.CREATIVE)) {
             event.setCancelled(true);
 
-            if (Hydon.SETTINGS.boMode != BlockOverlayMode.NONE) {
+            if (Hydon.SETTINGS.getBoMode() != BlockOverlayMode.NONE) {
                 this.drawBlockOverlay(event.getPartialTicks());
             }
         }
@@ -36,10 +40,12 @@ public class BlockOverlayRenderer {
     @EventListener
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (BlockOverlay.mc.thePlayer != null && BlockOverlay.mc.theWorld != null
-                && Hydon.SETTINGS.boPersistent && Hydon.SETTINGS.boMode != BlockOverlayMode.NONE
-                && Hydon.SETTINGS.boMode != BlockOverlayMode.DEFAULT
-                && (BlockOverlay.mc.playerController.getCurrentGameType() == WorldSettings.GameType.ADVENTURE ||
-                BlockOverlay.mc.playerController.getCurrentGameType() == WorldSettings.GameType.SPECTATOR)) {
+            && Hydon.SETTINGS.boPersistent && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.NONE
+            && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.DEFAULT
+            && (BlockOverlay.mc.playerController.getCurrentGameType()
+            == WorldSettings.GameType.ADVENTURE ||
+            BlockOverlay.mc.playerController.getCurrentGameType()
+                == WorldSettings.GameType.SPECTATOR)) {
             this.drawBlockOverlay(event.partialTicks);
         }
     }
@@ -47,14 +53,16 @@ public class BlockOverlayRenderer {
     private void drawBlockOverlay(float partialTicks) {
         MovingObjectPosition mouseOver = BlockOverlay.mc.objectMouseOver;
 
-        if (mouseOver == null || mouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
+        if (mouseOver == null
+            || mouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
             return;
         }
 
         Block block = BlockOverlay.mc.theWorld.getBlockState(mouseOver.getBlockPos()).getBlock();
 
         if (block == null || block == Blocks.air || block == Blocks.barrier ||
-                block == Blocks.water || block == Blocks.flowing_water || block == Blocks.lava || block == Blocks.flowing_lava) {
+            block == Blocks.water || block == Blocks.flowing_water || block == Blocks.lava
+            || block == Blocks.flowing_lava) {
             return;
         }
 
@@ -67,9 +75,12 @@ public class BlockOverlayRenderer {
         double expandAmount = 0.0020000000949949026;
         boolean isOutlined = Hydon.SETTINGS.boLineWidth > 0.0f;
 
-        AxisAlignedBB boundingBox = block.getSelectedBoundingBox(BlockOverlay.mc.theWorld, mouseOver.getBlockPos()).offset(-x, -y, -z).expand(expandAmount, expandAmount, expandAmount);
+        AxisAlignedBB boundingBox = block
+            .getSelectedBoundingBox(BlockOverlay.mc.theWorld, mouseOver.getBlockPos())
+            .offset(-x, -y, -z).expand(expandAmount, expandAmount, expandAmount);
 
-        Color color = Hydon.SETTINGS.isBoChroma() ? ColorUtil.getChroma() : ColorUtil.getConfigColor();
+        Color color =
+            Hydon.SETTINGS.isBoChroma() ? ColorUtil.getChroma() : ColorUtil.getConfigColor();
 
         GlStateManager.pushMatrix();
         GlStateManager.disableAlpha();
@@ -86,7 +97,7 @@ public class BlockOverlayRenderer {
             GL11.glLineWidth((float) Hydon.SETTINGS.boLineWidth);
         }
 
-        switch (Hydon.SETTINGS.boMode) {
+        switch (Hydon.SETTINGS.getBoMode()) {
             case SIDE_OUTLINE: {
                 RenderUtil.drawSide(boundingBox, mouseOver.sideHit, color, false, isOutlined);
                 break;

@@ -1,6 +1,7 @@
 package me.aycy.blockoverlay.utils;
 
 import net.hydonclient.Hydon;
+import net.hydonclient.gui.main.HydonMainGui;
 
 public enum BlockOverlayMode {
 
@@ -17,10 +18,10 @@ public enum BlockOverlayMode {
         this.name = name;
     }
 
-    public static BlockOverlayMode getNextMode() {
-        BlockOverlayMode currentMode = Hydon.SETTINGS.boMode;
-
-        return values()[(currentMode.ordinal() + 1) % values().length];
+    public static void cycleNextMode() {
+        BlockOverlayMode currentMode = Hydon.SETTINGS.getBoMode();
+        Hydon.SETTINGS.boMode = (currentMode.ordinal() + 1) % values().length;
+        HydonMainGui.outlineModeButton.setLabel("Outline Mode: " + Hydon.SETTINGS.getBoMode().getName());
     }
 
     public String getName() {

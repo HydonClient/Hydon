@@ -90,7 +90,7 @@ public class Settings {
     public boolean disableScoreboard = false;
 
     @SaveVal
-    public BlockOverlayMode boMode = BlockOverlayMode.DEFAULT;
+    public int boMode = BlockOverlayMode.DEFAULT.ordinal();
 
     @SaveVal
     public boolean boPersistent = false;
@@ -121,5 +121,9 @@ public class Settings {
 
     public boolean isBoChroma() {
         return boChroma;
+    }
+
+    public BlockOverlayMode getBoMode() {
+        return BlockOverlayMode.values()[boMode];
     }
 }
