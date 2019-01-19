@@ -14,6 +14,7 @@ import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.network.chat.ServerChatEvent;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.managers.impl.command.Command;
+import net.hydonclient.mods.timechanger.config.TimeChangerConfig;
 import net.hydonclient.util.ChatColor;
 import net.hydonclient.util.ReflectionUtils;
 import net.minecraft.client.Minecraft;
@@ -27,6 +28,7 @@ import net.minecraft.network.PacketThreadUtil;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.S02PacketChat;
+import net.minecraft.network.play.server.S03PacketTimeUpdate;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
 import net.minecraft.util.ChatComponentText;
@@ -168,4 +170,23 @@ public abstract class MixinNetHandlerPlayClient {
             gameController.ingameGUI.getChatGUI().printChatMessage(event.getChat());
         }
     }
+
+    /**
+     * @author Koding
+     */
+    @Overwrite
+    public void handleTimeUpdate(S03PacketTimeUpdate packetIn) {
+        long worldTime = packetIn.getWorldTime();
+        TimeChangerConfig config = HydonManagers.INSTANCE.getModManager().getTimeChangerMod().getConfig();
+
+        if (config.enabled) {
+            worldTime = config.time;
+        }
+
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, Minecraft.getMinecraft().thePlayer.sendQueue, this.gameController);
+        this.gameController.theWorld.setTotalWorldTime(packetIn.getTotalWorldTime());
+        this.gameController.theWorld.setWorldTime(worldTime);
+    }
+
+
 }
