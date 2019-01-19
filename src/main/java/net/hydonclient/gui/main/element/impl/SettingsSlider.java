@@ -4,6 +4,7 @@ import java.awt.Color;
 import net.hydonclient.gui.main.element.SettingsElement;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
+import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.gui.Gui;
 
 public class SettingsSlider extends SettingsElement {
@@ -51,6 +52,10 @@ public class SettingsSlider extends SettingsElement {
 
     @Override
     public void mouseDragged(int mouseX, int mouseY) {
+        if (!GuiUtils.isHovered(this.x, this.y, this.width, this.height)) {
+            return;
+        }
+
         if (this.dragging) {
             this.sliderValue = (mouseX - (this.x + 4)) / (float) (this.width - 8);
             updateSlider();
@@ -81,6 +86,10 @@ public class SettingsSlider extends SettingsElement {
 
     @Override
     public void mouseClicked(int button, int mouseX, int mouseY) {
+        if (!GuiUtils.isHovered(this.x, this.y, this.width, this.height)) {
+            return;
+        }
+
         this.sliderValue = (float) (mouseX - (this.x + 4)) / (float) (this.width - 8);
         updateSlider();
         this.dragging = true;

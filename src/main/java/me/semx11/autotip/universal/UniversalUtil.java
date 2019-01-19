@@ -42,7 +42,7 @@ public class UniversalUtil {
         return getHoverText(component);
     }
 
-    public static String getHoverText(IChatComponent component) {
+    private static String getHoverText(IChatComponent component) {
         if (component == null) {
             return null;
         }
@@ -90,27 +90,6 @@ public class UniversalUtil {
         IChatComponent chatComponent = newComponent(text);
 
         return chatComponent.setChatStyle(chatStyle);
-    }
-
-    private static boolean isLegacy() {
-        switch (autotip.getMcVersion()) {
-            case V1_8:
-            case V1_8_8:
-            case V1_8_9:
-                return true;
-            case V1_9:
-            case V1_9_4:
-            case V1_10:
-            case V1_10_2:
-            case V1_11:
-            case V1_11_2:
-            case V1_12:
-            case V1_12_1:
-            case V1_12_2:
-                return false;
-            default:
-                return false;
-        }
     }
 
 }
