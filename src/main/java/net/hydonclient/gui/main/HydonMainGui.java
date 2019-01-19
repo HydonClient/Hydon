@@ -1,7 +1,10 @@
 package net.hydonclient.gui.main;
 
 import java.io.IOException;
+import me.aycy.blockoverlay.utils.BlockOverlayMode;
 import net.hydonclient.Hydon;
+import net.hydonclient.gui.main.element.impl.SettingsButton;
+import net.hydonclient.gui.main.element.impl.SettingsSlider;
 import net.hydonclient.gui.main.element.impl.SettingsToggle;
 import net.hydonclient.gui.main.tab.SettingController;
 import net.hydonclient.gui.main.tab.SettingGroup;
@@ -27,6 +30,12 @@ public class HydonMainGui extends GuiScreen {
 
     private SettingGroup keyStrokesElements;
 
+    public static SettingsButton outlineModeButton;
+
+    /**
+     * All the Hydon Settings will go here Categories are placed as the code is Never make any
+     * category higher than General
+     */
     private HydonMainGui() {
         /* the top boye because he is most important */
         SettingsDropdownElement generalElement = new SettingsDropdownElement("General");
@@ -138,6 +147,9 @@ public class HydonMainGui extends GuiScreen {
         generalImprovements.addElements(
             new SettingsToggle("Disable Boss Bar", Hydon.SETTINGS.disableBossBar,
                 result -> Hydon.SETTINGS.disableBossBar = result));
+        generalImprovements.addElements(
+            new SettingsToggle("Disable Scoreboard", Hydon.SETTINGS.disableScoreboard,
+                result -> Hydon.SETTINGS.disableScoreboard = result));
 
         improvements.addElements(framerateImprovements, generalImprovements);
         controller.addElements(improvements);
@@ -178,6 +190,10 @@ public class HydonMainGui extends GuiScreen {
         SettingsDropdownElement modElement = new SettingsDropdownElement("Mods");
 
         /*
+         * Start the Mods section here
+         */
+
+        /*
          * Keystrokes Mod
          */
         keyStrokesElements = new SettingGroup("Key Strokes");
@@ -191,7 +207,49 @@ public class HydonMainGui extends GuiScreen {
             new SettingsToggle("Outline", Hydon.SETTINGS.keyStrokesOutline,
                 result -> Hydon.SETTINGS.keyStrokesOutline = result));
 
-        modElement.addElements(keyStrokesElements);
+
+        /*
+         * BlockOverlay Mod
+         */
+        SettingGroup blockOverlayElements = new SettingGroup("Block Overlay");
+        outlineModeButton = new SettingsButton("Outline Mode: " + Hydon.SETTINGS.getBoMode().getName(),
+            BlockOverlayMode::cycleNextMode);
+        blockOverlayElements.addElements(
+            outlineModeButton
+        );
+        blockOverlayElements.addElements(
+            new SettingsToggle("Persistent", Hydon.SETTINGS.boPersistent,
+                result -> Hydon.SETTINGS.boPersistent = result));
+        blockOverlayElements.addElements(
+            new SettingsToggle("Chroma", Hydon.SETTINGS.boChroma,
+                result -> Hydon.SETTINGS.boChroma = result));
+
+        blockOverlayElements.addElements(
+            new SettingsSlider("Line Width: ", "",
+                0, 5, Hydon.SETTINGS.boLineWidth, false,
+                value -> Hydon.SETTINGS.boLineWidth = value));
+        blockOverlayElements.addElements(
+            new SettingsSlider("Red: ", "",
+                0, 255, Hydon.SETTINGS.boRed, false,
+                value -> Hydon.SETTINGS.boRed = (int) value));
+        blockOverlayElements.addElements(
+            new SettingsSlider("Green: ", "",
+                0, 255, Hydon.SETTINGS.boBlue, false,
+                value -> Hydon.SETTINGS.boBlue = (int) value));
+        blockOverlayElements.addElements(
+            new SettingsSlider("Blue: ", "",
+                0, 255, Hydon.SETTINGS.boBlue, false,
+                value -> Hydon.SETTINGS.boBlue = (int) value));
+        blockOverlayElements.addElements(
+            new SettingsSlider("Alpha: ", "",
+                0, 255, Hydon.SETTINGS.boAlpha, false,
+                value -> Hydon.SETTINGS.boAlpha = (int) value));
+        blockOverlayElements.addElements(
+            new SettingsSlider("Chroma Speed: ", "",
+                0, 5, Hydon.SETTINGS.boChromaSpeed, false,
+                value -> Hydon.SETTINGS.boChromaSpeed = (int) value));
+
+        modElement.addElements(keyStrokesElements, blockOverlayElements);
         controller.addElements(modElement);
 
         /*
@@ -207,7 +265,6 @@ public class HydonMainGui extends GuiScreen {
                 result -> Hydon.SETTINGS.compactChat = result));
 
         veElement.addElements(hotBarElements, inventoryElements, miscElements);
-
         controller.addElements(veElement);
     }
 

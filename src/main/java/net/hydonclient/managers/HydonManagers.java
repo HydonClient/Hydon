@@ -2,7 +2,6 @@ package net.hydonclient.managers;
 
 import java.io.File;
 import net.hydonclient.Hydon;
-import net.hydonclient.Settings;
 import net.hydonclient.managers.impl.CommandManager;
 import net.hydonclient.managers.impl.KeybindHandler;
 import net.hydonclient.managers.impl.ModManager;

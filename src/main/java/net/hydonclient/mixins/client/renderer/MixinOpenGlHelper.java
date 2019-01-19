@@ -13,6 +13,7 @@ public class MixinOpenGlHelper {
 
     /**
      * @author Koding
+     * @reason Fast Render Issues
      */
     @Overwrite
     public static boolean isFramebufferEnabled() {

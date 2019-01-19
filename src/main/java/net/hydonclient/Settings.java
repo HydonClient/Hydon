@@ -1,5 +1,6 @@
 package net.hydonclient;
 
+import me.aycy.blockoverlay.utils.BlockOverlayMode;
 import net.hydonclient.managers.impl.config.SaveVal;
 
 public class Settings {
@@ -84,4 +85,45 @@ public class Settings {
 
     @SaveVal
     public boolean replaceDefaultFont = false;
+
+    @SaveVal
+    public boolean disableScoreboard = false;
+
+    @SaveVal
+    public int boMode = BlockOverlayMode.DEFAULT.ordinal();
+
+    @SaveVal
+    public boolean boPersistent = false;
+
+    @SaveVal
+    public boolean boChroma = false;
+
+    @SaveVal
+    public boolean boIgnoreDepth = false;
+
+    @SaveVal
+    public double boLineWidth = 2.0;
+
+    @SaveVal
+    public int boRed = 255;
+
+    @SaveVal
+    public int boGreen = 255;
+
+    @SaveVal
+    public int boBlue = 255;
+
+    @SaveVal
+    public int boAlpha = 255;
+
+    @SaveVal
+    public int boChromaSpeed = 5;
+
+    public boolean isBoChroma() {
+        return boChroma;
+    }
+
+    public BlockOverlayMode getBoMode() {
+        return BlockOverlayMode.values()[boMode];
+    }
 }

@@ -53,6 +53,6 @@ public class MixinEntityRenderer {
 
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=hand", shift = Shift.BEFORE))
     private void renderWorldPass2(int pass, float part, long nano, CallbackInfo ci) {
-        EventBus.call(new RenderWorldLastEvent());
+        EventBus.call(new RenderWorldLastEvent(mc.renderGlobal, part));
     }
 }
