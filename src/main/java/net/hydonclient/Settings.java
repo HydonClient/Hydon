@@ -81,4 +81,7 @@ public class Settings {
 
     @SaveVal
     public boolean discordRichPresence = true;
+
+    @SaveVal
+    public boolean replaceDefaultFont = false;
 }

@@ -33,6 +33,13 @@ public class HydonMainGui extends GuiScreen {
 
         SettingGroup misc = new SettingGroup("Miscellaneous");
 
+        SettingGroup toggleSprint = new SettingGroup("Togglesprint");
+
+        misc.addElements(new SettingsToggle("Fast Chat", Hydon.SETTINGS.fastChat,
+            result -> Hydon.SETTINGS.fastChat = result));
+        misc.addElements(
+            new SettingsToggle("GUI Blur", Hydon.SETTINGS.blurEnabled,
+                result -> Hydon.SETTINGS.blurEnabled = result));
         misc.addElements(
             new SettingsToggle("Discord Rich Presence", Hydon.SETTINGS.discordRichPresence,
                 result -> {
@@ -43,14 +50,9 @@ public class HydonMainGui extends GuiScreen {
                         DiscordPresence.getInstance().shutdown();
                     }
                 }));
-
-        SettingGroup toggleSprint = new SettingGroup("Togglesprint");
-
-        misc.addElements(new SettingsToggle("Fast Chat", Hydon.SETTINGS.fastChat,
-            result -> Hydon.SETTINGS.fastChat = result));
         misc.addElements(
-            new SettingsToggle("GUI Blur", Hydon.SETTINGS.blurEnabled,
-                result -> Hydon.SETTINGS.blurEnabled = result));
+            new SettingsToggle("Replace Font (WIP)", Hydon.SETTINGS.replaceDefaultFont,
+                result -> Hydon.SETTINGS.replaceDefaultFont = result));
 
         toggleSprint.addElements(
             new SettingsToggle("Togglesprint", Hydon.SETTINGS.togglesprintEnabled,

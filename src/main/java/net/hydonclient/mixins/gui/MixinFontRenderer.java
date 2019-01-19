@@ -1,6 +1,7 @@
 package net.hydonclient.mixins.gui;
 
 import com.google.common.base.CharMatcher;
+import net.hydonclient.Hydon;
 import net.hydonclient.ttf.HydonFonts;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -54,7 +55,7 @@ public abstract class MixinFontRenderer {
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
 
-            boolean shouldOverride = true;
+            boolean shouldOverride = Hydon.SETTINGS.replaceDefaultFont;
             shouldOverride = shouldOverride && CharMatcher.ASCII.matchesAllOf(text.replace('§', ' '));
 
             if (shouldOverride) {
