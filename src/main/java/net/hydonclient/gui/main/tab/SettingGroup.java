@@ -60,6 +60,14 @@ public class SettingGroup {
             .forEach(settingsElement -> settingsElement.mouseClicked(mouseButton, mouseX, mouseY));
     }
 
+    public void mouseReleased(int mouseX, int mouseY, int state) {
+        settingsElements.forEach(settingsElement -> settingsElement.mouseReleased(mouseX, mouseY));
+    }
+
+    public void mouseDragged(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
+        settingsElements.forEach(settingsElement -> settingsElement.mouseDragged(mouseX, mouseY));
+    }
+
     public void addElements(SettingsElement... elements) {
         settingsElements.addAll(Arrays.asList(elements));
     }

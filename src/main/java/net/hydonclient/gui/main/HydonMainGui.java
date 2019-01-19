@@ -31,6 +31,7 @@ public class HydonMainGui extends GuiScreen {
         SettingsDropdownElement generalElement = new SettingsDropdownElement("General");
 
         SettingGroup misc = new SettingGroup("Miscellaneous");
+
         SettingGroup toggleSprint = new SettingGroup("Togglesprint");
 
         misc.addElements(new SettingsToggle("Fast Chat", Hydon.SETTINGS.fastChat,
@@ -229,6 +230,23 @@ public class HydonMainGui extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         controller.mouseClicked(mouseButton, mouseX, mouseY);
         super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        if (currentGroup != null) {
+            currentGroup.mouseReleased(mouseX, mouseY, state);
+        }
+        super.mouseReleased(mouseX, mouseY, state);
+    }
+
+    @Override
+    protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton,
+        long timeSinceLastClick) {
+        if (currentGroup != null) {
+            currentGroup.mouseDragged(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+        }
+        super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
     }
 
     @Override

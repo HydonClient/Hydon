@@ -14,6 +14,14 @@ public abstract class SettingsElement {
 
     public abstract void mouseClicked(int button, int mouseX, int mouseY);
 
+    public void mouseDragged(int mouseX, int mouseY) {
+
+    }
+
+    public void mouseReleased(int mouseX, int mouseY) {
+
+    }
+
     public int getHeight() {
         return height;
     }
