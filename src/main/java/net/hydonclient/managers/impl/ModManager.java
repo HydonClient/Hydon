@@ -1,5 +1,6 @@
 package net.hydonclient.managers.impl;
 
+import me.aycy.blockoverlay.BlockOverlay;
 import me.semx11.autotip.Autotip;
 import net.hydonclient.Hydon;
 import net.hydonclient.mods.autogg.AutoGGMod;
@@ -18,6 +19,7 @@ public class ModManager {
     private VanillaEnhancements vanillaEnhancements;
     private OldAnimations oldAnimations;
     private KeystrokesMod keystrokesMod;
+    private BlockOverlay blockOverlay;
 
     public void init() {
         Hydon.LOGGER.info("Loading mods");
@@ -42,6 +44,9 @@ public class ModManager {
 
         keystrokesMod = new KeystrokesMod();
         keystrokesMod.load();
+
+        blockOverlay = new BlockOverlay();
+        blockOverlay.load();
     }
 
     public AutoGGMod getAutoGGMod() {
@@ -70,5 +75,9 @@ public class ModManager {
 
     public KeystrokesMod getKeystrokesMod() {
         return keystrokesMod;
+    }
+
+    public BlockOverlay getBlockOverlay() {
+        return blockOverlay;
     }
 }

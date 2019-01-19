@@ -50,4 +50,8 @@ public class SettingsButton extends SettingsElement {
     public void setOverrideHovered(boolean overrideHovered) {
         this.overrideHovered = overrideHovered;
     }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }
