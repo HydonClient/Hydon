@@ -38,7 +38,12 @@ public class MixinNetworkManager {
                 EventBus.call(new GameWinEvent());
             }
         }
-        EventBus.call(new PacketReceivedEvent(packet));
+
+        PacketReceivedEvent packetReceivedEvent = new PacketReceivedEvent(packet);
+        EventBus.call(packetReceivedEvent);
+        if (packetReceivedEvent.isCancelled()) {
+            callbackInfo.cancel();
+        }
     }
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
