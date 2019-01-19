@@ -237,7 +237,7 @@ public class HydonMainGui extends GuiScreen {
                         value -> Hydon.SETTINGS.boAlpha = (int) value));
         blockOverlayElements.addElements(
                 new SettingsSlider("Chroma Speed: ", "",
-                        0, 5, Hydon.SETTINGS.boChromaSpeed, false,
+                        1, 5, Hydon.SETTINGS.boChromaSpeed, false,
                         value -> Hydon.SETTINGS.boChromaSpeed = (int) value));
 
 
