@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.boss.BossStatus;
+import net.minecraft.scoreboard.ScoreObjective;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -65,6 +66,12 @@ public class HydonGuiIngame {
                     (float) (i1 - 10), 16777215);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             Minecraft.getMinecraft().getTextureManager().bindTexture(GuiIngame.icons);
+        }
+    }
+
+    public void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes, CallbackInfo ci) {
+        if (Hydon.SETTINGS.disableScoreboard) {
+            ci.cancel();
         }
     }
 }
