@@ -1,11 +1,8 @@
 package net.hydonclient;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.IOException;
+import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.ttf.HydonFonts;
-import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.Images;
 import net.hydonclient.util.ResolutionUtil;
 import net.minecraft.client.Minecraft;
@@ -19,8 +16,7 @@ import org.lwjgl.opengl.GL11;
 
 public class SplashScreen {
 
-    private static ResourceLocation backgroundLocation = new ResourceLocation(
-        "textures/alt-bg-1.png");
+    private static ResourceLocation backgroundLocation = EnumBackground.BACKGROUND_1.getLocation();
 
     public static class Progress {
 
@@ -55,6 +51,7 @@ public class SplashScreen {
 
     /**
      * Renders the SplashScreen
+     *
      * @param tm the texture manager for rendering with
      */
     public static void render(TextureManager tm) {
@@ -122,13 +119,16 @@ public class SplashScreen {
             sr.getScaledHeight(),
             new Color(201, 57, 53, 200).getRGB());
 
-        HydonFonts.PRODUCT_SANS_REGULAR.drawCenteredStringWithShadow(progress.getText(), sr.getScaledWidth() / 2f, sr.getScaledHeight() - (barHeight + HydonFonts.PRODUCT_SANS_REGULAR.getHeight()) / 2f, 0xffffff);
+        HydonFonts.PRODUCT_SANS_REGULAR
+            .drawCenteredStringWithShadow(progress.getText(), sr.getScaledWidth() / 2f,
+                sr.getScaledHeight()
+                    - (barHeight + HydonFonts.PRODUCT_SANS_REGULAR.getHeight()) / 2f, 0xffffff);
 
         framebuffer.unbindFramebuffer();
-            framebuffer.framebufferRender(sr.getScaledWidth() * i, sr.getScaledHeight() * i);
-            GlStateManager.enableAlpha();
-            GlStateManager.alphaFunc(516, 0.1F);
-            GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        framebuffer.framebufferRender(sr.getScaledWidth() * i, sr.getScaledHeight() * i);
+        GlStateManager.enableAlpha();
+        GlStateManager.alphaFunc(516, 0.1F);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
         Minecraft.getMinecraft().updateDisplay();
     }

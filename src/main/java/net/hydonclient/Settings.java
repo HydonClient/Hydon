@@ -1,6 +1,7 @@
 package net.hydonclient;
 
 import me.aycy.blockoverlay.utils.BlockOverlayMode;
+import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.managers.impl.config.SaveVal;
 
 public class Settings {
@@ -119,11 +120,18 @@ public class Settings {
     @SaveVal
     public int boChromaSpeed = 5;
 
+    @SaveVal
+    public int currentBackground = 0;
+
     public boolean isBoChroma() {
         return boChroma;
     }
 
     public BlockOverlayMode getBoMode() {
         return BlockOverlayMode.values()[boMode];
+    }
+
+    public EnumBackground getCurrentBackground() {
+        return EnumBackground.values()[currentBackground];
     }
 }

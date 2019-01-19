@@ -1,5 +1,6 @@
 package net.hydonclient.mixins.gui;
 
+import net.hydonclient.Hydon;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -122,7 +123,7 @@ public abstract class MixinGuiSlot {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glDisable(GL11.GL_ALPHA_TEST);
 
-            this.mc.getTextureManager().bindTexture(new ResourceLocation("textures/alt-bg-1.png"));
+            this.mc.getTextureManager().bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
             Gui.drawModalRectWithCustomSizedTexture(this.left, this.top, this.left, this.top,
                 this.right - this.left, this.bottom - this.top, sr.getScaledWidth(),
                 sr.getScaledHeight());

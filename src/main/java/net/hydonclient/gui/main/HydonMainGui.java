@@ -3,6 +3,7 @@ package net.hydonclient.gui.main;
 import java.io.IOException;
 import me.aycy.blockoverlay.utils.BlockOverlayMode;
 import net.hydonclient.Hydon;
+import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.gui.main.element.impl.SettingsButton;
 import net.hydonclient.gui.main.element.impl.SettingsSlider;
 import net.hydonclient.gui.main.element.impl.SettingsToggle;
@@ -30,7 +31,7 @@ public class HydonMainGui extends GuiScreen {
 
     private SettingGroup keyStrokesElements;
 
-    public static SettingsButton outlineModeButton;
+    public static SettingsButton outlineModeButton, currentBackgroundButton;
 
     /**
      * All the Hydon Settings will go here Categories are placed as the code is Never make any
@@ -44,6 +45,10 @@ public class HydonMainGui extends GuiScreen {
 
         SettingGroup toggleSprint = new SettingGroup("Togglesprint");
 
+        currentBackgroundButton = new SettingsButton(
+            "Current Background: " + (Hydon.SETTINGS.getCurrentBackground().ordinal() + 1),
+            EnumBackground::cycleBackground);
+        misc.addElements(currentBackgroundButton);
         misc.addElements(new SettingsToggle("Fast Chat", Hydon.SETTINGS.fastChat,
             result -> Hydon.SETTINGS.fastChat = result));
         misc.addElements(
@@ -212,7 +217,8 @@ public class HydonMainGui extends GuiScreen {
          * BlockOverlay Mod
          */
         SettingGroup blockOverlayElements = new SettingGroup("Block Overlay");
-        outlineModeButton = new SettingsButton("Outline Mode: " + Hydon.SETTINGS.getBoMode().getName(),
+        outlineModeButton = new SettingsButton(
+            "Outline Mode: " + Hydon.SETTINGS.getBoMode().getName(),
             BlockOverlayMode::cycleNextMode);
         blockOverlayElements.addElements(
             outlineModeButton
