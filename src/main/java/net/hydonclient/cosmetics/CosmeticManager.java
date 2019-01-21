@@ -5,13 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import net.hydonclient.cosmetics.capes.Capes;
+import net.hydonclient.event.EventListener;
+import net.hydonclient.event.events.game.WorldChangedEvent;
 
 public class CosmeticManager {
 
-    private static Map<UUID, CosmeticData> cosmeticDataMap = new HashMap<>();
-    static List<UUID> processingList = new ArrayList<>();
+    private Map<UUID, CosmeticData> cosmeticDataMap = new HashMap<>();
+    List<UUID> processingList = new ArrayList<>();
 
-    public static CosmeticData getData(UUID uuid) {
+    private static final CosmeticManager instance = new CosmeticManager();
+
+    public CosmeticData getData(UUID uuid) {
         if (cosmeticDataMap.containsKey(uuid)) {
             return cosmeticDataMap.get(uuid);
         } else {
@@ -22,8 +27,18 @@ public class CosmeticManager {
         }
     }
 
-    public static boolean isProcessing(UUID uuid) {
+    @EventListener
+    public void onWorldChange(WorldChangedEvent e) {
+        cosmeticDataMap.clear();
+        processingList.clear();
+        Capes.getCapes().clear();
+    }
+
+    public boolean isProcessing(UUID uuid) {
         return processingList.contains(uuid);
     }
 
+    public static CosmeticManager getInstance() {
+        return instance;
+    }
 }

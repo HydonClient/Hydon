@@ -30,17 +30,13 @@ public class CosmeticData {
             }
         }
 
-        System.out.println(result.toString());
-
         JsonObject result2 = HydonApi.getCape(uuid);
         this.hasCape = result2.has("hasCape") && result2.get("hasCape").getAsBoolean();
         this.capeUrl =
             result2.has("capeUrl") && !result2.get("capeUrl").isJsonNull() ? result2.get("capeUrl")
                 .getAsString() : "";
 
-        System.out.println(result2.toString());
-
-        CosmeticManager.processingList.remove(uuid);
+        CosmeticManager.getInstance().processingList.remove(uuid);
     }
 
     public boolean isAdmin() {

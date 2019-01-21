@@ -47,11 +47,11 @@ public class WingsRenderer extends ModelBase {
     @EventListener
     public void onPlayerRender(RenderPlayerEvent event) {
         EntityPlayer player = event.getEntity();
-        if (CosmeticManager.isProcessing(player.getUniqueID())) {
+        if (CosmeticManager.getInstance().isProcessing(player.getUniqueID())) {
             return;
         }
 
-        if (CosmeticManager.getData(player.getUniqueID()).hasUnlockedCosmetic(EnumCosmetic.WINGS)
+        if (CosmeticManager.getInstance().getData(player.getUniqueID()).hasUnlockedCosmetic(EnumCosmetic.WINGS)
             && !player.isInvisible() && Hydon.SETTINGS.wingsEnabled) {
             renderWings(player, event.getPartialTicks(), event.getX(), event.getY(), event.getZ());
         }
