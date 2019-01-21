@@ -8,6 +8,7 @@ import net.hydonclient.event.events.render.RenderPlayerEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -63,14 +64,22 @@ public class WingsRenderer extends ModelBase {
         double scale = 80.0 / 100.0;
         double rotate = this
             .interpolate(player.prevRenderYawOffset, player.renderYawOffset, partialTicks);
-        GL11.glPushMatrix();
-        GL11.glScaled(-scale, -scale, scale);
-        GL11.glRotated(180.0 + rotate, 0.0, 1.0, 0.0);
-        GL11.glTranslated(0.0, -(this.playerUsesFullHeight ? 1.45 : 1.25) / scale, 0.0);
-        GL11.glTranslated(0.0, 0.0, 0.125 / scale);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, z);
+
+        GlStateManager.scale(-scale, -scale, scale);
+        GlStateManager.rotate((float) (180.0F + rotate), 0.0F, 1.0F, 0.0F);
+
+        float scaledHeight = (float) ((this.playerUsesFullHeight ? 1.45 : 1.25) / scale);
+
+        GlStateManager.translate(0.0F, -scaledHeight, 0.0F);
+        GlStateManager.translate(0.0F, 0.0F, 0.15F / scale);
+
         if (player.isSneaking()) {
             GL11.glTranslated(0.0, 0.125 / scale, 0.0);
         }
+
         this.mc.getTextureManager().bindTexture(texture);
         for (int j = 0; j < 2; ++j) {
             GL11.glEnable(2884);
