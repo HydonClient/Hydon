@@ -1,7 +1,10 @@
 package net.hydonclient.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
+import net.hydonclient.cosmetics.CosmeticData;
+import net.hydonclient.cosmetics.CosmeticManager;
 import net.hydonclient.cosmetics.capes.Capes;
+import net.hydonclient.util.Multithreading;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.ResourceLocation;
@@ -18,10 +21,15 @@ public abstract class MixinAbstractClientPlayer {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void init(World worldIn, GameProfile playerProfile, CallbackInfo callbackInfo) {
-        Capes.loadCape(playerProfile.getId(), String.format("http://s.optifine.net/capes/%s.png", playerProfile.getName()));
+        Multithreading.run(() -> {
+            CosmeticData cosmeticData = CosmeticManager.getData(playerProfile.getId());
+            Capes.loadCape(playerProfile.getId(), cosmeticData.hasCape() ? cosmeticData.getCapeUrl()
+                : String.format("http://s.optifine.net/capes/%s.png", playerProfile.getName()));
+        });
     }
 
-    @Shadow protected abstract NetworkPlayerInfo getPlayerInfo();
+    @Shadow
+    protected abstract NetworkPlayerInfo getPlayerInfo();
 
     /**
      * @author Koding
