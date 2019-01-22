@@ -9,4 +9,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface SaveVal {
 
+    /*
+     * Used to create saved options in the configuration file
+     * Anything annotated with @SaveVal and is registered to the config manager
+     * will be saved into Hydon/config.json
+     */
 }

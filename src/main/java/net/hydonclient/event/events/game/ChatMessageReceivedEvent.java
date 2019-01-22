@@ -11,7 +11,7 @@ public class ChatMessageReceivedEvent extends CancellableEvent {
     /**
      * Fired when the client receives a message.
      *
-     * @param message The message string
+     * @param message       The message string
      * @param chatComponent The chat component
      */
     public ChatMessageReceivedEvent(String message, IChatComponent chatComponent) {

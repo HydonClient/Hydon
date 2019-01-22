@@ -31,7 +31,7 @@ public class HydonEntityRenderer {
         this.entityRenderer = entityRenderer;
     }
 
-    public void orientCamera(float partialTicks, float thirdPersonDistanceTemp, float thirdPersonDistance, boolean cloudFog, Minecraft mc){
+    public void orientCamera(float partialTicks, float thirdPersonDistanceTemp, float thirdPersonDistance, boolean cloudFog, Minecraft mc) {
         Entity entity = mc.getRenderViewEntity();
 
         float eyeHeight = entity.getEyeHeight();

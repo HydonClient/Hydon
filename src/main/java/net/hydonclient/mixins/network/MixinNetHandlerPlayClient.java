@@ -15,23 +15,29 @@ import net.hydonclient.event.events.network.chat.ServerChatEvent;
 import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.managers.impl.command.Command;
 import net.hydonclient.mods.timechanger.config.TimeChangerConfig;
-import net.hydonclient.util.ChatColor;
+import net.hydonclient.util.maps.ChatColor;
 import net.hydonclient.util.ReflectionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.command.CommandBase;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketThreadUtil;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
+import net.minecraft.network.play.server.S0BPacketAnimation;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumParticleTypes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -53,14 +59,17 @@ public abstract class MixinNetHandlerPlayClient {
     @Shadow
     public abstract NetworkManager getNetworkManager();
 
+    @Shadow
+    private WorldClient clientWorldController;
+
     /**
      * @author Koding
      */
     @Overwrite
     public void handleTabComplete(S3APacketTabComplete packetIn) {
         PacketThreadUtil
-            .checkThreadAndEnqueue(packetIn, Minecraft.getMinecraft().thePlayer.sendQueue,
-                this.gameController);
+                .checkThreadAndEnqueue(packetIn, Minecraft.getMinecraft().thePlayer.sendQueue,
+                        this.gameController);
         String[] astring = packetIn.func_149630_c();
 
         List<String> newOptions = new ArrayList<>(Arrays.asList(astring));
@@ -68,13 +77,13 @@ public abstract class MixinNetHandlerPlayClient {
         try {
             if (Minecraft.getMinecraft().currentScreen instanceof GuiChat) {
                 Field inputField = ReflectionUtils
-                    .getField(Minecraft.getMinecraft().currentScreen.getClass(),
-                        new String[]{"a", "inputField"});
+                        .getField(Minecraft.getMinecraft().currentScreen.getClass(),
+                                new String[]{"a", "inputField"});
 
                 if (inputField != null) {
                     inputField.setAccessible(true);
                     GuiTextField input = (GuiTextField) inputField
-                        .get(Minecraft.getMinecraft().currentScreen);
+                            .get(Minecraft.getMinecraft().currentScreen);
 
                     if (input.getText().startsWith("/")) {
 
@@ -83,7 +92,7 @@ public abstract class MixinNetHandlerPlayClient {
 
                         if (astring1.length == 1) {
                             for (Command c : HydonManagers.INSTANCE.getCommandManager()
-                                .getCommands()) {
+                                    .getCommands()) {
                                 if (CommandBase.doesStringStartWith(s, c.getName())) {
                                     newOptions.add("/" + c.getName());
                                 }
@@ -188,5 +197,34 @@ public abstract class MixinNetHandlerPlayClient {
         this.gameController.theWorld.setWorldTime(worldTime);
     }
 
+    /**
+     * @author asbyth
+     * @reason NPE
+     */
+    @Overwrite
+    public void handleAnimation(S0BPacketAnimation packetIn) {
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, (INetHandlerPlayClient) getNetworkManager().getNetHandler(), this.gameController);
 
+        if (this.clientWorldController == null) {
+            return;
+        }
+
+        Entity entity = this.clientWorldController.getEntityByID(packetIn.getEntityID());
+
+        if (entity != null) {
+            if (packetIn.getAnimationType() == 0) {
+                EntityLivingBase entitylivingbase = (EntityLivingBase) entity;
+                entitylivingbase.swingItem();
+            } else if (packetIn.getAnimationType() == 1) {
+                entity.performHurtAnimation();
+            } else if (packetIn.getAnimationType() == 2) {
+                EntityPlayer entityplayer = (EntityPlayer) entity;
+                entityplayer.wakeUpPlayer(false, false, false);
+            } else if (packetIn.getAnimationType() == 4) {
+                this.gameController.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT);
+            } else if (packetIn.getAnimationType() == 5) {
+                this.gameController.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC);
+            }
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package net.hydonclient.event.events.network;
 
 import net.hydonclient.event.CancellableEvent;
-import net.hydonclient.event.Event;
 import net.minecraft.network.Packet;
 
 public class PacketReceivedEvent extends CancellableEvent {
@@ -10,6 +9,7 @@ public class PacketReceivedEvent extends CancellableEvent {
 
     /**
      * Fired when a packet is received
+     *
      * @param packet the packed received
      */
     public PacketReceivedEvent(Packet packet) {

@@ -1,4 +1,4 @@
-package net.hydonclient.mixins.entity;
+package net.hydonclient.mixins.client.entity;
 
 import com.mojang.authlib.GameProfile;
 import net.hydonclient.event.EventBus;
@@ -25,7 +25,7 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
     public float timeInPortal;
 
     public MixinEntityPlayerSP(World worldIn,
-        GameProfile playerProfile) {
+                               GameProfile playerProfile) {
         super(worldIn, playerProfile);
     }
 

@@ -3,6 +3,7 @@ package me.semx11.autotip.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.api.reply.Reply;
 import me.semx11.autotip.api.request.Request;

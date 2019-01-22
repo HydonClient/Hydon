@@ -12,6 +12,13 @@ public class DrawBlockHighlightEvent extends CancellableEvent {
 
     private final float partialTicks;
 
+    /**
+     * Fired when hovering over a block
+     *
+     * @param player        the player
+     * @param targetedBlock the block they're looking at
+     * @param partialTicks  the world tick
+     */
     public DrawBlockHighlightEvent(EntityPlayer player, MovingObjectPosition targetedBlock, float partialTicks) {
 
         this.player = player;

@@ -1,6 +1,7 @@
 package me.semx11.autotip.stats;
 
 import java.time.LocalDate;
+
 import me.semx11.autotip.Autotip;
 
 public class StatsRange extends Stats {

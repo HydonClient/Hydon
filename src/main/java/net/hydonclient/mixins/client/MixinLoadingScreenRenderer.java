@@ -1,7 +1,7 @@
-package net.hydonclient.mixins.gui;
+package net.hydonclient.mixins.client;
 
 import net.hydonclient.util.GuiUtils;
-import net.hydonclient.util.Images;
+import net.hydonclient.util.maps.Images;
 import net.hydonclient.util.ResolutionUtil;
 import net.minecraft.client.LoadingScreenRenderer;
 import net.minecraft.client.Minecraft;
@@ -55,7 +55,7 @@ public class MixinLoadingScreenRenderer {
             GlStateManager.matrixMode(5889);
             GlStateManager.loadIdentity();
             GlStateManager.ortho(0.0D, scaledresolution.getScaledWidth_double(),
-                scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
+                    scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
             GlStateManager.matrixMode(5888);
             GlStateManager.loadIdentity();
             GlStateManager.translate(0.0F, 0.0F, -200.0F);
@@ -83,12 +83,12 @@ public class MixinLoadingScreenRenderer {
 
                 GlStateManager.color(0.0f, 0.0f, 0.0f, 0.2f);
                 Gui.drawModalRectWithCustomSizedTexture(logoX + 2, logoY + 2, 0, 0, logoWidth,
-                    logoHeight,
-                    logoWidth, logoHeight);
+                        logoHeight,
+                        logoWidth, logoHeight);
 
                 GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
                 Gui.drawModalRectWithCustomSizedTexture(logoX, logoY, 0, 0, logoWidth, logoHeight,
-                    logoWidth, logoHeight);
+                        logoWidth, logoHeight);
             }
 
             if (progress >= 0) {
@@ -99,23 +99,23 @@ public class MixinLoadingScreenRenderer {
                 GlStateManager.disableTexture2D();
                 worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
                 worldrenderer.pos((double) k1, (double) l1, 0.0D).color(128, 128, 128, 255)
-                    .endVertex();
+                        .endVertex();
                 worldrenderer.pos((double) k1, (double) (l1 + j1), 0.0D).color(128, 128, 128, 255)
-                    .endVertex();
+                        .endVertex();
                 worldrenderer.pos((double) (k1 + i1), (double) (l1 + j1), 0.0D)
-                    .color(128, 128, 128, 255)
-                    .endVertex();
+                        .color(128, 128, 128, 255)
+                        .endVertex();
                 worldrenderer.pos((double) (k1 + i1), (double) l1, 0.0D).color(128, 128, 128, 255)
-                    .endVertex();
+                        .endVertex();
                 worldrenderer.pos((double) k1, (double) l1, 0.0D).color(128, 255, 128, 255)
-                    .endVertex();
+                        .endVertex();
                 worldrenderer.pos((double) k1, (double) (l1 + j1), 0.0D).color(128, 255, 128, 255)
-                    .endVertex();
+                        .endVertex();
                 worldrenderer.pos((double) (k1 + progress), (double) (l1 + j1), 0.0D)
-                    .color(128, 255, 128, 255).endVertex();
+                        .color(128, 255, 128, 255).endVertex();
                 worldrenderer.pos((double) (k1 + progress), (double) l1, 0.0D)
-                    .color(128, 255, 128, 255)
-                    .endVertex();
+                        .color(128, 255, 128, 255)
+                        .endVertex();
                 tessellator.draw();
                 GlStateManager.enableTexture2D();
             }
@@ -123,12 +123,12 @@ public class MixinLoadingScreenRenderer {
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             this.mc.fontRendererObj.drawStringWithShadow(this.currentlyDisplayedText,
-                (float) ((k - this.mc.fontRendererObj.getStringWidth(this.currentlyDisplayedText))
-                    / 2),
-                (float) (l / 2 - 4 - 16), 16777215);
+                    (float) ((k - this.mc.fontRendererObj.getStringWidth(this.currentlyDisplayedText))
+                            / 2),
+                    (float) (l / 2 - 4 - 16), 16777215);
             this.mc.fontRendererObj.drawStringWithShadow(this.message,
-                (float) ((k - this.mc.fontRendererObj.getStringWidth(this.message)) / 2),
-                (float) (l / 2 - 4 + 8), 16777215);
+                    (float) ((k - this.mc.fontRendererObj.getStringWidth(this.message)) / 2),
+                    (float) (l / 2 - 4 + 8), 16777215);
             this.framebuffer.unbindFramebuffer();
 
             if (OpenGlHelper.isFramebufferEnabled()) {

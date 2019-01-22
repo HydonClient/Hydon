@@ -2,7 +2,7 @@ package net.hydonclient.mods.autogg.command;
 
 import net.hydonclient.Hydon;
 import net.hydonclient.managers.impl.command.Command;
-import net.hydonclient.util.ChatColor;
+import net.hydonclient.util.maps.ChatColor;
 
 public class AutoGGCommand extends Command {
 

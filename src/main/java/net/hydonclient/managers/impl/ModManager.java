@@ -5,6 +5,8 @@ import me.semx11.autotip.Autotip;
 import net.hydonclient.Hydon;
 import net.hydonclient.mods.autogg.AutoGGMod;
 import net.hydonclient.mods.blur.BlurMod;
+import net.hydonclient.mods.hydonhud.HydonHUD;
+import net.hydonclient.mods.itemphysics.ItemPhysics;
 import net.hydonclient.mods.oldanimations.OldAnimations;
 import net.hydonclient.mods.timechanger.TimeChangerMod;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
@@ -13,6 +15,9 @@ import pw.cinque.keystrokesmod.KeystrokesMod;
 
 public class ModManager {
 
+    /**
+     * The instance of all the mods
+     */
     private AutoGGMod autoGGMod;
     private BlurMod blurMod;
     private Autotip autotip;
@@ -22,7 +27,12 @@ public class ModManager {
     private KeystrokesMod keystrokesMod;
     private BlockOverlay blockOverlay;
     private TimeChangerMod timeChangerMod;
+    private HydonHUD hydonHUD;
+    private ItemPhysics itemPhysics;
 
+    /**
+     * Load all of the mods that are registered
+     */
     public void init() {
         Hydon.LOGGER.info("Loading mods");
 
@@ -52,6 +62,12 @@ public class ModManager {
 
         timeChangerMod = new TimeChangerMod();
         timeChangerMod.load();
+
+        hydonHUD = new HydonHUD();
+        hydonHUD.load();
+
+        itemPhysics = new ItemPhysics();
+        itemPhysics.load();
     }
 
     public AutoGGMod getAutoGGMod() {
@@ -88,5 +104,13 @@ public class ModManager {
 
     public TimeChangerMod getTimeChangerMod() {
         return timeChangerMod;
+    }
+
+    public HydonHUD getHydonHUD() {
+        return hydonHUD;
+    }
+
+    public ItemPhysics getItemPhysics() {
+        return itemPhysics;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.config.GlobalSettings.GameAlias;
 import me.semx11.autotip.config.GlobalSettings.GameGroup;

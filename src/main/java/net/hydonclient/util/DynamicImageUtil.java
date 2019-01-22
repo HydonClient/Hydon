@@ -1,8 +1,10 @@
 package net.hydonclient.util;
 
 import com.google.common.collect.Maps;
+
 import java.awt.image.BufferedImage;
 import java.util.Map;
+
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.lwjgl.opengl.GL11;
 

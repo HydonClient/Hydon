@@ -1,4 +1,4 @@
-package net.hydonclient.mixins.entity;
+package net.hydonclient.mixins.client.entity;
 
 import com.mojang.authlib.GameProfile;
 import net.hydonclient.api.UserManager;

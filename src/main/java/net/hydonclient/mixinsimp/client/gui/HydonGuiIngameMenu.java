@@ -19,8 +19,8 @@ public class HydonGuiIngameMenu extends GuiScreen {
 
     public void initGui(List<GuiButton> buttonList) {
         int i = -16;
-        buttonList.add(new GuiButton(8, guiIngameMenu.width / 2 - 100, guiIngameMenu.height / 4 + 72 + i, 98, 20,  "Servers"));
-        buttonList.add(new GuiButton(9, guiIngameMenu.width / 2 + 2, guiIngameMenu.height / 4 + 72 + i, 98, 20,"Hydon Settings"));
+        buttonList.add(new GuiButton(8, guiIngameMenu.width / 2 - 100, guiIngameMenu.height / 4 + 72 + i, 98, 20, "Servers"));
+        buttonList.add(new GuiButton(9, guiIngameMenu.width / 2 + 2, guiIngameMenu.height / 4 + 72 + i, 98, 20, "Hydon Settings"));
     }
 
     public void actionPerformed(GuiButton button) {

@@ -1,6 +1,7 @@
 package me.semx11.autotip.message;
 
 import java.util.function.BiConsumer;
+
 import me.semx11.autotip.stats.StatsDaily;
 
 public enum StatsType {

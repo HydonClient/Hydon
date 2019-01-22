@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.lwjgl.opengl.GL11;
 
@@ -33,7 +34,7 @@ public class CFont {
     }
 
     DynamicTexture setupTexture(Font font, boolean antiAlias, boolean fractionalMetrics,
-        CharData[] chars) {
+                                CharData[] chars) {
         BufferedImage img = generateFontImage(font, antiAlias, fractionalMetrics, chars);
 
         try {
@@ -46,23 +47,23 @@ public class CFont {
     }
 
     private BufferedImage generateFontImage(Font font, boolean antiAlias,
-        boolean fractionalMetrics, CharData[] chars) {
+                                            boolean fractionalMetrics, CharData[] chars) {
         int imgSize = (int) this.imgSize;
         BufferedImage bufferedImage = new BufferedImage(imgSize, imgSize,
-            BufferedImage.TYPE_INT_ARGB);
+                BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
         g.setFont(font);
         g.setColor(new Color(255, 255, 255, 0));
         g.fillRect(0, 0, imgSize, imgSize);
         g.setColor(Color.WHITE);
         g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
-            fractionalMetrics ? RenderingHints.VALUE_FRACTIONALMETRICS_ON
-                : RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+                fractionalMetrics ? RenderingHints.VALUE_FRACTIONALMETRICS_ON
+                        : RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-            antiAlias ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-                : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+                antiAlias ? RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+                        : RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-            antiAlias ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
+                antiAlias ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);
         FontMetrics fontMetrics = g.getFontMetrics();
         int charHeight = 0;
         int positionX = 0;
@@ -101,17 +102,17 @@ public class CFont {
     }
 
     public void drawChar(CharData[] chars, char c, float x, float y)
-        throws ArrayIndexOutOfBoundsException {
+            throws ArrayIndexOutOfBoundsException {
         try {
             drawQuad(x, y, chars[c].width, chars[c].height, chars[c].storedX, chars[c].storedY,
-                chars[c].width, chars[c].height);
+                    chars[c].width, chars[c].height);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void drawQuad(float x, float y, float width, float height, float srcX, float srcY,
-        float srcWidth, float srcHeight) {
+                          float srcWidth, float srcHeight) {
         float renderSRCX = srcX / imgSize;
         float renderSRCY = srcY / imgSize;
         float renderSRCWidth = srcWidth / imgSize;

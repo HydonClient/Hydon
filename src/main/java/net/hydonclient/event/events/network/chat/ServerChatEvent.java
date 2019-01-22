@@ -8,6 +8,12 @@ public class ServerChatEvent extends CancellableEvent {
     private final byte type;
     private IChatComponent chat;
 
+    /**
+     * Fired when the client has detected incoming chat packets being sent from the server
+     *
+     * @param type type of chat packet
+     * @param chat chat component
+     */
     public ServerChatEvent(byte type, IChatComponent chat) {
         this.type = type;
         this.chat = chat;

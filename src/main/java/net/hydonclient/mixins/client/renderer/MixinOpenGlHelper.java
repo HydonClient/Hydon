@@ -9,7 +9,8 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(OpenGlHelper.class)
 public class MixinOpenGlHelper {
 
-    @Shadow public static boolean framebufferSupported;
+    @Shadow
+    public static boolean framebufferSupported;
 
     /**
      * @author Koding

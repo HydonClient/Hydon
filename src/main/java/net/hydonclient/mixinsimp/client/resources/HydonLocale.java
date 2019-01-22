@@ -11,6 +11,6 @@ public class HydonLocale {
     public static Multimap<String, Supplier<InputStream>> LANGUAGE_FILES = ArrayListMultimap.create();
 
     public static void registerLanguages(String language) {
-        LANGUAGE_FILES.put(language, () -> HydonLocale.class.getResourceAsStream("/assets/hydon/lang/" + language + ".lang"));
+        LANGUAGE_FILES.put(language, () -> HydonLocale.class.getResourceAsStream("/assets/minecraft/lang/" + language + ".lang"));
     }
 }

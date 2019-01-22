@@ -1,12 +1,14 @@
 package me.semx11.autotip.util;
 
 import com.google.gson.JsonObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.event.impl.EventClientConnection;
 import org.apache.commons.io.IOUtils;
@@ -30,19 +32,19 @@ public class ErrorReport {
             conn.setDoOutput(true);
 
             JsonObjectBuilder builder = JsonObjectBuilder.newBuilder()
-                .addString("username", autotip.getGameProfile().getName())
-                .addString("uuid", autotip.getGameProfile().getId())
-                .addString("v", autotip.getVersion())
-                .addString("mc", autotip.getMcVersion())
-                .addString("os", System.getProperty("os.name"))
-                .addString("forge", "1.8.9")
-                .addString("stackTrace", ExceptionUtils.getStackTrace(t))
-                .addNumber("time", System.currentTimeMillis());
+                    .addString("username", autotip.getGameProfile().getName())
+                    .addString("uuid", autotip.getGameProfile().getId())
+                    .addString("v", autotip.getVersion())
+                    .addString("mc", autotip.getMcVersion())
+                    .addString("os", System.getProperty("os.name"))
+                    .addString("forge", "1.8.9")
+                    .addString("stackTrace", ExceptionUtils.getStackTrace(t))
+                    .addNumber("time", System.currentTimeMillis());
 
             if (autotip.isInitialized()) {
                 EventClientConnection event = autotip.getEvent(EventClientConnection.class);
                 builder.addString("sessionKey", autotip.getSessionManager().getKey())
-                    .addString("serverIp", event.getServerIp());
+                        .addString("serverIp", event.getServerIp());
             }
 
             byte[] jsonBytes = builder.build().toString().getBytes(StandardCharsets.UTF_8);

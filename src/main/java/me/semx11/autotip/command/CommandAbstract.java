@@ -2,6 +2,7 @@ package me.semx11.autotip.command;
 
 import java.util.List;
 import javax.annotation.Nullable;
+
 import me.semx11.autotip.Autotip;
 import net.hydonclient.managers.impl.command.Command;
 import net.minecraft.client.Minecraft;
@@ -25,7 +26,7 @@ public abstract class CommandAbstract extends Command {
     }
 
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args,
-            BlockPos pos) {
+                                                BlockPos pos) {
         return this.onTabComplete(sender, args);
     }
 

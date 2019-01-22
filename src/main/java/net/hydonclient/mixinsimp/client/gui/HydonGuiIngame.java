@@ -21,19 +21,19 @@ public class HydonGuiIngame {
     }
 
     public void renderGameOverlay(float partialTicks, CallbackInfo ci) {
-        EventBus.call(new RenderGameOverlayEvent(new ScaledResolution(Minecraft.getMinecraft()),
-            partialTicks));
+        EventBus.call(new RenderGameOverlayEvent(new ScaledResolution(Minecraft.getMinecraft()), partialTicks));
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     public void showCrosshair(CallbackInfoReturnable<Boolean> cir) {
         if (!Hydon.SETTINGS.thirdPersonCrosshair
-            && Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) {
+                && Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) {
             cir.setReturnValue(false);
         }
     }
 
     public void displayTitle(String title, String subTitle, int timeFadeIn, int displayTime,
-        int timeFadeOut, CallbackInfo ci) {
+                             int timeFadeOut, CallbackInfo ci) {
         if (Hydon.SETTINGS.disableTitles) {
             ci.cancel();
         }
@@ -41,7 +41,7 @@ public class HydonGuiIngame {
 
     public void renderBossHealth() {
         if (BossStatus.bossName != null && BossStatus.statusBarTime > 0
-            && !Hydon.SETTINGS.disableBossBar) {
+                && !Hydon.SETTINGS.disableBossBar) {
             --BossStatus.statusBarTime;
             ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
             int i = scaledresolution.getScaledWidth();
@@ -61,9 +61,9 @@ public class HydonGuiIngame {
 
             String s = BossStatus.bossName;
             guiIngame.getFontRenderer()
-                .drawStringWithShadow(s,
-                    (float) (i / 2 - guiIngame.getFontRenderer().getStringWidth(s) / 2),
-                    (float) (i1 - 10), 16777215);
+                    .drawStringWithShadow(s,
+                            (float) (i / 2 - guiIngame.getFontRenderer().getStringWidth(s) / 2),
+                            (float) (i1 - 10), 16777215);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             Minecraft.getMinecraft().getTextureManager().bindTexture(GuiIngame.icons);
         }

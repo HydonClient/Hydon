@@ -32,6 +32,8 @@ public class Hydon {
         HydonManagers.INSTANCE.init();
         EventBus.register(CompactChat.getInstance());
         EventBus.register(UserManager.getInstance());
+        EventBus.register(DefaultCommands.getInstance());
+        DefaultCommands.getInstance().load();
 
         LOGGER.info("Loading Discord RPC");
         EventBus.register(DiscordPresence.getInstance());

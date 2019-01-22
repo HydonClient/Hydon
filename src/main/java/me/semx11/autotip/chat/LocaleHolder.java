@@ -2,10 +2,12 @@ package me.semx11.autotip.chat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
+
 import me.semx11.autotip.util.ErrorReport;
 
 public class LocaleHolder {

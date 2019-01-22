@@ -1,6 +1,7 @@
 package me.semx11.autotip.core;
 
 import com.google.gson.JsonSyntaxException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.stats.StatsDaily;
 import me.semx11.autotip.stats.StatsRange;
@@ -94,7 +96,7 @@ public class StatsManager {
      * #get(LocalDate)} to get all the {@link StatsDaily} that are contained within this range.
      *
      * @param start The starting {@link LocalDate}
-     * @param end The ending {@link LocalDate}
+     * @param end   The ending {@link LocalDate}
      * @return {@link StatsRange} for the specified date range
      */
     public StatsRange getRange(LocalDate start, LocalDate end) {

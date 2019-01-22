@@ -8,6 +8,11 @@ import net.hydonclient.util.Multithreading;
 
 public class AutoGGListener {
 
+    /**
+     * Called when a game on Hypixel has ended
+     *
+     * @param e the event being used
+     */
     @EventListener
     public void onGameEnd(GameEndEvent e) {
         Multithreading.run(() -> {

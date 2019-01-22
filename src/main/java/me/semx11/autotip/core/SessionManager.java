@@ -2,6 +2,7 @@ package me.semx11.autotip.core;
 
 import com.google.gson.JsonObject;
 import com.mojang.authlib.GameProfile;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -10,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.api.SessionKey;
 import me.semx11.autotip.api.reply.impl.KeepAliveReply;

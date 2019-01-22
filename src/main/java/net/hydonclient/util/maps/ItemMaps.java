@@ -1,4 +1,4 @@
-package net.hydonclient.util;
+package net.hydonclient.util.maps;
 
 import java.util.HashMap;
 import java.util.Map;

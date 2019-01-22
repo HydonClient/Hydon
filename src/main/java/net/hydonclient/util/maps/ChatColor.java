@@ -1,4 +1,4 @@
-package net.hydonclient.util;
+package net.hydonclient.util.maps;
 
 public enum ChatColor {
 
@@ -36,7 +36,7 @@ public enum ChatColor {
         return colorChar;
     }
 
-    public String getFormat(){
+    public String getFormat() {
         return String.valueOf(prefixChar) + String.valueOf(colorChar);
     }
 

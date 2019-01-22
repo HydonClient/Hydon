@@ -20,7 +20,7 @@ public class TimeChangerCommand extends Command {
     @Override
     public void onCommand(String[] args) {
         TimeChangerConfig config = HydonManagers.INSTANCE.getModManager().getTimeChangerMod()
-            .getConfig();
+                .getConfig();
         if (args.length == 0) {
             ChatUtils.addChatMessage("Usage: " + getUsage());
         } else if (args[0].equalsIgnoreCase("reset")) {

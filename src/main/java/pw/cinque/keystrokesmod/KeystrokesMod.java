@@ -84,13 +84,13 @@ public class KeystrokesMod extends Mod {
         Key keySpaceBar = new Key(gameSettings.keyBindJump).setSpaceBar();
 
         keyHolder = new KeyHolder.Builder(this)
-            .setWidth(82)
-            .setGapSize(2)
-            .addRow(none, keyW, none)
-            .addRow(keyA, keyS, keyD)
-            .addRow(leftMouse, rightMouse)
-            .addRow(keySpaceBar)
-            .build();
+                .setWidth(82)
+                .setGapSize(2)
+                .addRow(none, keyW, none)
+                .addRow(keyA, keyS, keyD)
+                .addRow(leftMouse, rightMouse)
+                .addRow(keySpaceBar)
+                .build();
     }
 
     public KeyHolder getKeyHolder() {

@@ -1,4 +1,4 @@
-package net.hydonclient.mixins.gui;
+package net.hydonclient.mixins.client.gui;
 
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.gui.GuiDownloadTerrain;
@@ -17,8 +17,8 @@ public class MixinGuiDownloadTerrain extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         GuiUtils.drawBG(true);
         this.drawCenteredString(this.fontRendererObj,
-            I18n.format("multiplayer.downloadingTerrain", new Object[0]), this.width / 2,
-            this.height / 2 - 50, 16777215);
+                I18n.format("multiplayer.downloadingTerrain"), this.width / 2,
+                this.height / 2 - 50, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

@@ -12,20 +12,45 @@ import java.util.List;
 
 public class ConfigManager {
 
+    /**
+     * List of registered configuration classes
+     */
     private List<Object> registeredObjects = new ArrayList<>();
+
+    /**
+     * GSON used to create a JSON file for configuration
+     */
     private Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
+
+    /**
+     * The configuration file
+     */
     private File configFile;
 
+    /**
+     * The config manager instance
+     *
+     * @param configFile the configuration file
+     */
     public ConfigManager(File configFile) {
         this.configFile = configFile;
     }
 
+    /**
+     * Register any class that's called using
+     * HydonManagers().getConfigManager().register(new Class(anything else here));
+     *
+     * @param obj the class being registered
+     */
     public void register(Object obj) {
         registeredObjects.add(obj);
     }
 
+    /**
+     * Save the configuration file
+     */
     public void save() {
         JsonObject saveObject = new JsonObject();
         for (Object o : registeredObjects) {
@@ -52,6 +77,9 @@ public class ConfigManager {
         }
     }
 
+    /**
+     * Load the configuration file
+     */
     public void load() {
         try {
             if (!configFile.exists())

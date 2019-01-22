@@ -1,7 +1,9 @@
 package me.semx11.autotip.api.request.impl;
 
 import com.mojang.authlib.GameProfile;
+
 import java.util.Optional;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.api.GetBuilder;
 import me.semx11.autotip.api.RequestHandler;

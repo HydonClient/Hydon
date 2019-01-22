@@ -9,6 +9,7 @@ public class GuiDisplayEvent extends Event {
 
     /**
      * Fires when a GUI has been opened
+     *
      * @param guiScreen the Gui class
      */
     public GuiDisplayEvent(GuiScreen guiScreen) {

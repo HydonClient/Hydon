@@ -1,6 +1,7 @@
 package me.aycy.blockoverlay.renderer;
 
 import java.awt.Color;
+
 import me.aycy.blockoverlay.BlockOverlay;
 import me.aycy.blockoverlay.utils.BlockOverlayMode;
 import me.aycy.blockoverlay.utils.ColorUtil;
@@ -25,10 +26,10 @@ public class BlockOverlayRenderer {
     @EventListener
     public void onDrawBlockHighlight(DrawBlockHighlightEvent event) {
         if (BlockOverlay.mc.thePlayer != null && BlockOverlay.mc.theWorld != null
-            && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.DEFAULT && (
-            BlockOverlay.mc.playerController.getCurrentGameType() == WorldSettings.GameType.SURVIVAL
-                || Minecraft.getMinecraft().playerController.getCurrentGameType()
-                == WorldSettings.GameType.CREATIVE)) {
+                && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.DEFAULT && (
+                BlockOverlay.mc.playerController.getCurrentGameType() == WorldSettings.GameType.SURVIVAL
+                        || Minecraft.getMinecraft().playerController.getCurrentGameType()
+                        == WorldSettings.GameType.CREATIVE)) {
             event.setCancelled(true);
 
             if (Hydon.SETTINGS.getBoMode() != BlockOverlayMode.NONE) {
@@ -40,12 +41,12 @@ public class BlockOverlayRenderer {
     @EventListener
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (BlockOverlay.mc.thePlayer != null && BlockOverlay.mc.theWorld != null
-            && Hydon.SETTINGS.boPersistent && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.NONE
-            && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.DEFAULT
-            && (BlockOverlay.mc.playerController.getCurrentGameType()
-            == WorldSettings.GameType.ADVENTURE ||
-            BlockOverlay.mc.playerController.getCurrentGameType()
-                == WorldSettings.GameType.SPECTATOR)) {
+                && Hydon.SETTINGS.boPersistent && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.NONE
+                && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.DEFAULT
+                && (BlockOverlay.mc.playerController.getCurrentGameType()
+                == WorldSettings.GameType.ADVENTURE ||
+                BlockOverlay.mc.playerController.getCurrentGameType()
+                        == WorldSettings.GameType.SPECTATOR)) {
             this.drawBlockOverlay(event.partialTicks);
         }
     }
@@ -54,15 +55,15 @@ public class BlockOverlayRenderer {
         MovingObjectPosition mouseOver = BlockOverlay.mc.objectMouseOver;
 
         if (mouseOver == null
-            || mouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
+                || mouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
             return;
         }
 
         Block block = BlockOverlay.mc.theWorld.getBlockState(mouseOver.getBlockPos()).getBlock();
 
         if (block == null || block == Blocks.air || block == Blocks.barrier ||
-            block == Blocks.water || block == Blocks.flowing_water || block == Blocks.lava
-            || block == Blocks.flowing_lava) {
+                block == Blocks.water || block == Blocks.flowing_water || block == Blocks.lava
+                || block == Blocks.flowing_lava) {
             return;
         }
 
@@ -76,11 +77,11 @@ public class BlockOverlayRenderer {
         boolean isOutlined = Hydon.SETTINGS.boLineWidth > 0.0f;
 
         AxisAlignedBB boundingBox = block
-            .getSelectedBoundingBox(BlockOverlay.mc.theWorld, mouseOver.getBlockPos())
-            .offset(-x, -y, -z).expand(expandAmount, expandAmount, expandAmount);
+                .getSelectedBoundingBox(BlockOverlay.mc.theWorld, mouseOver.getBlockPos())
+                .offset(-x, -y, -z).expand(expandAmount, expandAmount, expandAmount);
 
         Color color =
-            Hydon.SETTINGS.isBoChroma() ? ColorUtil.getChroma() : ColorUtil.getConfigColor();
+                Hydon.SETTINGS.isBoChroma() ? ColorUtil.getChroma() : ColorUtil.getConfigColor();
 
         GlStateManager.pushMatrix();
         GlStateManager.disableAlpha();

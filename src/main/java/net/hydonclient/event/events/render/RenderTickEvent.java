@@ -9,7 +9,8 @@ public class RenderTickEvent extends Event {
 
     /**
      * Fires every render tick.
-     * @param scaledResolution
+     *
+     * @param scaledResolution the players monitor resolution
      */
     public RenderTickEvent(ScaledResolution scaledResolution) {
         this.scaledResolution = scaledResolution;

@@ -1,4 +1,4 @@
-package net.hydonclient.mixins.gui;
+package net.hydonclient.mixins.client.gui;
 
 import com.google.common.base.CharMatcher;
 import net.hydonclient.Hydon;
