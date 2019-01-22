@@ -6,6 +6,7 @@ import net.hydonclient.Hydon;
 import net.hydonclient.mods.autogg.AutoGGMod;
 import net.hydonclient.mods.blur.BlurMod;
 import net.hydonclient.mods.hydonhud.HydonHUD;
+import net.hydonclient.mods.itemphysics.ItemPhysics;
 import net.hydonclient.mods.oldanimations.OldAnimations;
 import net.hydonclient.mods.timechanger.TimeChangerMod;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
@@ -27,6 +28,7 @@ public class ModManager {
     private BlockOverlay blockOverlay;
     private TimeChangerMod timeChangerMod;
     private HydonHUD hydonHUD;
+    private ItemPhysics itemPhysics;
 
     /**
      * Load all of the mods that are registered
@@ -63,6 +65,9 @@ public class ModManager {
 
         hydonHUD = new HydonHUD();
         hydonHUD.load();
+
+        itemPhysics = new ItemPhysics();
+        itemPhysics.load();
     }
 
     public AutoGGMod getAutoGGMod() {
@@ -103,5 +108,9 @@ public class ModManager {
 
     public HydonHUD getHydonHUD() {
         return hydonHUD;
+    }
+
+    public ItemPhysics getItemPhysics() {
+        return itemPhysics;
     }
 }

@@ -129,6 +129,12 @@ public class Settings {
     @SaveVal
     public boolean hydonButtons = true;
 
+    @SaveVal
+    public boolean itemPhysics = false;
+
+    @SaveVal
+    public float rotateSpeed = 1.0F;
+
     public boolean isBoChroma() {
         return boChroma;
     }

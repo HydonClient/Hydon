@@ -334,7 +334,20 @@ public class HydonMainGui extends GuiScreen {
                 new SettingsToggle("Held Keybind", Hydon.SETTINGS.heldPerspective,
                         result -> Hydon.SETTINGS.heldPerspective = result));
 
-        modElement.addElements(autoGG, blockOverlayElements, keyStrokesElements, perspectiveElements);
+
+        /*
+         * Item Physics Mod
+         */
+        SettingGroup itemPhysics = new SettingGroup("Item Physics");
+        itemPhysics.addElements(
+                new SettingsToggle("Item Physics", Hydon.SETTINGS.itemPhysics,
+                        result -> Hydon.SETTINGS.itemPhysics = result));
+        itemPhysics.addElements(
+                new SettingsSlider("Rotation speed: ", "",
+                        0, 5, Hydon.SETTINGS.rotateSpeed, false,
+                        value -> Hydon.SETTINGS.rotateSpeed = (int) value));
+
+        modElement.addElements(autoGG, blockOverlayElements, itemPhysics, keyStrokesElements, perspectiveElements);
         controller.addElements(modElement);
 
         /*
