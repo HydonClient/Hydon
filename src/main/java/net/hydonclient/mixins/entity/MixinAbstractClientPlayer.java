@@ -1,8 +1,9 @@
 package net.hydonclient.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
-import net.hydonclient.cosmetics.CosmeticData;
-import net.hydonclient.cosmetics.CosmeticManager;
+import net.hydonclient.api.UserManager;
+import net.hydonclient.api.objects.EnumCosmetic;
+import net.hydonclient.api.objects.User;
 import net.hydonclient.cosmetics.capes.Capes;
 import net.hydonclient.util.Multithreading;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -22,9 +23,10 @@ public abstract class MixinAbstractClientPlayer {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void init(World worldIn, GameProfile playerProfile, CallbackInfo callbackInfo) {
         Multithreading.run(() -> {
-            CosmeticData cosmeticData = CosmeticManager.getInstance().getData(playerProfile.getId());
-            Capes.loadCape(playerProfile.getId(), cosmeticData.hasCape() ? cosmeticData.getCapeUrl()
-                : String.format("http://s.optifine.net/capes/%s.png", playerProfile.getName()));
+            User user = UserManager.getInstance().getUser(playerProfile.getId());
+            Capes.loadCape(playerProfile.getId(),
+                user.hasUnlockedCosmetic(EnumCosmetic.CAPE) ? user.getCapeUrl()
+                    : String.format("http://s.optifine.net/capes/%s.png", playerProfile.getName()));
         });
     }
 

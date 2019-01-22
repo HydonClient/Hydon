@@ -1,7 +1,7 @@
 package net.hydonclient;
 
 import java.io.File;
-import net.hydonclient.cosmetics.CosmeticManager;
+import net.hydonclient.api.UserManager;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.integrations.discord.DiscordPresence;
@@ -31,7 +31,7 @@ public class Hydon {
         LOGGER.info("Loading managers");
         HydonManagers.INSTANCE.init();
         EventBus.register(CompactChat.getInstance());
-        EventBus.register(CosmeticManager.getInstance());
+        EventBus.register(UserManager.getInstance());
 
         LOGGER.info("Loading Discord RPC");
         EventBus.register(DiscordPresence.getInstance());

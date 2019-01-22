@@ -1,8 +1,8 @@
 package net.hydonclient.cosmetics.wings;
 
 import net.hydonclient.Hydon;
-import net.hydonclient.cosmetics.CosmeticManager;
-import net.hydonclient.cosmetics.EnumCosmetic;
+import net.hydonclient.api.UserManager;
+import net.hydonclient.api.objects.EnumCosmetic;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderPlayerEvent;
 import net.minecraft.client.Minecraft;
@@ -47,11 +47,12 @@ public class WingsRenderer extends ModelBase {
     @EventListener
     public void onPlayerRender(RenderPlayerEvent event) {
         EntityPlayer player = event.getEntity();
-        if (CosmeticManager.getInstance().isProcessing(player.getUniqueID())) {
+        if (UserManager.getInstance().isProcessing(player.getUniqueID())) {
             return;
         }
 
-        if (CosmeticManager.getInstance().getData(player.getUniqueID()).hasUnlockedCosmetic(EnumCosmetic.WINGS)
+        if (UserManager.getInstance().getUser(player.getUniqueID())
+            .hasUnlockedCosmetic(EnumCosmetic.WINGS)
             && !player.isInvisible() && Hydon.SETTINGS.wingsEnabled) {
             renderWings(player, event.getPartialTicks(), event.getX(), event.getY(), event.getZ());
         }

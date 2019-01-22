@@ -10,11 +10,7 @@ public class HydonApi {
     private static JsonParser parser = new JsonParser();
 
     public static JsonObject getUser(UUID uuid) {
-        return request("http://hydonapi.kodingking.com/user/" + uuid.toString());
-    }
-
-    public static JsonObject getCape(UUID uuid) {
-        return request("http://hydonapi.kodingking.com/user/" + uuid.toString() + "/cape");
+        return request("http://api.kodingking.com/user/" + uuid.toString());
     }
 
     private static JsonObject request(String url) {
