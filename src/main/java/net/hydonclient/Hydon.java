@@ -2,6 +2,7 @@ package net.hydonclient;
 
 import java.io.File;
 import net.hydonclient.api.UserManager;
+import net.hydonclient.commands.DefaultCommands;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.integrations.discord.DiscordPresence;

@@ -70,6 +70,8 @@
 
     "util.MixinScreenshotHelper",
 
-    "world.MixinWorld"
+    "world.MixinWorld",
+
+    "world.chunk.MixinChunk"
   ]
 }
