@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import me.semx11.autotip.message.Message;
 import me.semx11.autotip.message.StatsMessage;
 import me.semx11.autotip.util.Version;

@@ -2,6 +2,7 @@ package net.hydonclient.mods.wings;
 
 import net.hydonclient.cosmetics.wings.WingsRenderer;
 import net.hydonclient.event.EventBus;
+import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.mods.Mod;
 import net.hydonclient.mods.Mod.Info;
 

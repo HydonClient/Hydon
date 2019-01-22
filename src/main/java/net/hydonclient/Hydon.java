@@ -2,12 +2,12 @@ package net.hydonclient;
 
 import java.io.File;
 
+import net.hydonclient.commands.DefaultCommands;
+import net.hydonclient.cosmetics.CosmeticManager;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
-import net.hydonclient.staff.StaffManager;
-import net.hydonclient.util.Multithreading;
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,9 +33,9 @@ public class Hydon {
         LOGGER.info("Loading managers");
         HydonManagers.INSTANCE.init();
         EventBus.register(CompactChat.getInstance());
-
-        LOGGER.info("Loading staff");
-        Multithreading.run(StaffManager::fetchStaff);
+        EventBus.register(CosmeticManager.getInstance());
+        EventBus.register(DefaultCommands.getInstance());
+        DefaultCommands.getInstance().load();
 
         LOGGER.info("Loading Discord RPC");
         EventBus.register(DiscordPresence.getInstance());

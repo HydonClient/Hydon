@@ -9,6 +9,7 @@ public class PacketSendEvent extends CancellableEvent {
 
     /**
      * Fired when the client sends a packet
+     *
      * @param packet the packet sent
      */
     public PacketSendEvent(Packet packet) {

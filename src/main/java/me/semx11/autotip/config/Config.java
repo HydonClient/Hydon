@@ -1,6 +1,7 @@
 package me.semx11.autotip.config;
 
 import com.google.gson.JsonSyntaxException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.chat.MessageOption;
 import me.semx11.autotip.gson.exclusion.Exclude;

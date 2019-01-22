@@ -1,6 +1,7 @@
 package net.hydonclient.mixins.client.gui;
 
 import java.util.List;
+
 import net.hydonclient.mixinsimp.client.gui.HydonGuiNewChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -51,9 +52,9 @@ public abstract class MixinGuiNewChat {
      */
     @Overwrite
     private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter,
-        boolean displayOnly) {
+                             boolean displayOnly) {
         impl.setChatLine(chatComponent, chatLineId, updateCounter, displayOnly, scrollPos,
-            isScrolled, drawnChatLines, chatLines, mc);
+                isScrolled, drawnChatLines, chatLines, mc);
     }
 
     /**

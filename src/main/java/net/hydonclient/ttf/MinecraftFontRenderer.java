@@ -7,6 +7,7 @@ package net.hydonclient.ttf;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.lwjgl.opengl.GL11;
@@ -41,7 +42,7 @@ public class MinecraftFontRenderer extends CFont {
 
     public float drawCenteredStringWithShadow(String text, float x, float y, int color) {
         float shadowWidth = drawString(text, x - getStringWidth(text) / 2 + 1.0D, y + 1.0D, color,
-            true);
+                true);
         return drawString(text, x - getStringWidth(text) / 2, y, color);
     }
 
@@ -81,7 +82,7 @@ public class MinecraftFontRenderer extends CFont {
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(770, 771);
             GlStateManager.color((color >> 16 & 0xFF) / 255.0F, (color >> 8 & 0xFF) / 255.0F,
-                (color & 0xFF) / 255.0F, alpha);
+                    (color & 0xFF) / 255.0F, alpha);
             int size = text.length();
             GlStateManager.enableTexture2D();
             GlStateManager.bindTexture(tex.getGlTextureId());
@@ -121,7 +122,7 @@ public class MinecraftFontRenderer extends CFont {
 
                         int colorcode = this.colorCode[colorIndex];
                         GlStateManager.color((colorcode >> 16 & 0xFF) / 255.0F,
-                            (colorcode >> 8 & 0xFF) / 255.0F, (colorcode & 0xFF) / 255.0F, alpha);
+                                (colorcode >> 8 & 0xFF) / 255.0F, (colorcode & 0xFF) / 255.0F, alpha);
                     } else if (colorIndex == 16) {
                         randomCase = true;
                     } else if (colorIndex == 17) {
@@ -163,8 +164,8 @@ public class MinecraftFontRenderer extends CFont {
                         underline = false;
                         strikethrough = false;
                         GlStateManager
-                            .color((color >> 16 & 0xFF) / 255.0F, (color >> 8 & 0xFF) / 255.0F,
-                                (color & 0xFF) / 255.0F, alpha);
+                                .color((color >> 16 & 0xFF) / 255.0F, (color >> 8 & 0xFF) / 255.0F,
+                                        (color & 0xFF) / 255.0F, alpha);
                         GlStateManager.bindTexture(tex.getGlTextureId());
                         // GL11.glBindTexture(GL11.GL_TEXTURE_2D,
                         // tex.getGlTextureId());
@@ -179,14 +180,14 @@ public class MinecraftFontRenderer extends CFont {
 
                     if (strikethrough) {
                         drawLine(x, y + currentData[character].height / 2,
-                            x + currentData[character].width - 8.0D,
-                            y + currentData[character].height / 2, 1.0F);
+                                x + currentData[character].width - 8.0D,
+                                y + currentData[character].height / 2, 1.0F);
                     }
 
                     if (underline) {
                         drawLine(x, y + currentData[character].height - 2.0D,
-                            x + currentData[character].width - 8.0D,
-                            y + currentData[character].height - 2.0D, 1.0F);
+                                x + currentData[character].width - 8.0D,
+                                y + currentData[character].height - 2.0D, 1.0F);
                     }
 
                     x += currentData[character].width - 8 + this.charOffset;
@@ -273,11 +274,11 @@ public class MinecraftFontRenderer extends CFont {
 
     private void setupBoldItalicIDs() {
         texBold = setupTexture(this.font.deriveFont(1), this.antiAlias, this.fractionalMetrics,
-            this.boldChars);
+                this.boldChars);
         texItalic = setupTexture(this.font.deriveFont(2), this.antiAlias, this.fractionalMetrics,
-            this.italicChars);
+                this.italicChars);
         texItalicBold = setupTexture(this.font.deriveFont(3), this.antiAlias,
-            this.fractionalMetrics, this.boldItalicChars);
+                this.fractionalMetrics, this.boldItalicChars);
     }
 
     private void drawLine(double x, double y, double x1, double y1, float width) {

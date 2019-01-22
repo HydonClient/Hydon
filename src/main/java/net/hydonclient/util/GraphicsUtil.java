@@ -1,6 +1,7 @@
 package net.hydonclient.util;
 
 import java.awt.Color;
+
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -33,7 +34,7 @@ public class GraphicsUtil {
         for (int i = 0; i <= sides; i++) {
             double angle = (TWICE_PI * i / sides) + Math.toRadians(180);
             worldRenderer.pos(x + Math.sin(angle) * radius, y + Math.cos(angle) * radius, 0)
-                .endVertex();
+                    .endVertex();
         }
         tessellator.draw();
 

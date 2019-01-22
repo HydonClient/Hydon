@@ -7,6 +7,11 @@ public class ChatEvent extends CancellableEvent {
 
     private final IChatComponent chat;
 
+    /**
+     * Fired when the client receives a message.
+     *
+     * @param chat Chat Component
+     */
     public ChatEvent(IChatComponent chat) {
         this.chat = chat;
     }

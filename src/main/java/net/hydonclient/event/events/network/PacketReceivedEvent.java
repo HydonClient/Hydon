@@ -9,6 +9,7 @@ public class PacketReceivedEvent extends CancellableEvent {
 
     /**
      * Fired when a packet is received
+     *
      * @param packet the packed received
      */
     public PacketReceivedEvent(Packet packet) {

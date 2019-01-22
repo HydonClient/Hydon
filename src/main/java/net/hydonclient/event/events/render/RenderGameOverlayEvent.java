@@ -10,8 +10,9 @@ public class RenderGameOverlayEvent extends Event {
 
     /**
      * Fires when the game starts rendering the overlay (e.g. xp bar)
-     * @param scaledResolution
-     * @param partialTicks
+     *
+     * @param scaledResolution the players monitor resolution
+     * @param partialTicks     the world tick
      */
     public RenderGameOverlayEvent(ScaledResolution scaledResolution, float partialTicks) {
         this.scaledResolution = scaledResolution;

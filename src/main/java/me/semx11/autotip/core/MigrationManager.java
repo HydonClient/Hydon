@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.config.Config;
 import me.semx11.autotip.stats.StatsDaily;

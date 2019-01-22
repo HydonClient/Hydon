@@ -1,9 +1,10 @@
 package net.hydonclient;
 
 import java.awt.Color;
+
 import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.ttf.HydonFonts;
-import net.hydonclient.util.Images;
+import net.hydonclient.util.maps.Images;
 import net.hydonclient.util.ResolutionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -59,15 +60,15 @@ public class SplashScreen {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         int i = sr.getScaleFactor();
         Framebuffer framebuffer = new Framebuffer(sr.getScaledWidth() * i,
-            sr.getScaledHeight() * i,
-            true);
+                sr.getScaledHeight() * i,
+                true);
 
         framebuffer.bindFramebuffer(false);
         GlStateManager.matrixMode(5889);
         GlStateManager.loadIdentity();
         GlStateManager
-            .ortho(0.0D, (double) sr.getScaledWidth(), (double) sr.getScaledHeight(), 0.0D, 1000.0D,
-                3000.0D);
+                .ortho(0.0D, (double) sr.getScaledWidth(), (double) sr.getScaledHeight(), 0.0D, 1000.0D,
+                        3000.0D);
         GlStateManager.matrixMode(5888);
         GlStateManager.loadIdentity();
         GlStateManager.translate(0.0F, 0.0F, -2000.0F);
@@ -79,7 +80,7 @@ public class SplashScreen {
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         tm.bindTexture(backgroundLocation);
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, sr.getScaledWidth(),
-            sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+                sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -101,28 +102,28 @@ public class SplashScreen {
 
         GlStateManager.color(0.0f, 0.0f, 0.0f, 0.2f);
         Gui.drawModalRectWithCustomSizedTexture(logoX + 2, logoY + 2, 0, 0, logoWidth, logoHeight,
-            logoWidth, logoHeight);
+                logoWidth, logoHeight);
 
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         Gui.drawModalRectWithCustomSizedTexture(logoX, logoY, 0, 0, logoWidth, logoHeight,
-            logoWidth, logoHeight);
+                logoWidth, logoHeight);
 
         int barHeight = 20;
         double newCurrentProgress = progress.getCurrent();
         double progressDouble = (newCurrentProgress / progress.getMax());
         progressDouble *= sr.getScaledWidth() / 2f;
         Gui.drawRect(sr.getScaledWidth() / 4, sr.getScaledHeight() - barHeight,
-            sr.getScaledWidth() / 4 * 3, sr.getScaledHeight(),
-            new Color(0, 0, 0, 100).getRGB());
+                sr.getScaledWidth() / 4 * 3, sr.getScaledHeight(),
+                new Color(0, 0, 0, 100).getRGB());
         Gui.drawRect(sr.getScaledWidth() / 4, sr.getScaledHeight() - barHeight,
-            (int) (sr.getScaledWidth() / 4 + progressDouble),
-            sr.getScaledHeight(),
-            new Color(201, 57, 53, 200).getRGB());
+                (int) (sr.getScaledWidth() / 4 + progressDouble),
+                sr.getScaledHeight(),
+                new Color(201, 57, 53, 200).getRGB());
 
         HydonFonts.PRODUCT_SANS_REGULAR
-            .drawCenteredStringWithShadow(progress.getText(), sr.getScaledWidth() / 2f,
-                sr.getScaledHeight()
-                    - (barHeight + HydonFonts.PRODUCT_SANS_REGULAR.getHeight()) / 2f, 0xffffff);
+                .drawCenteredStringWithShadow(progress.getText(), sr.getScaledWidth() / 2f,
+                        sr.getScaledHeight()
+                                - (barHeight + HydonFonts.PRODUCT_SANS_REGULAR.getHeight()) / 2f, 0xffffff);
 
         framebuffer.unbindFramebuffer();
         framebuffer.framebufferRender(sr.getScaledWidth() * i, sr.getScaledHeight() * i);

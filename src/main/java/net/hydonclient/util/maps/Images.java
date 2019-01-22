@@ -1,4 +1,4 @@
-package net.hydonclient.util;
+package net.hydonclient.util.maps;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;

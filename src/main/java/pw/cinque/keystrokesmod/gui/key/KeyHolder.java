@@ -1,10 +1,12 @@
 package pw.cinque.keystrokesmod.gui.key;
 
 import com.google.common.base.Preconditions;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import net.hydonclient.Hydon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -73,7 +75,7 @@ public class KeyHolder {
             ScaledResolution resolution = new ScaledResolution(mc);
 
             position.updateScreenSize(scaledDisplayWidth = resolution.getScaledWidth(),
-                scaledDisplayHeight = resolution.getScaledHeight());
+                    scaledDisplayHeight = resolution.getScaledHeight());
 
             displayWidth = mc.displayWidth;
             displayHeight = mc.displayHeight;
@@ -97,7 +99,7 @@ public class KeyHolder {
 
         GL11.glPushMatrix();
         GL11.glTranslated(overrideX != -1 ? overrideX : position.getX(),
-            overrideY != -1 ? overrideY : position.getY(), 0.0);
+                overrideY != -1 ? overrideY : position.getY(), 0.0);
 
         GlStateManager.disableAlpha();
         GlStateManager.enableBlend();
@@ -219,7 +221,7 @@ public class KeyHolder {
          *
          * @param keys The {@code Key}s in this row
          * @throws IllegalStateException If this method is called before the width or gap size are
-         * set.
+         *                               set.
          * @see Builder#setWidth
          * @see Builder#setGapSize
          */
@@ -232,7 +234,7 @@ public class KeyHolder {
             }
 
             double keyWidth = (keyHolder.width - keyHolder.gapSize * (keys.length - 1))
-                / keys.length;
+                    / keys.length;
             double height = Arrays.stream(keys).mapToDouble(Key::getHeight).max().orElse(0.0);
             keyHolder.rows.add(new Row(keys, keyWidth, height));
             return this;
@@ -249,7 +251,7 @@ public class KeyHolder {
         public KeyHolder build() {
             Preconditions.checkState(!keyHolder.rows.isEmpty());
             keyHolder.height = keyHolder.rows.stream().mapToDouble(Row::getHeight).sum()
-                + keyHolder.gapSize * (keyHolder.rows.size() - 1);
+                    + keyHolder.gapSize * (keyHolder.rows.size() - 1);
             return keyHolder;
         }
 

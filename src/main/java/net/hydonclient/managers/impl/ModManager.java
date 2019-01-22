@@ -14,6 +14,9 @@ import pw.cinque.keystrokesmod.KeystrokesMod;
 
 public class ModManager {
 
+    /**
+     * The instance of all the mods
+     */
     private AutoGGMod autoGGMod;
     private BlurMod blurMod;
     private Autotip autotip;
@@ -25,6 +28,9 @@ public class ModManager {
     private TimeChangerMod timeChangerMod;
     private HydonHUD hydonHUD;
 
+    /**
+     * Load all of the mods that are registered
+     */
     public void init() {
         Hydon.LOGGER.info("Loading mods");
 

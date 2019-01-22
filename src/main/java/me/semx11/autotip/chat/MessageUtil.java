@@ -1,7 +1,9 @@
 package me.semx11.autotip.chat;
 
 import com.google.common.collect.Queues;
+
 import java.util.Queue;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.universal.UniversalUtil;
 import me.semx11.autotip.util.StringUtil;

@@ -1,6 +1,7 @@
 package net.hydonclient.mixinsimp.client.gui;
 
 import java.util.List;
+
 import net.hydonclient.Hydon;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.ChatEvent;
@@ -41,16 +42,16 @@ public class HydonGuiNewChat {
     }
 
     public void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter,
-        boolean displayOnly, int scrollPos, boolean isScrolled, List<ChatLine> drawnChatLines,
-        List<ChatLine> chatLines, Minecraft mc) {
+                            boolean displayOnly, int scrollPos, boolean isScrolled, List<ChatLine> drawnChatLines,
+                            List<ChatLine> chatLines, Minecraft mc) {
         if (chatLineId != 0) {
             guiNewChat.deleteChatLine(chatLineId);
         }
 
         int i = MathHelper
-            .floor_float((float) guiNewChat.getChatWidth() / guiNewChat.getChatScale());
+                .floor_float((float) guiNewChat.getChatWidth() / guiNewChat.getChatScale());
         List<IChatComponent> list = GuiUtilRenderComponents
-            .splitText(chatComponent, i, mc.fontRendererObj, false, false);
+                .splitText(chatComponent, i, mc.fontRendererObj, false, false);
         boolean flag = guiNewChat.getChatOpen();
 
         for (IChatComponent ichatcomponent : list) {
@@ -90,7 +91,7 @@ public class HydonGuiNewChat {
 
                 float f1 = guiNewChat.getChatScale();
                 int l = MathHelper
-                    .ceiling_float_int((float) guiNewChat.getChatWidth() / f1);
+                        .ceiling_float_int((float) guiNewChat.getChatWidth() / f1);
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(2.0F, 20.0F, 0.0F);
                 GlStateManager.scale(f1, f1, 1.0F);
@@ -125,8 +126,8 @@ public class HydonGuiNewChat {
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
                                 Minecraft.getMinecraft().fontRendererObj
-                                    .drawStringWithShadow(s, (float) i2, (float) (j2 - 8),
-                                        16777215 + (l1 << 24));
+                                        .drawStringWithShadow(s, (float) i2, (float) (j2 - 8),
+                                                16777215 + (l1 << 24));
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }

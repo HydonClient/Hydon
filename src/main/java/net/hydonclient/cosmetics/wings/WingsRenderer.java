@@ -1,12 +1,14 @@
 package net.hydonclient.cosmetics.wings;
 
 import net.hydonclient.Hydon;
+import net.hydonclient.cosmetics.CosmeticManager;
+import net.hydonclient.cosmetics.EnumCosmetic;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderPlayerEvent;
-import net.hydonclient.staff.StaffManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -14,11 +16,29 @@ import org.lwjgl.opengl.GL11;
 public class WingsRenderer extends ModelBase {
 
     private Minecraft mc;
+
+    /**
+     * wing is the default box for rendering
+     * wingtip is the tips of the wing
+     * <p>
+     * texture is the location of the texture
+     */
     private ModelRenderer wing;
     private ModelRenderer wingTip;
     private ResourceLocation texture;
+
+    /**
+     * If the player is sneaking
+     * return eyeheight 1.25
+     * else
+     * return eyeheight 1.45
+     */
     private boolean playerUsesFullHeight;
 
+    /**
+     * Initialized all the textures
+     * and add parts
+     */
     public WingsRenderer() {
         this.texture = new ResourceLocation("textures/cosmetics/wings.png");
         this.mc = Minecraft.getMinecraft();
@@ -42,29 +62,60 @@ public class WingsRenderer extends ModelBase {
 
     }
 
+    /**
+     * If the player is being processed, wait a bit
+     * <p>
+     * If the player has been fully processed and match one of the uuid's
+     * and have the cosmetic unlocked, render the wings if they're enabled
+     *
+     * @param event the event being used
+     */
     @EventListener
     public void onPlayerRender(RenderPlayerEvent event) {
         EntityPlayer player = event.getEntity();
-        if (StaffManager.STAFF_WINGS.contains(player.getUniqueID()) && !player.isInvisible() && Hydon.SETTINGS.wingsEnabled) {
+        if (CosmeticManager.getInstance().isProcessing(player.getUniqueID())) {
+            return;
+        }
+
+        if (CosmeticManager.getInstance().getData(player.getUniqueID()).hasUnlockedCosmetic(EnumCosmetic.WINGS)
+                && !player.isInvisible() && Hydon.SETTINGS.wingsEnabled) {
             renderWings(player, event.getPartialTicks(), event.getX(), event.getY(), event.getZ());
         }
     }
 
     // TODO: adjustable scale & complete rework of this for a fully custom one
 
+    /**
+     * Wings Renderer
+     * Renders all of the parts, animations, etc
+     *
+     * @param player       the user
+     * @param partialTicks the world tick
+     * @param x            the x position of the user
+     * @param y            the y position of the user
+     * @param z            the z position of the user
+     */
     private void renderWings(EntityPlayer player, float partialTicks, double x, double y,
-        double z) {
+                             double z) {
         double scale = 80.0 / 100.0;
         double rotate = this
-            .interpolate(player.prevRenderYawOffset, player.renderYawOffset, partialTicks);
-        GL11.glPushMatrix();
-        GL11.glScaled(-scale, -scale, scale);
-        GL11.glRotated(180.0 + rotate, 0.0, 1.0, 0.0);
-        GL11.glTranslated(0.0, -(this.playerUsesFullHeight ? 1.45 : 1.25) / scale, 0.0);
-        GL11.glTranslated(0.0, 0.0, 0.125 / scale);
+                .interpolate(player.prevRenderYawOffset, player.renderYawOffset, partialTicks);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, z);
+
+        GlStateManager.scale(-scale, -scale, scale);
+        GlStateManager.rotate((float) (180.0F + rotate), 0.0F, 1.0F, 0.0F);
+
+        float scaledHeight = (float) ((this.playerUsesFullHeight ? 1.45 : 1.25) / scale);
+
+        GlStateManager.translate(0.0F, -scaledHeight, 0.0F);
+        GlStateManager.translate(0.0F, 0.0F, 0.15F / scale);
+
         if (player.isSneaking()) {
             GL11.glTranslated(0.0, 0.125 / scale, 0.0);
         }
+
         this.mc.getTextureManager().bindTexture(texture);
         for (int j = 0; j < 2; ++j) {
             GL11.glEnable(2884);
@@ -86,6 +137,14 @@ public class WingsRenderer extends ModelBase {
         GL11.glPopMatrix();
     }
 
+    /**
+     * Used to animate the wings
+     *
+     * @param yaw1    x
+     * @param yaw2    y
+     * @param percent 0 - 360
+     * @return the rotation value
+     */
     private float interpolate(float yaw1, float yaw2, float percent) {
         float f = (yaw1 + (yaw2 - yaw1) * percent) % 360.0f;
         if (f < 0.0f) {

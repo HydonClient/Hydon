@@ -6,17 +6,30 @@
     "IMixinMinecraft",
     "MixinMinecraft",
 
+    "client.MixinLoadingScreenRenderer",
     "client.MixinClientBrandRetriever",
 
+    "client.entity.MixinAbstractClientPlayer",
+    "client.entity.MixinEntityPlayerSP",
+
     "client.gui.IMixinGuiNewChat",
+    "client.gui.MixinFontRenderer",
+    "client.gui.MixinGui",
+    "client.gui.MixinGuiButton",
+    "client.gui.MixinGuiButtonLanguage",
     "client.gui.MixinGuiDisconnected",
+    "client.gui.MixinGuiDownloadTerrain",
     "client.gui.MixinGuiGameOver",
     "client.gui.MixinGuiIngame",
     "client.gui.MixinGuiIngameMenu",
     "client.gui.MixinGuiNewChat",
+    "client.gui.MixinGuiOptionSlider",
     "client.gui.MixinGuiOverlayDebug",
     "client.gui.MixinGuiPlayerTabOverlay",
     "client.gui.MixinGuiScreen",
+    "client.gui.MixinGuiSlider",
+    "client.gui.MixinGuiSlot",
+    "client.gui.MixinGuiTextField",
     "client.gui.MixinGuiUtilRenderComponents",
 
     "client.multiplayer.MixinGuiConnecting",
@@ -40,27 +53,16 @@
 
     "client.settings.MixinKeyBinding",
 
-    "entity.MixinAbstractClientPlayer",
     "entity.MixinEntity",
     "entity.MixinEntityLivingBase",
-    "entity.MixinEntityPlayerSP",
-
-    "gui.MixinFontRenderer",
-    "gui.MixinGui",
-    "gui.MixinGuiButton",
-    "gui.MixinGuiButtonLanguage",
-    "gui.MixinGuiDownloadTerrain",
-    "gui.MixinGuiOptionSlider",
-    "gui.MixinGuiScreen",
-    "gui.MixinGuiSlider",
-    "gui.MixinGuiSlot",
-    "gui.MixinGuiTextField",
-    "gui.MixinLoadingScreenRenderer",
 
     "network.MixinNetHandlerPlayClient",
     "network.MixinNetworkManager",
 
     "network.play.server.MixinS2EPacketCloseWindow",
+    "network.play.server.MixinS14PacketEntity",
+    "network.play.server.MixinS19PacketEntityHeadLook",
+    "network.play.server.MixinS19PacketEntityStatus",
 
     "scoreboard.MixinScoreboard",
 

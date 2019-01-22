@@ -1,6 +1,7 @@
 package net.hydonclient.mods.blur;
 
 import com.google.common.base.Throwables;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -31,6 +32,11 @@ public class BlurMod extends Mod {
         EventBus.register(this);
     }
 
+    /**
+     * Renders the blur shaders to the background of the container
+     *
+     * @param e the event being used
+     */
     @EventListener
     public void onRenderTick(RenderTickEvent e) {
         if (Hydon.SETTINGS.blurEnabled) {
@@ -57,12 +63,18 @@ public class BlurMod extends Mod {
         }
     }
 
+    /**
+     * Called when a Gui is opened
+     * If the opened Gui is GuiChat, cancel the shader
+     *
+     * @param e the event being used
+     */
     @EventListener
     public void onGuiDisplayed(GuiDisplayEvent e) {
         if (e.getGuiScreen() == null || e.getGuiScreen() instanceof GuiChat) {
             GuiUtils.unloadShader();
         } else if (Minecraft.getMinecraft().theWorld != null && Minecraft
-            .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer) && !Minecraft.getMinecraft().entityRenderer.isShaderActive()) {
+                .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer) && !Minecraft.getMinecraft().entityRenderer.isShaderActive()) {
             start = System.currentTimeMillis();
             GuiUtils.applyShader(new ResourceLocation("minecraft", "shaders/post/fade_in_blur.json"));
         }

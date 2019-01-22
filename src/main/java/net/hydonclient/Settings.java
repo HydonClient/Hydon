@@ -126,6 +126,9 @@ public class Settings {
     @SaveVal
     public boolean heldPerspective = true;
 
+    @SaveVal
+    public boolean hydonButtons = true;
+
     public boolean isBoChroma() {
         return boChroma;
     }

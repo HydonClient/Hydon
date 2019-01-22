@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import me.semx11.autotip.Autotip;
 import me.semx11.autotip.chat.MessageUtil;
 import me.semx11.autotip.config.GlobalSettings;

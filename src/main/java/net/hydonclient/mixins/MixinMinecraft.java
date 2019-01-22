@@ -3,6 +3,7 @@ package net.hydonclient.mixins;
 import net.hydonclient.Hydon;
 import net.hydonclient.SplashScreen;
 import net.hydonclient.event.EventBus;
+import net.hydonclient.event.events.game.WorldChangedEvent;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
 import net.hydonclient.event.events.gui.MouseInputEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
@@ -122,6 +123,11 @@ public abstract class MixinMinecraft {
     @Inject(method = "toggleFullscreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setVSyncEnabled(Z)V", shift = Shift.AFTER))
     private void toggleFullscreen(CallbackInfo ci) throws LWJGLException {
         impl.toggleFullscreen(fullscreen, displayWidth, displayHeight, ci);
+    }
+
+    @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("RETURN"))
+    private void loadWorld(WorldClient worldClient, String loadingMessage, CallbackInfo callbackInfo) {
+        EventBus.call(new WorldChangedEvent());
     }
 
     /**

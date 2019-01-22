@@ -1,7 +1,7 @@
 package net.hydonclient.mixinsimp.util;
 
 import net.hydonclient.integrations.asyncscreenshotsaver.AsyncScreenshotSaver;
-import net.hydonclient.util.ChatColor;
+import net.hydonclient.util.maps.ChatColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;

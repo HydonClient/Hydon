@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.NumberFormat;
+
 import net.hydonclient.Hydon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -32,31 +33,31 @@ public class GuiUtils {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
 
         if (!(Minecraft.getMinecraft().theWorld != null && Minecraft
-            .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer))
-            || overrideWorldCheck) {
+                .getMinecraft().theWorld.playerEntities.contains(Minecraft.getMinecraft().thePlayer))
+                || overrideWorldCheck) {
             Minecraft.getMinecraft().getTextureManager()
-                .bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
+                    .bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, sr.getScaledWidth(),
-                sr.getScaledHeight(),
-                sr.getScaledWidth(), sr.getScaledHeight());
+                    sr.getScaledHeight(),
+                    sr.getScaledWidth(), sr.getScaledHeight());
         }
     }
 
     public static void drawIngameGuiGradient() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         Gui.drawRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(),
-            new Color(0, 0, 0, 120).getRGB());
+                new Color(0, 0, 0, 120).getRGB());
     }
 
     public static void applyShader(ResourceLocation path) {
         Method method = ReflectionUtils
-            .getMethod(EntityRenderer.class, new String[]{"loadShader", "a"},
-                new Class[]{ResourceLocation.class});
+                .getMethod(EntityRenderer.class, new String[]{"loadShader", "a"},
+                        new Class[]{ResourceLocation.class});
         assert method != null;
         method.setAccessible(true);
         try {
             method.invoke(Minecraft.getMinecraft().entityRenderer,
-                path);
+                    path);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -78,16 +79,16 @@ public class GuiUtils {
 
         mc.getTextureManager().bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
         Gui.drawModalRectWithCustomSizedTexture(0, startY, 0, startY, sr.getScaledWidth(), endY,
-            sr.getScaledWidth(), sr.getScaledHeight());
+                sr.getScaledWidth(), sr.getScaledHeight());
     }
 
     public static Point getMouse() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         int i = Mouse.getEventX() * scaledResolution.getScaledWidth() / Minecraft
-            .getMinecraft().displayWidth;
+                .getMinecraft().displayWidth;
         int j = scaledResolution.getScaledHeight()
-            - Mouse.getEventY() * scaledResolution.getScaledHeight() / Minecraft
-            .getMinecraft().displayHeight - 1;
+                - Mouse.getEventY() * scaledResolution.getScaledHeight() / Minecraft
+                .getMinecraft().displayHeight - 1;
         return new Point(i, j);
     }
 

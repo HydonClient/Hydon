@@ -22,7 +22,7 @@ public class HydonRenderPlayer {
     }
 
     public void renderRightArm(AbstractClientPlayer clientPlayer, CallbackInfo ci) {
-        ModelPlayer modelplayer =  renderPlayer.getMainModel();
+        ModelPlayer modelplayer = renderPlayer.getMainModel();
         modelplayer.isRiding = modelplayer.isSneak = false;
     }
 }

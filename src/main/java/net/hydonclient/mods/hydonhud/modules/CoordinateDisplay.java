@@ -5,7 +5,10 @@ import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.player.EntityPlayer;
+
+import java.awt.*;
 import java.text.DecimalFormat;
 
 public class CoordinateDisplay extends Gui {
@@ -19,6 +22,10 @@ public class CoordinateDisplay extends Gui {
 
     @EventListener
     public void display(RenderGameOverlayEvent event) {
+        if (!core.getConfig().SHOW_COORDS_IN_CHAT && Minecraft.getMinecraft().currentScreen instanceof GuiChat) {
+            return;
+        }
+
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         String coords;
         if (player != null) {
@@ -33,7 +40,7 @@ public class CoordinateDisplay extends Gui {
 
                 DecimalFormat format = new DecimalFormat(expandedCoordinates.toString());
 
-                if (core.getConfig().SURROUNDING_CHARS == 0) {
+                if (!core.getConfig().COORDS_PARENTHESES) {
                     coords = ("x: " + format.format(player.posX) +
                             ", y: " + format.format(player.posY) +
                             ", z: " + format.format(player.posZ));
@@ -44,10 +51,12 @@ public class CoordinateDisplay extends Gui {
                 }
 
                 if (core.getConfig().COORDINATES && !Minecraft.getMinecraft().gameSettings.showDebugInfo) {
-                    if (core.getConfig().SHADOW) {
-                        core.drawStringWithShadow(coords);
+                    if (core.getConfig().COORDS_SHADOW) {
+                        core.drawStringWithShadow(coords, core.getConfig().coordsX, core.getConfig().coordsY,
+                                new Color(core.getConfig().COORDS_RED, core.getConfig().COORDS_GREEN, core.getConfig().COORDS_BLUE).getRGB());
                     } else {
-                        core.drawString(coords);
+                        core.drawString(coords, core.getConfig().coordsX, core.getConfig().coordsY,
+                                new Color(core.getConfig().COORDS_RED, core.getConfig().COORDS_GREEN, core.getConfig().COORDS_BLUE).getRGB());
                     }
                 }
             }

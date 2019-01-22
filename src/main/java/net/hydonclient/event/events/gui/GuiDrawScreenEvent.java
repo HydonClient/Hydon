@@ -11,6 +11,14 @@ public class GuiDrawScreenEvent extends Event {
     private int mouseY;
     private float partialTicks;
 
+    /**
+     * Fires when a Gui is drawn
+     *
+     * @param screen       the players screen
+     * @param mouseX       the players current mouse pos x
+     * @param mouseY       the players current mouse pos y
+     * @param partialTicks the world tick
+     */
     public GuiDrawScreenEvent(GuiScreen screen, int mouseX, int mouseY, float partialTicks) {
         this.screen = screen;
 
