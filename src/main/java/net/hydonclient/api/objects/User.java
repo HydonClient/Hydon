@@ -11,6 +11,7 @@ import net.hydonclient.api.UserManager;
 public class User {
 
     private String lastUsername;
+    private boolean admin;
     private UUID uuid;
     private long lastLoginTime, firstSeen;
 
@@ -26,10 +27,13 @@ public class User {
             result.has("lastUsername") && !result.get("lastUsername").isJsonNull() ? result.get("lastUsername").getAsString() : "";
         this.lastLoginTime = result.get("lastLoginTime").getAsLong();
         this.firstSeen = result.get("firstSeen").getAsLong();
+        this.admin = result.has("admin") && result.get("admin").getAsBoolean();
 
         for (JsonElement element : result.getAsJsonArray("cosmetics")) {
             JsonObject jsonObject = element.getAsJsonObject();
             Cosmetic cosmetic = new Cosmetic(jsonObject.get("name").getAsString());
+            cosmetic.setEnabled(
+                !jsonObject.has("enabled") || jsonObject.get("enabled").getAsBoolean());
             cosmetic.setData(jsonObject.getAsJsonObject("data"));
             cosmetics.add(cosmetic);
         }
@@ -63,7 +67,7 @@ public class User {
 
     public boolean hasUnlockedCosmetic(EnumCosmetic cosmetic) {
         return getCosmetics().stream()
-            .anyMatch(cosmetic1 -> cosmetic1.getName().equalsIgnoreCase(cosmetic.name()));
+            .anyMatch(cosmetic1 -> cosmetic1.getName().equalsIgnoreCase(cosmetic.name()) && cosmetic1.isEnabled());
     }
 
     public String getCapeUrl() {
@@ -73,5 +77,9 @@ public class User {
             }
         }
         return "";
+    }
+
+    public boolean isAdmin() {
+        return admin;
     }
 }

@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import net.hydonclient.api.objects.EnumCosmetic;
 import net.hydonclient.api.objects.User;
 import net.hydonclient.cosmetics.capes.Capes;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.game.WorldChangedEvent;
+import net.hydonclient.util.Multithreading;
+import net.minecraft.client.Minecraft;
 
 public class UserManager {
 
@@ -33,6 +36,24 @@ public class UserManager {
         userMap.clear();
         processingList.clear();
         Capes.getCapes().clear();
+    }
+
+    public void reprocess(UUID uuid) {
+        Multithreading.run(() -> {
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            userMap.remove(uuid);
+            processingList.remove(uuid);
+            Capes.getCapes().remove(uuid);
+            User user = UserManager.getInstance().getUser(uuid);
+            Capes.loadCape(uuid,
+                user.hasUnlockedCosmetic(EnumCosmetic.CAPE) ? user.getCapeUrl()
+                    : String.format("http://s.optifine.net/capes/%s.png",
+                        Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid).getName()));
+        });
     }
 
     public boolean isProcessing(UUID uuid) {
