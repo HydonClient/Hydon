@@ -45,7 +45,7 @@ public class Hydon {
         LOGGER.info("Connecting to Netty");
         Multithreading.run(() -> {
             Session session = Minecraft.getMinecraft().getSession();
-            NetClientBuilder.create(Constants.CLIENT_BRAND_MINECRAFT, "1.0", "netty.kodingking.com",
+            NetClientBuilder.create(Constants.CLIENT_BRAND_MINECRAFT, "1.0", "localhost",
                 Constants.SERVER_BIND_PORT).setAutoReconnect()
                 .withMinecraftAuth(session.getUsername(), session.getToken(),
                     session.getProfile().getId()).boot();
