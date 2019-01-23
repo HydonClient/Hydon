@@ -45,6 +45,9 @@ public class UserManager {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid) == null) {
+                return;
+            }
             userMap.remove(uuid);
             processingList.remove(uuid);
             Capes.getCapes().remove(uuid);

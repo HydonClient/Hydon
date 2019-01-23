@@ -20,7 +20,7 @@ public class MainListener extends ListenerAdapter {
         if (packet instanceof SPacketLoginSuccess) {
             User user = UserManager.getInstance()
                 .getUser(Minecraft.getMinecraft().getSession().getProfile().getId());
-            if (user.isAdmin()) {
+            if (user != null && user.isAdmin()) {
                 HydonManagers.INSTANCE.getCommandManager().register(new CommandHydonAnnounce());
             }
         } else if (packet instanceof SPacketReloadUser) {
