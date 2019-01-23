@@ -64,6 +64,9 @@ public class Settings {
     public boolean wingsEnabled = true;
 
     @SaveVal
+    public double wingsScale = 80D;
+
+    @SaveVal
     public boolean keyStrokesChroma = true;
 
     @SaveVal
@@ -134,6 +137,9 @@ public class Settings {
 
     @SaveVal
     public float rotateSpeed = 1.0F;
+
+    @SaveVal
+    public boolean fullbright = false;
 
     public boolean isBoChroma() {
         return boChroma;

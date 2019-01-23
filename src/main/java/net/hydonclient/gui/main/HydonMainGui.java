@@ -143,14 +143,17 @@ public class HydonMainGui extends GuiScreen {
         controller.addElements(oldAnimationsElement);
 
         SettingsDropdownElement cosmeticElement = new SettingsDropdownElement("Cosmetics");
+        SettingGroup wings = new SettingGroup("Wings");
 
-        SettingGroup staffCosmetics = new SettingGroup("Staff Modules");
-
-        staffCosmetics.addElements(
+        wings.addElements(
                 new SettingsToggle("Wings", Hydon.SETTINGS.wingsEnabled,
                         result -> Hydon.SETTINGS.wingsEnabled = result));
+        wings.addElements(
+                new SettingsSlider("Scale: ", "",
+                        60, 200, Hydon.SETTINGS.wingsScale, false,
+                        value -> Hydon.SETTINGS.wingsScale = (int) value));
 
-        cosmeticElement.addElements(staffCosmetics);
+        cosmeticElement.addElements(wings);
 
         controller.addElements(cosmeticElement);
 
@@ -193,6 +196,9 @@ public class HydonMainGui extends GuiScreen {
         generalImprovements.addElements(
                 new SettingsToggle("Disable Scoreboard", Hydon.SETTINGS.disableScoreboard,
                         result -> Hydon.SETTINGS.disableScoreboard = result));
+        generalImprovements.addElements(
+                new SettingsToggle("Fullbright", Hydon.SETTINGS.fullbright,
+                        result -> Hydon.SETTINGS.fullbright = result));
 
         improvements.addElements(framerateImprovements, generalImprovements);
         controller.addElements(improvements);

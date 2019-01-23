@@ -21,7 +21,6 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -67,7 +66,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
-        Display.setTitle("[STARTING] Hydon // " + Hydon.VERSION);
+        Display.setTitle("[STARTING] Hydon (" + Hydon.VERSION + ")");
     }
 
     @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;drawSplashScreen(Lnet/minecraft/client/renderer/texture/TextureManager;)V", shift = At.Shift.AFTER))
@@ -132,6 +131,7 @@ public abstract class MixinMinecraft {
 
     /**
      * @author Koding
+     * @reason Create the main menu
      */
     @Overwrite
     public void displayGuiScreen(GuiScreen guiScreenIn) {
@@ -178,7 +178,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "startGame", at = @At("RETURN"))
     private void startGame2(CallbackInfo callbackInfo) {
-        Display.setTitle("Hydon // " + Hydon.VERSION);
+        Display.setTitle("Hydon (" + Hydon.VERSION + ")");
     }
 
     @Inject(method = "shutdown", at = @At("HEAD"))
@@ -193,6 +193,7 @@ public abstract class MixinMinecraft {
 
     /**
      * @author Koding
+     * @reason Custom splash screen
      */
     @Overwrite
     private void drawSplashScreen(TextureManager textureManagerInstance) {

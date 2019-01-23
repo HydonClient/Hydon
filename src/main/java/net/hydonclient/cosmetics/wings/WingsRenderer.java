@@ -58,11 +58,11 @@ public class WingsRenderer extends ModelBase {
         }
     }
 
-    // TODO: adjustable scale & complete rework of this for a fully custom one
+    // TODO: complete rework of this for a fully custom one
 
     private void renderWings(EntityPlayer player, float partialTicks, double x, double y,
         double z) {
-        double scale = 80.0 / 100.0;
+        double scale = Hydon.SETTINGS.wingsScale / 100.0;
         double rotate = this
             .interpolate(player.prevRenderYawOffset, player.renderYawOffset, partialTicks);
 

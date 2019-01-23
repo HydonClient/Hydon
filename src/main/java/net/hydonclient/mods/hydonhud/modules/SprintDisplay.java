@@ -37,10 +37,10 @@ public class SprintDisplay extends Gui {
 
             if (core.getConfig().SPRINT_SHADOW) {
                 core.drawStringWithShadow(status, core.getConfig().statusX, core.getConfig().statusY,
-                        new Color(core.getConfig().FPS_RED, core.getConfig().FPS_GREEN, core.getConfig().FPS_BLUE).getRGB());
+                        new Color(core.getConfig().STATUS_RED, core.getConfig().STATUS_GREEN, core.getConfig().STATUS_BLUE).getRGB());
             } else {
                 core.drawString(status, core.getConfig().statusX, core.getConfig().statusY,
-                        new Color(core.getConfig().FPS_RED, core.getConfig().FPS_GREEN, core.getConfig().FPS_BLUE).getRGB());
+                        new Color(core.getConfig().STATUS_RED, core.getConfig().STATUS_GREEN, core.getConfig().STATUS_BLUE).getRGB());
             }
         }
     }
