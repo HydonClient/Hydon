@@ -25,7 +25,7 @@ public class MainListener extends ListenerAdapter {
     public void onReceived(ChannelHandlerContext connection, IPacket packet) {
         if (packet instanceof SPacketLoginSuccess) {
             User user = UserManager.getInstance()
-                    .getUser(Minecraft.getMinecraft().getSession().getProfile().getId());
+                .getUser(Minecraft.getMinecraft().getSession().getProfile().getId());
             if (user != null && user.isAdmin()) {
                 HydonManagers.INSTANCE.getCommandManager().register(new CommandHydonAnnounce());
             }
