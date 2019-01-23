@@ -3,13 +3,14 @@ package net.hydonclient.mods.hydonhud.modules;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.mods.hydonhud.HydonHUD;
+import net.hydonclient.mods.hydonhud.builder.ModuleBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 
 import java.awt.*;
 
-public class SprintDisplay extends Gui {
+public class SprintDisplay extends Gui implements ModuleBuilder {
 
     private HydonHUD core;
     private String status;

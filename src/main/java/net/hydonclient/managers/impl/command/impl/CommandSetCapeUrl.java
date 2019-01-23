@@ -19,7 +19,7 @@ public class CommandSetCapeUrl extends Command {
 
     @Override
     public String getUsage() {
-        return "setcapeurl <URL>";
+        return "setcapeurl <reset|URL>";
     }
 
     @Override
@@ -28,6 +28,12 @@ public class CommandSetCapeUrl extends Command {
             sendMsg("Usage: " + getUsage());
         } else {
             String url = args[0];
+            if (url.endsWith("reset")) {
+                UniversalNetty.getCurrentBootstrap()
+                    .sendPacket(new CPacketSetCapeUrl(ClientData.INSTANCE.getClientUuid(), "https://github.com/HydonClient/Repo/raw/master/capes/staff-cape.png"));
+                sendMsg("Reset cape url.");
+                return;
+            }
             if (!url.toLowerCase().endsWith(".png") && !url.toLowerCase().endsWith(".jpg") && !url.toLowerCase().endsWith(".jpeg")) {
                 sendMsg("Enter a valid image URL.");
                 return;

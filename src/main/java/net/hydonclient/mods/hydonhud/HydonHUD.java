@@ -7,6 +7,7 @@ import net.hydonclient.mods.Mod.Info;
 import net.hydonclient.mods.hydonhud.config.HydonHUDSettings;
 import net.hydonclient.mods.hydonhud.modules.CoordinateDisplay;
 import net.hydonclient.mods.hydonhud.modules.FPSDisplay;
+import net.hydonclient.mods.hydonhud.modules.PotionDisplay;
 import net.hydonclient.mods.hydonhud.modules.SprintDisplay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -38,10 +39,17 @@ public class HydonHUD extends Mod {
         mc = Minecraft.getMinecraft();
         fontRenderer = mc.fontRendererObj;
         gui = new Gui();
-        EventBus.register(new CoordinateDisplay(this));
-        EventBus.register(new FPSDisplay(this));
-        EventBus.register(new SprintDisplay(this));
+
+        registerModule(new CoordinateDisplay(this));
+        registerModule(new FPSDisplay(this));
+        registerModule(new PotionDisplay(this));
+        registerModule(new SprintDisplay(this));
+
         HydonManagers.INSTANCE.getConfigManager().register(config);
+    }
+
+    private void registerModule(Object obj) {
+        EventBus.register(obj);
     }
 
     public HydonHUDSettings getConfig() {

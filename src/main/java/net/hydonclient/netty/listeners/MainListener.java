@@ -15,12 +15,18 @@ import net.minecraft.client.Minecraft;
 
 public class MainListener extends ListenerAdapter {
 
+    /**
+     * Receive a packet from the Hydon Netty servers
+     *
+     * @param connection the channel the packet is being sent through
+     * @param packet     the packet being sent
+     */
     @Override
     public void onReceived(ChannelHandlerContext connection, IPacket packet) {
         if (packet instanceof SPacketLoginSuccess) {
             User user = UserManager.getInstance()
-                .getUser(Minecraft.getMinecraft().getSession().getProfile().getId());
-            if (user.isAdmin()) {
+                    .getUser(Minecraft.getMinecraft().getSession().getProfile().getId());
+            if (user != null && user.isAdmin()) {
                 HydonManagers.INSTANCE.getCommandManager().register(new CommandHydonAnnounce());
             }
         } else if (packet instanceof SPacketReloadUser) {

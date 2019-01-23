@@ -1,6 +1,7 @@
 package net.hydonclient.mods.hydonhud.config;
 
 import net.hydonclient.managers.impl.config.SaveVal;
+import net.hydonclient.mods.hydonhud.modules.maps.EnumSeparators;
 
 public class HydonHUDSettings {
 
@@ -73,4 +74,26 @@ public class HydonHUDSettings {
     public int STATUS_GREEN = 255;
     @SaveVal
     public int STATUS_BLUE = 255;
+
+    /**
+     * Potion Display Settings
+     */
+    @SaveVal
+    public boolean POTIONSTATUS = false;
+    @SaveVal
+    public boolean POTIONSTATUS_PARENTHESES = false;
+    @SaveVal
+    public boolean POTIONSTATUS_SHADOW = false;
+    @SaveVal
+    public int potionStatusX = 1;
+    @SaveVal
+    public int potionStatusY = 1;
+    @SaveVal
+    public boolean SHOW_POTIONSTATUS_IN_CHAT = false;
+    @SaveVal
+    public int POTIONSTATUS_SEPARATOR = 0;
+
+    public EnumSeparators getSeparator() {
+        return EnumSeparators.values()[POTIONSTATUS_SEPARATOR];
+    }
 }

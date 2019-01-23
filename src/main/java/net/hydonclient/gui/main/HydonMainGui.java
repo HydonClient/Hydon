@@ -3,6 +3,7 @@ package net.hydonclient.gui.main;
 import java.awt.*;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Collection;
 
 import me.aycy.blockoverlay.utils.BlockOverlayMode;
 import net.hydonclient.Hydon;
@@ -19,13 +20,18 @@ import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.hydonclient.mods.hydonhud.modules.display.MoveCoordsElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveFPSElement;
+import net.hydonclient.mods.hydonhud.modules.display.MovePotionStatusElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveSprintingElement;
+import net.hydonclient.mods.hydonhud.modules.maps.EnumSeparators;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -58,24 +64,14 @@ public class HydonMainGui extends GuiScreen {
     private SettingGroup keyStrokesElements;
 
     /**
-     * The coords elements
+     * The Hydon HUD elements
      */
-    private SettingGroup coordsElements;
-
-    /**
-     * The fps elements
-     */
-    private SettingGroup fpsElements;
-
-    /**
-     * The sprint status elements
-     */
-    private SettingGroup sprintElements;
+    private SettingGroup coordsElements, fpsElements, sprintElements, potionDisplayElements;
 
     /**
      * Buttons that are ran through enums and have multiple options
      */
-    public static SettingsButton outlineModeButton, currentBackgroundButton;
+    public static SettingsButton outlineModeButton, currentBackgroundButton, seperatorButton;
 
     /**
      * The Hydon hud to make things easy
@@ -279,8 +275,7 @@ public class HydonMainGui extends GuiScreen {
                 "Outline Mode: " + Hydon.SETTINGS.getBoMode().getName(),
                 BlockOverlayMode::cycleNextMode);
         blockOverlayElements.addElements(
-                outlineModeButton
-        );
+                outlineModeButton);
         blockOverlayElements.addElements(
                 new SettingsToggle("Persistent", Hydon.SETTINGS.boPersistent,
                         result -> Hydon.SETTINGS.boPersistent = result));
@@ -457,7 +452,29 @@ public class HydonMainGui extends GuiScreen {
                 new SettingsButton("Position",
                         () -> Minecraft.getMinecraft().displayGuiScreen(new MoveSprintingElement(hud))));
 
-        hudItems.addElements(note, coordsElements, fpsElements, sprintElements);
+        potionDisplayElements = new SettingGroup("Potion Status");
+        potionDisplayElements.addElements(
+                new SettingsToggle("Potion Status", hud.getConfig().POTIONSTATUS,
+                        result -> hud.getConfig().POTIONSTATUS = result));
+        potionDisplayElements.addElements(
+                new SettingsToggle("Shadow", hud.getConfig().POTIONSTATUS_SHADOW,
+                        result -> hud.getConfig().POTIONSTATUS_SHADOW = result));
+        potionDisplayElements.addElements(
+                new SettingsToggle("Show in Chat", hud.getConfig().SHOW_POTIONSTATUS_IN_CHAT,
+                        result -> hud.getConfig().SHOW_POTIONSTATUS_IN_CHAT = result));
+        potionDisplayElements.addElements(
+                new SettingsToggle("Parentheses", hud.getConfig().POTIONSTATUS_PARENTHESES,
+                        result -> hud.getConfig().POTIONSTATUS_PARENTHESES = result));
+        /* seperatorButton = new SettingsButton(
+                "Separators: " + hud.getConfig().getSeparator().getSeparatorOption(),
+                EnumSeparators::cycleSeparators);
+        potionDisplayElements.addElements(
+                seperatorButton); */
+        potionDisplayElements.addElements(
+                new SettingsButton("Position",
+                        () -> Minecraft.getMinecraft().displayGuiScreen(new MovePotionStatusElement(hud))));
+
+        hudItems.addElements(note, coordsElements, fpsElements, sprintElements, potionDisplayElements);
         controller.addElements(hudItems);
     }
 
@@ -552,6 +569,44 @@ public class HydonMainGui extends GuiScreen {
                 hud.drawCenteredString(status, this.width,
                         new Color(hud.getConfig().STATUS_RED, hud.getConfig().STATUS_GREEN, hud.getConfig().STATUS_BLUE).
                                 getRGB());
+            }
+
+            if (currentGroup == potionDisplayElements) {
+                Collection<PotionEffect> effects;
+                effects = hud.getMinecraft().thePlayer.getActivePotionEffects();
+
+                for (PotionEffect potionEffect : effects) {
+                    Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
+
+                    StringBuilder effectName = new StringBuilder(I18n.format(potion.getName()));
+
+                    if (potionEffect.getAmplifier() == 1) {
+                        effectName.append(" ").append(
+                                I18n.format("enchantment.level.2"));
+
+                    } else if (potionEffect.getAmplifier() == 2) {
+                        effectName.append(" ").append(
+                                I18n.format("enchantment.level.3"));
+
+                    } else if (potionEffect.getAmplifier() == 3) {
+                        effectName.append(" ").append(
+                                I18n.format("enchantment.level.4"));
+                    }
+
+                    String duration = Potion.getDurationString(potionEffect);
+                    String jointedText;
+
+                    // TODO: fix the NPE when changing the separator (any reason why an npe is being thrown?), then replace " * " with the used separator
+                    if (hud.getConfig().POTIONSTATUS) {
+                        if (!hud.getConfig().POTIONSTATUS_PARENTHESES) {
+                            jointedText = ("" + effectName + " * " + duration);
+                        } else {
+                            jointedText = ("(" + effectName + " * " + duration + ")");
+                        }
+
+                        hud.drawCenteredString(jointedText, this.width, 16777215);
+                    }
+                }
             }
         }
 

@@ -3,6 +3,7 @@ package net.hydonclient.mods.hydonhud.modules;
 import net.hydonclient.event.EventListener;
 import net.hydonclient.event.events.render.RenderGameOverlayEvent;
 import net.hydonclient.mods.hydonhud.HydonHUD;
+import net.hydonclient.mods.hydonhud.builder.ModuleBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
@@ -11,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import java.awt.*;
 import java.text.DecimalFormat;
 
-public class CoordinateDisplay extends Gui {
+public class CoordinateDisplay extends Gui implements ModuleBuilder {
 
 
     private HydonHUD core;
