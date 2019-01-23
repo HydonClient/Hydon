@@ -1,5 +1,6 @@
 package net.hydonclient;
 
+import com.kodingking.mods.core.KodingMod;
 import com.kodingking.netty.client.NetClientBuilder;
 import com.kodingking.netty.universal.Constants;
 import com.kodingking.netty.universal.UniversalNetty;
@@ -24,6 +25,7 @@ public class Hydon {
     public static final File STORAGE_FOLDER = new File(Minecraft.getMinecraft().mcDataDir, "Hydon");
     public static final String VERSION = "B1";
     public static final Settings SETTINGS = new Settings();
+    public static final KodingMod KODING_MOD = new KodingMod("hydon", "Hydon", VERSION);
 
     /**
      * Invoked when the client starts.
@@ -34,6 +36,9 @@ public class Hydon {
         if (!STORAGE_FOLDER.exists()) {
             STORAGE_FOLDER.mkdirs();
         }
+
+        LOGGER.info("Loading Koding mod");
+        KODING_MOD.init();
 
         LOGGER.info("Loading managers");
         HydonManagers.INSTANCE.init();

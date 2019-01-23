@@ -21,7 +21,7 @@ public class HydonManagers {
     private CommandManager commandManager;
 
     /**
-     * The mods manager
+     * The mod manager
      */
     private ModManager modManager;
 

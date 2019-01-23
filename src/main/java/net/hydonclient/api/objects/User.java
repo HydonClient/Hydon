@@ -24,9 +24,12 @@ public class User {
         JsonObject result = HydonApi.getUser(uuid);
 
         this.lastUsername =
-            result.has("lastUsername") && !result.get("lastUsername").isJsonNull() ? result.get("lastUsername").getAsString() : "";
-        this.lastLoginTime = result.get("lastLoginTime").getAsLong();
-        this.firstSeen = result.get("firstSeen").getAsLong();
+            result.has("lastUsername") && !result.get("lastUsername").isJsonNull() ? result
+                .get("lastUsername").getAsString() : "";
+        this.lastLoginTime = result.has("lastLoginTime") ? result.get("lastLoginTime").getAsLong()
+            : System.currentTimeMillis();
+        this.firstSeen = result.has("firstSeen") ? result.get("firstSeen").getAsLong() : System
+            .currentTimeMillis();
         this.admin = result.has("admin") && result.get("admin").getAsBoolean();
 
         for (JsonElement element : result.getAsJsonArray("cosmetics")) {
@@ -67,12 +70,15 @@ public class User {
 
     public boolean hasUnlockedCosmetic(EnumCosmetic cosmetic) {
         return getCosmetics().stream()
-            .anyMatch(cosmetic1 -> cosmetic1.getName().equalsIgnoreCase(cosmetic.name()) && cosmetic1.isEnabled());
+            .anyMatch(
+                cosmetic1 -> cosmetic1.getName().equalsIgnoreCase(cosmetic.name()) && cosmetic1
+                    .isEnabled());
     }
 
     public String getCapeUrl() {
         for (Cosmetic cosmetic : getCosmetics()) {
-            if (cosmetic.getName().equalsIgnoreCase(EnumCosmetic.CAPE.name()) && cosmetic.getData().has("url")) {
+            if (cosmetic.getName().equalsIgnoreCase(EnumCosmetic.CAPE.name()) && cosmetic.getData()
+                .has("url")) {
                 return cosmetic.getData().get("url").getAsString();
             }
         }
