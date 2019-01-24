@@ -17,6 +17,7 @@ import net.hydonclient.gui.main.tab.SettingGroup;
 import net.hydonclient.gui.main.tab.SettingsDropdownElement;
 import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
+import net.hydonclient.mods.chatlocker.ChatLocker;
 import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.hydonclient.mods.hydonhud.modules.display.MoveCoordsElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveFPSElement;
@@ -193,8 +194,14 @@ public class HydonMainGui extends GuiScreen {
                 new SettingsToggle("Disable Scoreboard", Hydon.SETTINGS.disableScoreboard,
                         result -> Hydon.SETTINGS.disableScoreboard = result));
         generalImprovements.addElements(
+                new SettingsToggle("Disable Enchantments", Hydon.SETTINGS.disableEnchantments,
+                        result -> Hydon.SETTINGS.disableEnchantments = result));
+        generalImprovements.addElements(
                 new SettingsToggle("Fullbright", Hydon.SETTINGS.fullbright,
                         result -> Hydon.SETTINGS.fullbright = result));
+        generalImprovements.addElements(
+                new SettingsToggle("Chat Locker", ChatLocker.CHATLOCKER,
+                        result -> ChatLocker.CHATLOCKER = result));
 
         improvements.addElements(framerateImprovements, generalImprovements);
         controller.addElements(improvements);

@@ -141,6 +141,9 @@ public class Settings {
     @SaveVal
     public boolean fullbright = false;
 
+    @SaveVal
+    public boolean disableEnchantments = false;
+
     public boolean isBoChroma() {
         return boChroma;
     }

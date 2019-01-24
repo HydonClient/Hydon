@@ -1,6 +1,6 @@
 package net.hydonclient.commands;
 
-import net.hydonclient.commands.modules.CommandLog;
+import net.hydonclient.commands.modules.*;
 import net.hydonclient.managers.impl.command.impl.CommandToggleCosmetic;
 import net.hydonclient.managers.HydonManagers;
 
@@ -13,9 +13,11 @@ public class DefaultCommands {
      */
     public void load() {
         HydonManagers.INSTANCE.getCommandManager().register(
-            new CommandLog());
+                new CommandLog());
         HydonManagers.INSTANCE.getConfigManager().register(
                 new CommandToggleCosmetic());
+        HydonManagers.INSTANCE.getCommandManager().register(
+                new CommandGC());
     }
 
     public static DefaultCommands getInstance() {

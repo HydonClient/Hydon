@@ -44,7 +44,10 @@
     "client.renderer.entity.MixinRender",
     "client.renderer.entity.MixinRenderEntityItem",
     "client.renderer.entity.MixinRendererLivingEntity",
+    "client.renderer.entity.MixinRenderItem",
     "client.renderer.entity.MixinRenderPlayer",
+
+    "client.renderer.entity.layers.MixinLayerArmorBase",
 
     "client.renderer.tileentity.MixinRenderItemFrame",
     "client.renderer.tileentity.MixinTileEntitySignRenderer",

@@ -34,7 +34,7 @@ public abstract class MixinGuiButton extends Gui {
 
     @Final
     @Shadow
-    protected static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
+    private static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
 
     @Shadow
     protected int getHoverState(boolean mouseOver) {
