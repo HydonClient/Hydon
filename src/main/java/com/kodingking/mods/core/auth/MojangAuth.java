@@ -3,6 +3,8 @@ package com.kodingking.mods.core.auth;
 import com.google.gson.JsonObject;
 import com.kodingking.mods.core.KodingMod;
 import com.kodingking.mods.core.util.HttpUtil;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import me.semx11.autotip.util.LoginUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
@@ -21,41 +23,45 @@ public class MojangAuth {
     }
 
     public void authenticate() {
-        Session session = Minecraft.getMinecraft().getSession();
+        try {
+            Session session = Minecraft.getMinecraft().getSession();
 
-        JsonObject preResult = HttpUtil.getJson(String
-            .format(KodingMod.API_ENDPOINT + "/mod/startLoading?uuid=%s&modId=%s&modVersion=%s",
-                session.getProfile().getId().toString(), modId, modVersion));
-        if (preResult.has("success") && !preResult.get("success").getAsBoolean()) {
-            this.authenticated = false;
-            System.out.println("Authentication failed: LOADING");
-            return;
+            JsonObject preResult = HttpUtil.getJson(URLEncoder.encode(String
+                .format(KodingMod.API_ENDPOINT + "/mod/startLoading?uuid=%s&modId=%s&modVersion=%s",
+                    session.getProfile().getId().toString(), modId, modVersion), "UTF-8"));
+            if (preResult.has("success") && !preResult.get("success").getAsBoolean()) {
+                this.authenticated = false;
+                System.out.println("Authentication failed: LOADING");
+                return;
+            }
+            String hash = preResult.get("hash").getAsString();
+
+            int statusCode = LoginUtil
+                .joinServer(session.getToken(), session.getPlayerID().replace("-", ""), hash);
+            if (statusCode != 204) {
+                this.authenticated = false;
+                System.out.println("Authentication failed: JOINING");
+                return;
+            }
+
+            JsonObject postResult = HttpUtil.getJson(URLEncoder.encode(String.format(
+                KodingMod.API_ENDPOINT
+                    + "/mod/finishLoading?username=%s&hash=%s&uuid=%s&modId=%s&modVersion=%s&mcVersion=%s",
+                session.getUsername(), hash, session.getProfile().getId().toString(),
+                modId, modVersion, Minecraft.getMinecraft().getVersion()), "UTF-8"));
+            if (postResult.has("success") && !postResult.get("success").getAsBoolean()) {
+                this.authenticated = false;
+                System.out.println("Authentication failed: POST-LOAD");
+                System.out.println("Details: " + postResult.get("message").getAsString());
+                return;
+            }
+
+            this.authenticated = true;
+            this.token = postResult.get("token").getAsString();
+            System.out.println("Authentication succeed: AUTHENTIC");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        String hash = preResult.get("hash").getAsString();
-
-        int statusCode = LoginUtil
-            .joinServer(session.getToken(), session.getPlayerID().replace("-", ""), hash);
-        if (statusCode != 204) {
-            this.authenticated = false;
-            System.out.println("Authentication failed: JOINING");
-            return;
-        }
-
-        JsonObject postResult = HttpUtil.getJson(String.format(
-            KodingMod.API_ENDPOINT
-                + "/mod/finishLoading?username=%s&hash=%s&uuid=%s&modId=%s&modVersion=%s&mcVersion=%s",
-            session.getUsername(), hash, session.getProfile().getId().toString(),
-            modId, modVersion, Minecraft.getMinecraft().getVersion()));
-        if (postResult.has("success") && !postResult.get("success").getAsBoolean()) {
-            this.authenticated = false;
-            System.out.println("Authentication failed: POST-LOAD");
-            System.out.println("Details: " + postResult.get("message").getAsString());
-            return;
-        }
-
-        this.authenticated = true;
-        this.token = postResult.get("token").getAsString();
-        System.out.println("Authentication succeed: AUTHENTIC");
     }
 
     public boolean isAuthenticated() {
