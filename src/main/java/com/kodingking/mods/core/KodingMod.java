@@ -6,7 +6,7 @@ import net.hydonclient.util.Multithreading;
 
 public class KodingMod {
 
-    public static final String API_ENDPOINT = "http://api.kodingking.com";
+    public static final String API_ENDPOINT = "https://api.kodingking.com";
 
     private static KodingMod instance;
 
