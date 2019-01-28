@@ -77,7 +77,7 @@ public class DiscordPresence {
          */
         if (e.getGuiScreen() instanceof GuiHydonMainMenu) {
             DiscordRPC.discordUpdatePresence(
-                    new DiscordRichPresence.Builder("Main menu")
+                    new DiscordRichPresence.Builder("Main Menu")
                             .setDetails(details)
                             .setStartTimestamps(startTime)
                             .setBigImage("assets/hydon", "Hydon")
@@ -143,7 +143,7 @@ public class DiscordPresence {
                  */
             } else {
                 DiscordRPC.discordUpdatePresence(
-                        new DiscordRichPresence.Builder("Playing singleplayer")
+                        new DiscordRichPresence.Builder("Playing Singleplayer")
                                 .setDetails(details)
                                 .setStartTimestamps(startTime)
                                 .setBigImage("singleplayer", "Singleplayer")
