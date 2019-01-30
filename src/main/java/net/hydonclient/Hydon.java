@@ -1,9 +1,6 @@
 package net.hydonclient;
 
 import com.kodingking.mods.core.KodingMod;
-import com.kodingking.netty.client.NetClientBuilder;
-import com.kodingking.netty.universal.Constants;
-import com.kodingking.netty.universal.UniversalNetty;
 import java.io.File;
 import net.hydonclient.api.UserManager;
 import net.hydonclient.commands.DefaultCommands;
@@ -11,10 +8,7 @@ import net.hydonclient.event.EventBus;
 import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
-import net.hydonclient.netty.listeners.MainListener;
-import net.hydonclient.util.Multithreading;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,17 +40,6 @@ public class Hydon {
         EventBus.register(UserManager.getInstance());
         EventBus.register(DefaultCommands.getInstance());
         DefaultCommands.getInstance().load();
-
-        LOGGER.info("Connecting to Netty");
-        Multithreading.run(() -> {
-            Session session = Minecraft.getMinecraft().getSession();
-            NetClientBuilder.create(Constants.CLIENT_BRAND_MINECRAFT, "1.0", "netty.kodingking.com",
-                Constants.SERVER_BIND_PORT).setAutoReconnect()
-                .withMinecraftAuth(session.getUsername(), session.getToken(),
-                    session.getProfile().getId()).boot();
-            UniversalNetty.getCurrentBootstrap().getUniversalNetty().getListenerAdapters()
-                .add(new MainListener());
-        });
 
         LOGGER.info("Loading Discord RPC");
         EventBus.register(DiscordPresence.getInstance());

@@ -3,6 +3,7 @@ package net.hydonclient.api.objects;
 public enum EnumCosmetic {
 
     WINGS,
-    CAPE
+    CAPE,
+    EARS
 
 }

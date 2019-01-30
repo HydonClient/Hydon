@@ -13,7 +13,6 @@ public class User {
     private String lastUsername;
     private boolean admin;
     private UUID uuid;
-    private long lastLoginTime, firstSeen;
 
     private List<Cosmetic> cosmetics;
 
@@ -22,42 +21,30 @@ public class User {
         this.cosmetics = new ArrayList<>();
 
         JsonObject result = HydonApi.getUser(uuid);
+        if (result.has("success") && result.get("success").getAsBoolean()) {
+            this.lastUsername =
+                result.has("lastUsername") && !result.get("lastUsername").isJsonNull() ? result
+                    .get("lastUsername").getAsString() : "";
+            this.admin = result.has("admin") && result.get("admin").getAsBoolean();
+        }
 
-        this.lastUsername =
-            result.has("lastUsername") && !result.get("lastUsername").isJsonNull() ? result
-                .get("lastUsername").getAsString() : "";
-        this.lastLoginTime = result.has("lastLoginTime") ? result.get("lastLoginTime").getAsLong()
-            : System.currentTimeMillis();
-        this.firstSeen = result.has("firstSeen") ? result.get("firstSeen").getAsLong() : System
-            .currentTimeMillis();
-        this.admin = result.has("admin") && result.get("admin").getAsBoolean();
-
-        for (JsonElement element : result.getAsJsonArray("cosmetics")) {
-            JsonObject jsonObject = element.getAsJsonObject();
-            Cosmetic cosmetic = new Cosmetic(jsonObject.get("name").getAsString());
-            cosmetic.setEnabled(
-                !jsonObject.has("enabled") || jsonObject.get("enabled").getAsBoolean());
-            cosmetic.setData(jsonObject.getAsJsonObject("data"));
-            cosmetics.add(cosmetic);
+        JsonObject cosmeticsResult = HydonApi.getCosmetics(uuid);
+        if (cosmeticsResult.has("success") && cosmeticsResult.get("success").getAsBoolean()) {
+            for (JsonElement element : cosmeticsResult.getAsJsonArray("cosmetics")) {
+                JsonObject jsonObject = element.getAsJsonObject();
+                Cosmetic cosmetic = new Cosmetic(jsonObject.get("name").getAsString());
+                cosmetic.setEnabled(
+                    !jsonObject.has("enabled") || jsonObject.get("enabled").getAsBoolean());
+                cosmetic.setData(jsonObject.getAsJsonObject("data"));
+                cosmetics.add(cosmetic);
+            }
         }
 
         UserManager.getInstance().stopProcessing(uuid);
     }
 
-    public void setLastUsername(String lastUsername) {
-        this.lastUsername = lastUsername;
-    }
-
     public UUID getUuid() {
         return uuid;
-    }
-
-    public long getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public long getFirstSeen() {
-        return firstSeen;
     }
 
     public String getLastUsername() {

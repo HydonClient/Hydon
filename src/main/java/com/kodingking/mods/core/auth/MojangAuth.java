@@ -23,6 +23,10 @@ public class MojangAuth {
     public void authenticate() {
         Session session = Minecraft.getMinecraft().getSession();
 
+        if (session == null || session.getProfile() == null) {
+            return;
+        }
+
         JsonObject preResult = HttpUtil.getJson(String
             .format(KodingMod.API_ENDPOINT + "/mod/startLoading?uuid=%s&modId=%s&modVersion=%s",
                 session.getProfile().getId().toString(), modId, modVersion).replace(" ", "%20"));
@@ -31,6 +35,7 @@ public class MojangAuth {
             System.out.println("Authentication failed: LOADING");
             return;
         }
+
         String hash = preResult.get("hash").getAsString();
 
         int statusCode = LoginUtil
@@ -40,6 +45,7 @@ public class MojangAuth {
             System.out.println("Authentication failed: JOINING");
             return;
         }
+
 
         JsonObject postResult = HttpUtil.getJson(String.format(
             KodingMod.API_ENDPOINT

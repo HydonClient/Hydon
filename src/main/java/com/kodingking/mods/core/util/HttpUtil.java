@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
 import org.apache.commons.io.IOUtils;
 
 public class HttpUtil {
@@ -26,6 +27,7 @@ public class HttpUtil {
         try {
             URLConnection conn = url.openConnection();
             conn.addRequestProperty("Access-Token", KodingMod.getInstance().getAuth().getToken());
+            conn.setRequestProperty("Accept-Language", Locale.getDefault().toLanguageTag());
             conn.connect();
             return new JsonParser().parse(IOUtils.toString(conn.getInputStream(), "UTF-8"))
                 .getAsJsonObject();
@@ -50,6 +52,7 @@ public class HttpUtil {
             conn.setRequestMethod("POST");
             conn.addRequestProperty("Content-Type", "application/json");
             conn.addRequestProperty("Access-Token", KodingMod.getInstance().getAuth().getToken());
+            conn.setRequestProperty("Accept-Language", Locale.getDefault().toLanguageTag());
             conn.setDoOutput(true);
 
             OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
