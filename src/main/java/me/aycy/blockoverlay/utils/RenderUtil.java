@@ -1,6 +1,7 @@
 package me.aycy.blockoverlay.utils;
 
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -33,6 +34,7 @@ public final class RenderUtil {
         if (filled) {
             setGLColor(color);
         }
+
         switch (face) {
             case UP: {
                 if (filled) {
@@ -45,6 +47,7 @@ public final class RenderUtil {
                 }
                 break;
             }
+
             case DOWN: {
                 if (filled) {
                     drawFilledBottomFace(box);
@@ -56,6 +59,7 @@ public final class RenderUtil {
                 }
                 break;
             }
+
             case NORTH: {
                 if (filled) {
                     drawFilledNorthFace(box);
@@ -67,6 +71,7 @@ public final class RenderUtil {
                 }
                 break;
             }
+
             case EAST: {
                 if (filled) {
                     drawFilledEastFace(box);
@@ -78,6 +83,7 @@ public final class RenderUtil {
                 }
                 break;
             }
+
             case SOUTH: {
                 if (filled) {
                     drawFilledSouthFace(box);
@@ -89,6 +95,7 @@ public final class RenderUtil {
                 }
                 break;
             }
+
             case WEST: {
                 if (filled) {
                     drawFilledWestFace(box);
@@ -102,6 +109,8 @@ public final class RenderUtil {
             }
         }
     }
+
+    //TODO: fix how the rendering works on this
 
     private static void drawFilledTopFace(AxisAlignedBB box) {
         RenderUtil.worldRenderer.begin(7, DefaultVertexFormats.POSITION);

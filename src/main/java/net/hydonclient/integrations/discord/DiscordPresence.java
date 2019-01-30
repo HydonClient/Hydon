@@ -24,11 +24,6 @@ public class DiscordPresence {
     private long startTime;
 
     /**
-     * The username of the user
-     */
-    private final String details = "IGN: " + Minecraft.getMinecraft().getSession().getUsername();
-
-    /**
      * Called upon launching the client
      * Initializes the DiscordRPC Thread
      */
@@ -77,8 +72,8 @@ public class DiscordPresence {
          */
         if (e.getGuiScreen() instanceof GuiHydonMainMenu) {
             DiscordRPC.discordUpdatePresence(
-                    new DiscordRichPresence.Builder("Main menu")
-                            .setDetails(details)
+                    new DiscordRichPresence.Builder("Main Menu")
+                            .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
                             .setStartTimestamps(startTime)
                             .setBigImage("assets/hydon", "Hydon")
                             .build()
@@ -91,7 +86,7 @@ public class DiscordPresence {
         } else if (e.getGuiScreen() instanceof GuiMultiplayer) {
             DiscordRPC.discordUpdatePresence(
                     new DiscordRichPresence.Builder("Browsing servers")
-                            .setDetails(details)
+                            .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
                             .setStartTimestamps(startTime)
                             .setBigImage("assets/hydon", "Hydon")
                             .build()
@@ -103,7 +98,7 @@ public class DiscordPresence {
         } else if (e.getGuiScreen() instanceof GuiChat) {
             DiscordRPC.discordUpdatePresence(
                     new DiscordRichPresence.Builder("Typing in chat")
-                            .setDetails(details)
+                            .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
                             .setStartTimestamps(startTime)
                             .setBigImage("chat", "Chat")
                             .build()
@@ -118,7 +113,7 @@ public class DiscordPresence {
                         .endsWith("hypixel.net")) {
                     DiscordRPC.discordUpdatePresence(
                             new DiscordRichPresence.Builder("On Hypixel")
-                                    .setDetails(details)
+                                    .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
                                     .setStartTimestamps(startTime)
                                     .setBigImage("hypixel", "Hypixel")
                                     .build()
@@ -131,7 +126,7 @@ public class DiscordPresence {
                     DiscordRPC.discordUpdatePresence(
                             new DiscordRichPresence.Builder(
                                     "Server: " + Minecraft.getMinecraft().getCurrentServerData().serverIP)
-                                    .setDetails(details)
+                                    .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
                                     .setStartTimestamps(startTime)
                                     .setBigImage("game", "In game")
                                     .build()
@@ -143,8 +138,8 @@ public class DiscordPresence {
                  */
             } else {
                 DiscordRPC.discordUpdatePresence(
-                        new DiscordRichPresence.Builder("Playing singleplayer")
-                                .setDetails(details)
+                        new DiscordRichPresence.Builder("Playing Singleplayer")
+                                .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
                                 .setStartTimestamps(startTime)
                                 .setBigImage("singleplayer", "Singleplayer")
                                 .build()

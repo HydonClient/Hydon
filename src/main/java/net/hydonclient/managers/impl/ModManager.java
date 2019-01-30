@@ -5,6 +5,7 @@ import me.semx11.autotip.Autotip;
 import net.hydonclient.Hydon;
 import net.hydonclient.mods.autogg.AutoGGMod;
 import net.hydonclient.mods.blur.BlurMod;
+import net.hydonclient.mods.chatlocker.ChatLocker;
 import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.hydonclient.mods.itemphysics.ItemPhysics;
 import net.hydonclient.mods.oldanimations.OldAnimations;
@@ -29,6 +30,7 @@ public class ModManager {
     private TimeChangerMod timeChangerMod;
     private HydonHUD hydonHUD;
     private ItemPhysics itemPhysics;
+    private ChatLocker chatLocker;
 
     /**
      * Load all of the mods that are registered
@@ -68,6 +70,9 @@ public class ModManager {
 
         itemPhysics = new ItemPhysics();
         itemPhysics.load();
+
+        chatLocker = new ChatLocker();
+        chatLocker.load();
     }
 
     public AutoGGMod getAutoGGMod() {
@@ -112,5 +117,9 @@ public class ModManager {
 
     public ItemPhysics getItemPhysics() {
         return itemPhysics;
+    }
+
+    public ChatLocker getChatLocker() {
+        return chatLocker;
     }
 }
