@@ -59,7 +59,7 @@ public abstract class MixinFontRenderer {
             shouldOverride = shouldOverride && CharMatcher.ASCII.matchesAllOf(text.replace('§', ' '));
 
             if (shouldOverride) {
-                return (int) HydonFonts.PRODUCT_SANS_REGULAR.drawString(text, x, y, color, dropShadow);
+                return (int) HydonFonts.FONT_REGULAR.drawString(text, x, y, color, dropShadow);
             } else {
                 this.red = (float) (color >> 16 & 255) / 255.0F;
                 this.blue = (float) (color >> 8 & 255) / 255.0F;

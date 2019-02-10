@@ -12,12 +12,12 @@ public abstract class SettingsElement {
     /**
      * Regular font for the text
      */
-    protected final MinecraftFontRenderer regularFont = HydonFonts.PRODUCT_SANS_REGULAR;
+    protected final MinecraftFontRenderer regularFont = HydonFonts.FONT_REGULAR;
 
     /**
      * Bold font for the text
      */
-    protected final MinecraftFontRenderer boldFont = HydonFonts.PRODUCT_SANS_BOLD;
+    protected final MinecraftFontRenderer boldFont = HydonFonts.FONT_BOLD;
 
     /**
      * width is how wide it'll be

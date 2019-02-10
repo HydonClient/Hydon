@@ -1,14 +1,9 @@
 package net.hydonclient.gui;
 
-import com.google.common.collect.Lists;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import net.hydonclient.Hydon;
@@ -38,11 +33,9 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.realms.RealmsBridge;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.demo.DemoWorldServer;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
-import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GLContext;
@@ -148,7 +141,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.splashText = "OOoooOOOoooo! Spooky!";
         }
 
-        int j = this.height / 3 + HydonFonts.PRODUCT_SANS_BOLD.getHeight() + 5;
+        int j = this.height / 3 + HydonFonts.FONT_BOLD.getHeight() + 5;
 
         if (this.mc.isDemo()) {
             this.addDemoButtons(j);
@@ -303,7 +296,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-        MinecraftFontRenderer fontRenderer = HydonFonts.PRODUCT_SANS_REGULAR;
+        MinecraftFontRenderer fontRenderer = HydonFonts.FONT_REGULAR;
 
         this.mc.getTextureManager().bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0,

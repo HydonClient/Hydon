@@ -33,12 +33,12 @@ public class SettingsDropdownElement {
     /**
      * Regular font for the text
      */
-    private final MinecraftFontRenderer regularFont = HydonFonts.PRODUCT_SANS_REGULAR;
+    private final MinecraftFontRenderer regularFont = HydonFonts.FONT_REGULAR;
 
     /**
      * Bold font for the text
      */
-    private final MinecraftFontRenderer boldFont = HydonFonts.PRODUCT_SANS_BOLD;
+    private final MinecraftFontRenderer boldFont = HydonFonts.FONT_BOLD;
 
     /**
      * width is how wide it'll be

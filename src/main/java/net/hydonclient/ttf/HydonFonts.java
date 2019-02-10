@@ -8,16 +8,16 @@ import net.hydonclient.Hydon;
 
 public class HydonFonts {
 
-    public static MinecraftFontRenderer PRODUCT_SANS_REGULAR;
-    public static MinecraftFontRenderer PRODUCT_SANS_BOLD;
+    public static MinecraftFontRenderer FONT_REGULAR;
+    public static MinecraftFontRenderer FONT_BOLD;
 
     static {
         try {
-            PRODUCT_SANS_REGULAR = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT,
-                    Hydon.class.getResourceAsStream("/assets/minecraft/fonts/Product-Sans-Regular.ttf"))
+            FONT_REGULAR = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT,
+                    Hydon.class.getResourceAsStream("/assets/minecraft/fonts/RobotoCondensed-Regular.ttf"))
                     .deriveFont(20f), true, true);
-            PRODUCT_SANS_BOLD = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT,
-                    Hydon.class.getResourceAsStream("/assets/minecraft/fonts/Product-Sans-Bold.ttf"))
+            FONT_BOLD = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT,
+                    Hydon.class.getResourceAsStream("/assets/minecraft/fonts/RobotoCondensed-Bold.ttf"))
                     .deriveFont(30f), true, true);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();

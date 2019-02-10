@@ -98,7 +98,7 @@ public class GuiHydonCredits extends GuiScreen {
      */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        MinecraftFontRenderer fontRenderer = HydonFonts.PRODUCT_SANS_REGULAR;
+        MinecraftFontRenderer fontRenderer = HydonFonts.FONT_REGULAR;
         GuiUtils.drawBG();
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 

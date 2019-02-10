@@ -120,10 +120,10 @@ public class SplashScreen {
                 sr.getScaledHeight(),
                 new Color(201, 57, 53, 200).getRGB());
 
-        HydonFonts.PRODUCT_SANS_REGULAR
+        HydonFonts.FONT_REGULAR
                 .drawCenteredStringWithShadow(progress.getText(), sr.getScaledWidth() / 2f,
                         sr.getScaledHeight()
-                                - (barHeight + HydonFonts.PRODUCT_SANS_REGULAR.getHeight()) / 2f, 0xffffff);
+                                - (barHeight + HydonFonts.FONT_REGULAR.getHeight()) / 2f, 0xffffff);
 
         framebuffer.unbindFramebuffer();
         framebuffer.framebufferRender(sr.getScaledWidth() * i, sr.getScaledHeight() * i);

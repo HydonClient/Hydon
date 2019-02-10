@@ -125,7 +125,7 @@ public class SettingsSlider extends SettingsElement {
         this.x = x + 5;
         this.y = y;
 
-        MinecraftFontRenderer fontRenderer = HydonFonts.PRODUCT_SANS_REGULAR;
+        MinecraftFontRenderer fontRenderer = HydonFonts.FONT_REGULAR;
 
         Gui.drawRect(this.x, this.y, this.x + this.width, this.y + this.height,
                 new Color(0, 0, 0, 20).getRGB());

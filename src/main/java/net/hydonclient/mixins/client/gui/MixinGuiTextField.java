@@ -81,7 +81,7 @@ public abstract class MixinGuiTextField extends Gui {
             int j = this.cursorPosition - this.lineScrollOffset;
             int k = this.selectionEnd - this.lineScrollOffset;
 
-            MinecraftFontRenderer fontRenderer = HydonFonts.PRODUCT_SANS_REGULAR;
+            MinecraftFontRenderer fontRenderer = HydonFonts.FONT_REGULAR;
 
             String s = fontRenderer
                     .trimStringToWidth(this.text.substring(this.lineScrollOffset), this.getWidth(), false);

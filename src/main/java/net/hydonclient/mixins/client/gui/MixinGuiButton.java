@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(GuiButton.class)
 public abstract class MixinGuiButton extends Gui {
@@ -80,7 +79,7 @@ public abstract class MixinGuiButton extends Gui {
 
                 int textColor = enabled ? 255 : 180;
 
-                HydonFonts.PRODUCT_SANS_REGULAR
+                HydonFonts.FONT_REGULAR
                         .drawCenteredString(this.displayString, this.xPosition + this.width / 2f,
                                 this.yPosition + (this.height - 8) / 2f,
                                 new Color(textColor, textColor, textColor, 255).getRGB());
