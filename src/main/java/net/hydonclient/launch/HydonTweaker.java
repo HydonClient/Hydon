@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.hydonclient.packages.PackageBootstrap;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import org.spongepowered.asm.launch.MixinBootstrap;
@@ -28,6 +29,7 @@ public class HydonTweaker implements ITweaker {
     @Override
     public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
         newArgs = new ArrayList<>(args);
+
         if (gameDir != null) {
             newArgs.addAll(Arrays.asList("--gameDir", gameDir.getAbsolutePath()));
         }
@@ -46,7 +48,11 @@ public class HydonTweaker implements ITweaker {
      */
     @Override
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
+        classLoader.addClassLoaderExclusion("net.hydonclient.packages");
+
         MixinBootstrap.init();
+        PackageBootstrap.tweakerInit();
+
         Mixins.addConfiguration("mixins.hydon.json");
     }
 

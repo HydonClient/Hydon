@@ -2,6 +2,7 @@ package net.hydonclient.mixins;
 
 import net.hydonclient.Hydon;
 import net.hydonclient.SplashScreen;
+import net.hydonclient.packages.PackageBootstrap;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.WorldChangedEvent;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
@@ -72,6 +73,8 @@ public abstract class MixinMinecraft {
     @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;drawSplashScreen(Lnet/minecraft/client/renderer/texture/TextureManager;)V", shift = At.Shift.AFTER))
     private void loadingStartGame1(CallbackInfo callbackInfo) {
         SplashScreen.advanceProgress("Starting to load...");
+
+        PackageBootstrap.gameInit();
     }
 
     @Inject(method = "startGame", at = @At(value = "NEW", target = "net/minecraft/client/audio/SoundHandler", shift = At.Shift.AFTER))
@@ -184,6 +187,8 @@ public abstract class MixinMinecraft {
     @Inject(method = "shutdown", at = @At("HEAD"))
     private void shutdown(CallbackInfo callbackInfo) {
         Hydon.INSTANCE.stop();
+
+        PackageBootstrap.gameShutdown();
     }
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;next()Z", shift = Shift.BEFORE))
