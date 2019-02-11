@@ -73,8 +73,6 @@ public abstract class MixinMinecraft {
     @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;drawSplashScreen(Lnet/minecraft/client/renderer/texture/TextureManager;)V", shift = At.Shift.AFTER))
     private void loadingStartGame1(CallbackInfo callbackInfo) {
         SplashScreen.advanceProgress("Starting to load...");
-
-        PackageBootstrap.gameInit();
     }
 
     @Inject(method = "startGame", at = @At(value = "NEW", target = "net/minecraft/client/audio/SoundHandler", shift = At.Shift.AFTER))

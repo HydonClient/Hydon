@@ -8,6 +8,7 @@ import net.hydonclient.event.EventBus;
 import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
+import net.hydonclient.packages.PackageBootstrap;
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,6 +45,9 @@ public class Hydon {
         LOGGER.info("Loading Discord RPC");
         EventBus.register(DiscordPresence.getInstance());
         DiscordPresence.getInstance().load();
+
+        LOGGER.info("Initializing packages");
+        PackageBootstrap.gameInit();
 
         LOGGER.info("Done");
     }
