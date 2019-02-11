@@ -710,4 +710,8 @@ public class HydonMainGui extends GuiScreen {
         }
         super.actionPerformed(button);
     }
+
+    public SettingController getController() {
+        return controller;
+    }
 }
