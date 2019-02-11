@@ -34,7 +34,12 @@ repositories {
 }
 
 dependencies {
-    embed 'org.spongepowered:mixin:0.7-SNAPSHOT'
+    embed('org.spongepowered:mixin:0.7-SNAPSHOT') {
+        exclude module: 'launchwrapper'
+        exclude module: 'commons-io'
+        exclude module: 'guava'
+        exclude module: 'gson'
+    }
     embed 'com.github.FalseHonesty:reflections:21959e6e'
     embed group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
     embed 'com.github.Vatuu:discord-rpc:1.6.0'
@@ -46,10 +51,18 @@ minecraft {
     mappings = 'stable_22'
     tweakClass = 'net.hydonclient.launch.HydonTweaker'
     runDir = 'run'
+    makeObfSourceJar = false
 }
 
 jar {
     dependsOn configurations.compile
+
+    manifest.attributes(
+            "TweakClass": 'net.hydonclient.launch.HydonTweaker',
+            "MixinConfigs": 'mixins.hydon.json',
+            "Manifest-Version": 1.0,
+            "TweakOrder": 0
+    )
 
     from {
         configurations.embed.collect {
@@ -57,12 +70,13 @@ jar {
         }
     }
 
-    manifest.attributes(
-            "MixinConfigs": 'mixins.hydon.json',
-            "TweakClass": 'net.hydonclient.launch.HydonTweaker',
-            "TweakOrder": 0,
-            "Manifest-Version": 1.0
-    )
+    configurations.embed.each { dep ->
+        from(project.zipTree(dep)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
 }
 
 mixin {
