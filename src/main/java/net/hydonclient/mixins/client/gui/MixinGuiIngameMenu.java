@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,8 +20,12 @@ public class MixinGuiIngameMenu extends GuiScreen {
         impl.initGui(buttonList);
     }
 
-    @Inject(method = "actionPerformed", at = @At("RETURN"))
-    private void actionPerformed(GuiButton button, CallbackInfo ci) {
+    /**
+     * @author asbyth & Mojang
+     * @reason Confirm disconnect
+     */
+    @Overwrite
+    protected void actionPerformed(GuiButton button) {
         impl.actionPerformed(button);
     }
 }

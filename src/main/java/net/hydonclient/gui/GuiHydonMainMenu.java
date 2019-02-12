@@ -3,6 +3,7 @@ package net.hydonclient.gui;
 import net.hydonclient.Hydon;
 import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.gui.main.HydonMainGui;
+import net.hydonclient.gui.misc.GuiConfirmQuit;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.AnimationUtil;
@@ -88,54 +89,58 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
     protected void actionPerformed(GuiButton button) {
-        if (button.id == 0) {
-            this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
-        }
+        switch (button.id) {
+            case 0:
+                mc.displayGuiScreen(new GuiOptions(this, mc.gameSettings));
+                break;
 
-        if (button.id == 5) {
-            this.mc.displayGuiScreen(
-                    new GuiLanguage(this, this.mc.gameSettings, this.mc.getLanguageManager()));
-        }
+            case 1:
+                mc.displayGuiScreen(new GuiSelectWorld(this));
+                break;
 
-        if (button.id == 1) {
-            this.mc.displayGuiScreen(new GuiSelectWorld(this));
-        }
+            case 2:
+                mc.displayGuiScreen(new GuiMultiplayer(this));
+                break;
 
-        if (button.id == 2) {
-            this.mc.displayGuiScreen(new GuiMultiplayer(this));
-        }
+            case 4:
+                if (Hydon.SETTINGS.confirmQuitGame) {
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiConfirmQuit());
+                } else {
+                    this.mc.shutdown();
+                }
+                break;
 
-        if (button.id == 4) {
-            this.mc.shutdown();
-        }
+            case 5:
+                mc.displayGuiScreen(new GuiLanguage(this, mc.gameSettings, mc.getLanguageManager()));
+                break;
 
-        if (button.id == 11) {
-            this.mc.launchIntegratedServer("Demo_World", "Demo_World",
-                    DemoWorldServer.demoWorldSettings);
-        }
+            case 6:
+                mc.displayGuiScreen(new GuiHydonCredits());
+                break;
 
-        if (button.id == 6) {
-            this.mc.displayGuiScreen(new GuiHydonCredits());
-        }
+            case 10:
+                mc.displayGuiScreen(HydonMainGui.INSTANCE);
+                break;
 
-        if (button.id == 10) {
-            this.mc.displayGuiScreen(HydonMainGui.INSTANCE);
-        }
+            case 11:
+                mc.launchIntegratedServer("Demo_World", "Demo_World", DemoWorldServer.demoWorldSettings);
+                break;
 
-        if (button.id == 12) {
-            ISaveFormat isaveformat = this.mc.getSaveLoader();
-            WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
+            case 12:
+                ISaveFormat isaveformat = this.mc.getSaveLoader();
+                WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
 
-            if (worldinfo != null) {
-                GuiYesNo guiyesno = GuiSelectWorld
-                        .makeDeleteWorldYesNo(this, worldinfo.getWorldName(), 12);
-                this.mc.displayGuiScreen(guiyesno);
-            }
+                if (worldinfo != null) {
+                    GuiYesNo guiyesno = GuiSelectWorld
+                            .makeDeleteWorldYesNo(this, worldinfo.getWorldName(), 12);
+                    this.mc.displayGuiScreen(guiyesno);
+                }
+                break;
         }
     }
 
-    public void confirmClicked(boolean result, int id) {
-        if (result && id == 12) {
+    public void confirmClicked(boolean demoUser, int button) {
+        if (demoUser && button == 12) {
             ISaveFormat isaveformat = this.mc.getSaveLoader();
             isaveformat.flushCache();
             isaveformat.deleteWorldDirectory("Demo_World");

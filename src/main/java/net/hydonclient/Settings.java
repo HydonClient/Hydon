@@ -165,6 +165,12 @@ public class Settings {
     @SaveVal
     public boolean hotbarNumberShadow = false;
 
+    @SaveVal
+    public boolean confirmDisconnect = false;
+
+    @SaveVal
+    public boolean confirmQuitGame = false;
+
     public boolean isBoChroma() {
         return boChroma;
     }

@@ -268,11 +268,17 @@ public class HydonMainGui extends GuiScreen {
          */
         SettingGroup miscElements = new SettingGroup("Other Elements");
         miscElements.addElements(
-                new SettingsToggle("Third Person Crosshair", Hydon.SETTINGS.thirdPersonCrosshair,
-                        result -> Hydon.SETTINGS.thirdPersonCrosshair = result));
-        miscElements.addElements(
                 new SettingsToggle("Compact Chat", Hydon.SETTINGS.compactChat,
                         result -> Hydon.SETTINGS.compactChat = result));
+        miscElements.addElements(
+                new SettingsToggle("Confirm Disconnect", Hydon.SETTINGS.confirmDisconnect,
+                        result -> Hydon.SETTINGS.confirmDisconnect = result));
+        miscElements.addElements(
+                new SettingsToggle("Confirm Quit Game", Hydon.SETTINGS.confirmQuitGame,
+                        result -> Hydon.SETTINGS.confirmQuitGame = result));
+        miscElements.addElements(
+                new SettingsToggle("Third Person Crosshair", Hydon.SETTINGS.thirdPersonCrosshair,
+                        result -> Hydon.SETTINGS.thirdPersonCrosshair = result));
 
         veElement.addElements(hotBarElements, inventoryElements, miscElements);
         controller.addElements(veElement);
