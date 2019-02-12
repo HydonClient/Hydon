@@ -4,8 +4,10 @@ import com.mojang.authlib.GameProfile;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.ChatMessageSendEvent;
 import net.hydonclient.event.events.game.UpdateEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityPlayerSP.class)
@@ -54,5 +57,10 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
             timeInPortal = 0.0F;
         }
         removePotionEffect(potionID);
+    }
+
+    @Redirect(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", ordinal = 0))
+    private GuiScreen onLivingUpdate(Minecraft mc) {
+        return null;
     }
 }
