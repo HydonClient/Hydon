@@ -128,13 +128,31 @@ public class HydonMainGui extends GuiScreen {
         /* Old Animations Configuration */
         SettingsDropdownElement oldAnimationsElement = new SettingsDropdownElement("Animations");
 
-        SettingGroup animationElements = new SettingGroup("HUD Items");
+        SettingGroup animationElements = new SettingGroup("Animation Items");
 
         animationElements.addElements(
+                new SettingsToggle("1.7 Armor", Hydon.SETTINGS.oldArmor,
+                        result -> Hydon.SETTINGS.oldArmor = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Blocking", Hydon.SETTINGS.oldBlocking,
+                        result -> Hydon.SETTINGS.oldBlocking = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Damage", Hydon.SETTINGS.oldDamageFlash,
+                        result -> Hydon.SETTINGS.oldDamageFlash = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Item Holding", Hydon.SETTINGS.oldItemHolding,
+                        result -> Hydon.SETTINGS.oldItemHolding = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Sneaking", Hydon.SETTINGS.oldSneaking,
+                        result -> Hydon.SETTINGS.oldSneaking = result));
+
+        SettingGroup hudElements = new SettingGroup("HUD Items");
+
+        hudElements.addElements(
                 new SettingsToggle("1.7 Debug", Hydon.SETTINGS.oldDebugMenu,
                         result -> Hydon.SETTINGS.oldDebugMenu = result));
 
-        oldAnimationsElement.addElements(animationElements);
+        oldAnimationsElement.addElements(animationElements, hudElements);
 
         controller.addElements(oldAnimationsElement);
 

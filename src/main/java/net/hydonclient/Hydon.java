@@ -22,6 +22,8 @@ public class Hydon {
     public static final Settings SETTINGS = new Settings();
     public static final KodingMod KODING_MOD = new KodingMod("hydon", "Hydon", VERSION);
 
+    private boolean optifineFound = false;
+
     /**
      * Invoked when the client starts.
      */
@@ -42,6 +44,15 @@ public class Hydon {
         EventBus.register(UserManager.getInstance());
         EventBus.register(DefaultCommands.getInstance());
         DefaultCommands.getInstance().load();
+
+        try {
+            Class.forName("optifine.OptiFineTweaker");
+            optifineFound = true;
+            LOGGER.info("Found Optifine, applying MixinLayerCape");
+        } catch (ClassNotFoundException e) {
+            LOGGER.info("Optifine not found, ignoring MixinLayerCape");
+            optifineFound = false;
+        }
 
         LOGGER.info("Loading Discord RPC");
         EventBus.register(DiscordPresence.getInstance());
@@ -68,4 +79,7 @@ public class Hydon {
         LOGGER.info("Done");
     }
 
+    public boolean wasOptifineFound() {
+        return optifineFound;
+    }
 }

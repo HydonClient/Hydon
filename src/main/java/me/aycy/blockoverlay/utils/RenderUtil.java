@@ -1,7 +1,6 @@
 package me.aycy.blockoverlay.utils;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.client.renderer.RenderGlobal;
