@@ -23,7 +23,6 @@ import net.hydonclient.mods.hydonhud.modules.display.MoveCoordsElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveFPSElement;
 import net.hydonclient.mods.hydonhud.modules.display.MovePotionStatusElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveSprintingElement;
-import net.hydonclient.mods.hydonhud.modules.maps.EnumSeparators;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -580,38 +579,40 @@ public class HydonMainGui extends GuiScreen {
 
             if (currentGroup == potionDisplayElements) {
                 Collection<PotionEffect> effects;
-                effects = hud.getMinecraft().thePlayer.getActivePotionEffects();
+                if (mc.theWorld != null) {
+                    effects = hud.getMinecraft().thePlayer.getActivePotionEffects();
 
-                for (PotionEffect potionEffect : effects) {
-                    Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
+                    for (PotionEffect potionEffect : effects) {
+                        Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
 
-                    StringBuilder effectName = new StringBuilder(I18n.format(potion.getName()));
+                        StringBuilder effectName = new StringBuilder(I18n.format(potion.getName()));
 
-                    if (potionEffect.getAmplifier() == 1) {
-                        effectName.append(" ").append(
-                                I18n.format("enchantment.level.2"));
+                        if (potionEffect.getAmplifier() == 1) {
+                            effectName.append(" ").append(
+                                    I18n.format("enchantment.level.2"));
 
-                    } else if (potionEffect.getAmplifier() == 2) {
-                        effectName.append(" ").append(
-                                I18n.format("enchantment.level.3"));
+                        } else if (potionEffect.getAmplifier() == 2) {
+                            effectName.append(" ").append(
+                                    I18n.format("enchantment.level.3"));
 
-                    } else if (potionEffect.getAmplifier() == 3) {
-                        effectName.append(" ").append(
-                                I18n.format("enchantment.level.4"));
-                    }
-
-                    String duration = Potion.getDurationString(potionEffect);
-                    String jointedText;
-
-                    // TODO: fix the NPE when changing the separator (any reason why an npe is being thrown?), then replace " * " with the used separator
-                    if (hud.getConfig().POTIONSTATUS) {
-                        if (!hud.getConfig().POTIONSTATUS_PARENTHESES) {
-                            jointedText = ("" + effectName + " * " + duration);
-                        } else {
-                            jointedText = ("(" + effectName + " * " + duration + ")");
+                        } else if (potionEffect.getAmplifier() == 3) {
+                            effectName.append(" ").append(
+                                    I18n.format("enchantment.level.4"));
                         }
 
-                        hud.drawCenteredString(jointedText, this.width, 16777215);
+                        String duration = Potion.getDurationString(potionEffect);
+                        String jointedText;
+
+                        // TODO: fix the NPE when changing the separator (any reason why an npe is being thrown?), then replace " * " with the used separator
+                        if (hud.getConfig().POTIONSTATUS) {
+                            if (!hud.getConfig().POTIONSTATUS_PARENTHESES) {
+                                jointedText = ("" + effectName + " * " + duration);
+                            } else {
+                                jointedText = ("(" + effectName + " * " + duration + ")");
+                            }
+
+                            hud.drawCenteredString(jointedText, this.width, 16777215);
+                        }
                     }
                 }
             }
@@ -709,5 +710,9 @@ public class HydonMainGui extends GuiScreen {
             Minecraft.getMinecraft().displayGuiScreen(null);
         }
         super.actionPerformed(button);
+    }
+
+    public SettingController getController() {
+        return controller;
     }
 }
