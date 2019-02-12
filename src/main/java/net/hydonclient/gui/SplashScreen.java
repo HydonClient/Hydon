@@ -1,4 +1,4 @@
-package net.hydonclient;
+package net.hydonclient.gui;
 
 import java.awt.Color;
 

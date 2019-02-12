@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import net.hydonclient.Variables;
+import net.hydonclient.util.Variables;
 import net.hydonclient.packages.PackageManifest;
 import net.hydonclient.packages.discovery.IPackageDiscoverer;
 import net.minecraft.launchwrapper.Launch;

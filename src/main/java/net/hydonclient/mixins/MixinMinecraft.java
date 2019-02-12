@@ -1,7 +1,7 @@
 package net.hydonclient.mixins;
 
 import net.hydonclient.Hydon;
-import net.hydonclient.SplashScreen;
+import net.hydonclient.gui.SplashScreen;
 import net.hydonclient.packages.PackageBootstrap;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.WorldChangedEvent;

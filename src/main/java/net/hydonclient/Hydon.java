@@ -30,6 +30,7 @@ public class Hydon {
 
         if (!STORAGE_FOLDER.exists()) {
             STORAGE_FOLDER.mkdirs();
+            LOGGER.info("Creating storage folder");
         }
 
         LOGGER.info("Loading Koding mod");

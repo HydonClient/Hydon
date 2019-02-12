@@ -17,6 +17,7 @@
     "client.gui.MixinGui",
     "client.gui.MixinGuiButton",
     "client.gui.MixinGuiButtonLanguage",
+    "client.gui.MixinGuiContainer",
     "client.gui.MixinGuiDisconnected",
     "client.gui.MixinGuiDownloadTerrain",
     "client.gui.MixinGuiGameOver",
