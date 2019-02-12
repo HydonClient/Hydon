@@ -199,7 +199,7 @@ public class HydonMainGui extends GuiScreen {
                 new SettingsToggle("Windowed Fullscreen", Hydon.SETTINGS.windowedFullscreen,
                         result -> Hydon.SETTINGS.windowedFullscreen = result));
         generalImprovements.addElements(
-                new SettingsToggle("Hide Titles", Hydon.SETTINGS.disableTitles,
+                new SettingsToggle("Disable Titles", Hydon.SETTINGS.disableTitles,
                         result -> Hydon.SETTINGS.disableTitles = result));
         generalImprovements.addElements(
                 new SettingsToggle("Disable Boss Footer", Hydon.SETTINGS.disableBossFooter,
@@ -242,6 +242,12 @@ public class HydonMainGui extends GuiScreen {
         hotBarElements.addElements(
                 new SettingsToggle("Damage Preview", Hydon.SETTINGS.damagePreview,
                         result -> Hydon.SETTINGS.damagePreview = result));
+        hotBarElements.addElements(
+                new SettingsToggle("Hotbar Numbers", Hydon.SETTINGS.hotbarNumbers,
+                        result -> Hydon.SETTINGS.hotbarNumbers = result));
+        hotBarElements.addElements(
+                new SettingsToggle("Number Shadow", Hydon.SETTINGS.hotbarNumberShadow,
+                        result -> Hydon.SETTINGS.hotbarNumberShadow = result));
 
         /*
          * Inventory Elements

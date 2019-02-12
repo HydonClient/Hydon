@@ -7,6 +7,7 @@ import net.hydonclient.mods.vanillaenhancements.renderer.ArmorPotential;
 import net.hydonclient.mods.vanillaenhancements.renderer.ArrowCounter;
 import net.hydonclient.mods.vanillaenhancements.renderer.AmplifierPreview;
 import net.hydonclient.mods.vanillaenhancements.renderer.DamagePreview;
+import net.hydonclient.mods.vanillaenhancements.renderer.HotbarPreview;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 
@@ -21,6 +22,7 @@ public class VanillaEnhancements extends Mod {
         EventBus.register(new ArrowCounter(this));
         EventBus.register(new AmplifierPreview(this));
         EventBus.register(new DamagePreview(this));
+        EventBus.register(new HotbarPreview(this));
     }
 
     public Minecraft getMinecraft() {

@@ -159,6 +159,12 @@ public class Settings {
     @SaveVal
     public boolean disableEnchantments = false;
 
+    @SaveVal
+    public boolean hotbarNumbers = false;
+
+    @SaveVal
+    public boolean hotbarNumberShadow = false;
+
     public boolean isBoChroma() {
         return boChroma;
     }

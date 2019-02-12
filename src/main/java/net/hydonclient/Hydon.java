@@ -48,9 +48,9 @@ public class Hydon {
         try {
             Class.forName("optifine.OptiFineTweaker");
             optifineFound = true;
-            LOGGER.info("Found Optifine, applying MixinLayerCape");
+            LOGGER.info("Found Optifine");
         } catch (ClassNotFoundException e) {
-            LOGGER.info("Optifine not found, ignoring MixinLayerCape");
+            LOGGER.info("Optifine not found");
             optifineFound = false;
         }
 
