@@ -38,11 +38,17 @@
 
     "client.multiplayer.MixinGuiConnecting",
 
+    "client.renderer.chunk.MixinCompiledChunk",
+    "client.renderer.chunk.MixinRenderChunk",
+
     "client.renderer.IMixinEntityRenderer",
     "client.renderer.IMixinGuiContainer",
     "client.renderer.IMixinInventoryEffectRenderer",
+    "client.renderer.MixinBlockFluidRenderer",
+    "client.renderer.MixinBlockModelShapes",
     "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinInventoryEffectRenderer",
+    "client.renderer.MixinItemRenderer",
     "client.renderer.MixinOpenGlHelper",
     "client.renderer.MixinWorldRenderer",
 
@@ -58,6 +64,8 @@
     "client.renderer.entity.MixinRenderFish",
     "client.renderer.entity.MixinRenderItem",
     "client.renderer.entity.MixinRenderPlayer",
+
+    "client.renderer.texture.MixinTextureAtlasSprite",
 
     "client.renderer.tileentity.MixinRenderItemFrame",
     "client.renderer.tileentity.MixinTileEntitySignRenderer",

@@ -23,7 +23,8 @@ public class PackageBootstrap {
         Arrays.asList(
             new DevelopmentPackageDiscoverer(),
             new FolderPackageDiscoverer()
-        ).forEach(iPackageDiscoverer -> packageManifests.addAll(iPackageDiscoverer.discoverPackages()));
+        ).forEach(
+            iPackageDiscoverer -> packageManifests.addAll(iPackageDiscoverer.discoverPackages()));
 
         List<String> resolved = new ArrayList<>(), unresolved = new ArrayList<>();
         for (PackageManifest manifest : packageManifests) {
@@ -33,14 +34,17 @@ public class PackageBootstrap {
         }
 
         DISCOVERED_PACKAGES.addAll(Arrays.asList(resolved.stream().map(
-            s -> packageManifests.stream().filter(manifest -> manifest.getName().equalsIgnoreCase(s))
-                .findFirst().orElse(null)).filter(Objects::nonNull).toArray(PackageManifest[]::new)));
+            s -> packageManifests.stream()
+                .filter(manifest -> manifest.getName().equalsIgnoreCase(s))
+                .findFirst().orElse(null)).filter(Objects::nonNull)
+            .toArray(PackageManifest[]::new)));
 
         Arrays.asList(
             new MixinPackageTransformer(),
             new ASMPackageTransformer()
         ).forEach(
-            iPackageTransformer -> DISCOVERED_PACKAGES.forEach(iPackageTransformer::transformPackage));
+            iPackageTransformer -> DISCOVERED_PACKAGES
+                .forEach(iPackageTransformer::transformPackage));
     }
 
     public static void gameInit() {
@@ -52,11 +56,13 @@ public class PackageBootstrap {
                 Class<?> clazz = classLoader.findClass(packageManifest.getMainClass());
 
                 if (clazz == null) {
-                    System.out.println("ERROR: Couldn't find package class (" + packageManifest.getName() + ").");
+                    System.out.println(
+                        "ERROR: Couldn't find package class (" + packageManifest.getName() + ").");
                     return;
                 }
 
-                AbstractPackage packageImpl = (AbstractPackage) clazz.getConstructor().newInstance();
+                AbstractPackage packageImpl = (AbstractPackage) clazz.getConstructor()
+                    .newInstance();
                 packageImpl.setPackageManifest(packageManifest);
                 packages.add(packageImpl);
             } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
@@ -79,7 +85,9 @@ public class PackageBootstrap {
         for (String dependency : manifest.getDependencies()) {
             if (!resolved.contains(dependency)) {
                 if (unresolved.contains(dependency)) {
-                    System.out.println("ERROR: Circular dependency reference found for package (" + manifest.getName()
+                    System.out.println(
+                        "ERROR: Circular dependency reference found for package (" + manifest
+                            .getName()
                             + ").");
                     return false;
                 }
