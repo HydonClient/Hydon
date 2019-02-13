@@ -223,9 +223,9 @@ public class HydonMainGui extends GuiScreen {
         generalImprovements.addElements(
                 new SettingsToggle("Fullbright", Hydon.SETTINGS.fullbright,
                         result -> Hydon.SETTINGS.fullbright = result));
-        generalImprovements.addElements(
-                new SettingsToggle("Chat Locker", ChatLocker.CHATLOCKER,
-                        result -> ChatLocker.CHATLOCKER = result));
+//        generalImprovements.addElements(
+//                new SettingsToggle("Chat Locker", ChatLocker.CHATLOCKER,
+//                        result -> ChatLocker.CHATLOCKER = result));
 
         improvements.addElements(framerateImprovements, generalImprovements);
         controller.addElements(improvements);

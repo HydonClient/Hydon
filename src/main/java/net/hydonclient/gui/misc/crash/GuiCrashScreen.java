@@ -19,7 +19,8 @@ public class GuiCrashScreen extends GuiScreen {
     @Override
     public void initGui() {
         super.initGui();
-        GuiOptionButton mainMenuButton = new GuiOptionButton(0, width / 2 - 155, height / 4 + 120 + 12, "Return to title screen");
+        int i = -12;
+        GuiOptionButton mainMenuButton = new GuiOptionButton(0, width / 2 - 70, height / 4 + 120 + i, 150, 20, "Return to title screen");
         buttonList.add(mainMenuButton);
     }
 
@@ -34,15 +35,14 @@ public class GuiCrashScreen extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
-        drawCenteredString(fontRendererObj, "Minecraft crashed", width / 2, height / 4 - 40, 0xFFFFFF);
+        drawCenteredString(fontRendererObj, "Minecraft crashed", width / 2, height / 2 - 10, 0xFFFFFF);
 
         int textColor = 0xD0D0D0;
-        int x = width / 2 - 155;
-        int y = height / 4;
+        int x = width / 2 - 105;
+        int y = height / 2;
 
         drawString(fontRendererObj, "Minecraft ran into a problem and crashed.", x, y, textColor);
-
-        drawCenteredString(fontRendererObj, report.getFile() != null ? "\u00A7n" + report.getFile().getName() : "[Error saving report, see log]", width / 2, y += 11, 0x00FF00);
+        drawCenteredString(fontRendererObj, report.getFile() != null ? "\u00A7n" + report.getFile().getName() : "[Error saving report, see log]", width / 2, y + 11, 0x00FF00);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

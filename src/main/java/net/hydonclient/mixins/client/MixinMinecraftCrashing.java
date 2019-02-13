@@ -211,16 +211,12 @@ public abstract class MixinMinecraftCrashing implements IThreadListener, IPlayer
             mcResourceManager.registerReloadListener(mcSoundHandler);
 
             running = true;
-            runGUILoop(new GuiInitErrorScreen(report));
+            Minecraft.getMinecraft().displayGuiScreen(new GuiInitErrorScreen(report));
         } catch (Throwable t) {
             Hydon.LOGGER.error("An uncaught exception occurred while displaying the init error screen, making normal report instead.", t);
             displayCrashReport(report);
             System.exit(report.getFile() != null ? -1 : -2);
         }
-    }
-
-    private void runGUILoop(GuiScreen screen) throws IOException {
-        Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
     }
 
     private void displayCrashScreen(CrashReport report) {
@@ -234,7 +230,7 @@ public abstract class MixinMinecraftCrashing implements IThreadListener, IPlayer
             gameSettings.showDebugInfo = false;
             ingameGUI.getChatGUI().clearChatMessages();
 
-            runGUILoop(new GuiCrashScreen(report));
+            Minecraft.getMinecraft().displayGuiScreen(new GuiCrashScreen(report));
         } catch (Throwable t) {
             Hydon.LOGGER.error("An uncaught exception occured while displaying the crash screen, making normal report instead.", t);
             displayCrashReport(report);

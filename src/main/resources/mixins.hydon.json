@@ -3,6 +3,8 @@
   "package": "net.hydonclient.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ITextureManager",
+    "MixinTextureManager",
     "IMixinMinecraft",
     "MixinMinecraft",
 
@@ -29,6 +31,7 @@
     "client.gui.MixinGuiOverlayDebug",
     "client.gui.MixinGuiPlayerTabOverlay",
     "client.gui.MixinGuiScreen",
+
     "client.gui.MixinGuiSlider",
     "client.gui.MixinGuiSlot",
     "client.gui.MixinGuiTextField",

@@ -18,7 +18,7 @@ public class MixinGuiIngameMenu extends GuiScreen {
      * @author asbyth
      * @reason Hydon Main menu
      */
-    @Inject(method = "initGui", at = @At("HEAD"))
+    @Inject(method = "initGui", at = @At("RETURN"))
     private void initGui(CallbackInfo ci) {
         impl.initGui(buttonList);
     }

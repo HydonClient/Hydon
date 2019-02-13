@@ -208,11 +208,38 @@ public class ReflectionUtil {
         private static final long serialVersionUID = 601263623563010837L;
 
         UnableToFindConstructorException(Class<?>[] params, Exception e) {
-            super("Could not find params: " + String.join(", ", Arrays.stream(params)
+            super("Could not find params: " + Arrays.stream(params)
                     .map(Class::getSimpleName)
-                    .collect(Collectors.toList())), e);
+                    .collect(Collectors.joining(", ")), e);
         }
 
     }
 
+    public static Method findDeclaredMethod(Class<?> clazz, String[] methodNames, Class<?>... params) {
+        if (!loadedMethods.containsKey(clazz)) {
+            loadedMethods.put(clazz, new HashMap<>());
+        }
+
+        Map<String, Method> clazzMethods = loadedMethods.get(clazz);
+
+        Exception err = null;
+        for (String methodName : methodNames) {
+            if (clazzMethods.containsKey(methodName)) {
+                return clazzMethods.get(methodName);
+            }
+
+            try {
+                Method method = clazz.getDeclaredMethod(methodName, params);
+                method.setAccessible(true);
+
+                clazzMethods.put(methodName, method);
+                loadedMethods.put(clazz, clazzMethods);
+                return method;
+            } catch (NoSuchMethodException e) {
+                err = e;
+            }
+        }
+
+        throw new UnableToFindMethodException(methodNames, err);
+    }
 }
