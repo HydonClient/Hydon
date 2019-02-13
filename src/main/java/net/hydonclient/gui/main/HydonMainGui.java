@@ -23,7 +23,8 @@ import net.hydonclient.mods.hydonhud.modules.display.MoveCoordsElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveFPSElement;
 import net.hydonclient.mods.hydonhud.modules.display.MovePotionStatusElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveSprintingElement;
-import net.hydonclient.mods.hydonhud.modules.maps.EnumSeparators;
+import net.hydonclient.packages.AbstractPackage;
+import net.hydonclient.packages.PackageBootstrap;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -68,6 +69,11 @@ public class HydonMainGui extends GuiScreen {
      * The Hydon HUD elements
      */
     private SettingGroup coordsElements, fpsElements, sprintElements, potionDisplayElements;
+
+    /**
+     * The addons dropdown
+     */
+    private SettingsDropdownElement packageElements;
 
     /**
      * Buttons that are ran through enums and have multiple options
@@ -482,7 +488,18 @@ public class HydonMainGui extends GuiScreen {
                         () -> Minecraft.getMinecraft().displayGuiScreen(new MovePotionStatusElement(hud))));
 
         hudItems.addElements(note, coordsElements, fpsElements, sprintElements, potionDisplayElements);
+
         controller.addElements(hudItems);
+    }
+
+    public void loadPackageElements() {
+        packageElements = new SettingsDropdownElement("Package Elements");
+
+        for (AbstractPackage loadedPackage : PackageBootstrap.getLoadedPackages()) {
+            loadedPackage.loadSettingsElements(packageElements);
+        }
+
+        controller.addElements(packageElements);
     }
 
     /**

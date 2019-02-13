@@ -5,6 +5,7 @@ import java.io.File;
 import net.hydonclient.api.UserManager;
 import net.hydonclient.commands.DefaultCommands;
 import net.hydonclient.event.EventBus;
+import net.hydonclient.gui.main.HydonMainGui;
 import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
@@ -48,6 +49,9 @@ public class Hydon {
 
         LOGGER.info("Initializing packages");
         PackageBootstrap.gameInit();
+
+        LOGGER.info("Initializing Main GUI");
+        HydonMainGui.INSTANCE.loadPackageElements();
 
         LOGGER.info("Done");
     }
