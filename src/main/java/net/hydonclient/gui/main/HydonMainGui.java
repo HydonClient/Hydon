@@ -523,7 +523,7 @@ public class HydonMainGui extends GuiScreen {
     }
 
     public void loadPackageElements() {
-        packageElements = new SettingsDropdownElement("Package Elements");
+        packageElements = new SettingsDropdownElement("Packages");
 
         for (AbstractPackage loadedPackage : PackageBootstrap.getLoadedPackages()) {
             loadedPackage.loadSettingsElements(packageElements);
