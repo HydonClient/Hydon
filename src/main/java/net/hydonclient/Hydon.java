@@ -62,6 +62,9 @@ public class Hydon {
         LOGGER.info("Initializing packages");
         PackageBootstrap.gameInit();
 
+        LOGGER.info("Loading config values");
+        HydonManagers.INSTANCE.getConfigManager().load();
+
         LOGGER.info("Initializing Main GUI");
         HydonMainGui.INSTANCE.loadPackageElements();
 
