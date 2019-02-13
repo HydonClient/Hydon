@@ -3,6 +3,8 @@
   "package": "net.hydonclient.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ITextureManager",
+    "MixinTextureManager",
     "IMixinMinecraft",
     "MixinMinecraft",
 
