@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import net.hydonclient.Variables;
+import net.hydonclient.util.Variables;
 import net.hydonclient.packages.PackageManifest;
 import net.hydonclient.packages.discovery.IPackageDiscoverer;
 import net.minecraft.launchwrapper.Launch;

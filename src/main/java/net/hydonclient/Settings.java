@@ -40,6 +40,21 @@ public class Settings {
     public boolean oldDebugMenu = false;
 
     @SaveVal
+    public boolean oldBlocking = false;
+
+    @SaveVal
+    public boolean oldItemHolding = false;
+
+    @SaveVal
+    public boolean oldArmor = false;
+
+    @SaveVal
+    public boolean oldDamageFlash = false;
+
+    @SaveVal
+    public boolean oldSneaking = false;
+
+    @SaveVal
     public boolean ampPreview = true;
 
     @SaveVal
@@ -143,6 +158,18 @@ public class Settings {
 
     @SaveVal
     public boolean disableEnchantments = false;
+
+    @SaveVal
+    public boolean hotbarNumbers = false;
+
+    @SaveVal
+    public boolean hotbarNumberShadow = false;
+
+    @SaveVal
+    public boolean confirmDisconnect = false;
+
+    @SaveVal
+    public boolean confirmQuitGame = false;
 
     public boolean isBoChroma() {
         return boChroma;

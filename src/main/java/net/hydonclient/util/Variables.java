@@ -1,4 +1,4 @@
-package net.hydonclient;
+package net.hydonclient.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

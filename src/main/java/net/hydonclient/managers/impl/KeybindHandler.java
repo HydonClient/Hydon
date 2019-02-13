@@ -56,21 +56,21 @@ public class KeybindHandler {
         HydonManagers.INSTANCE.getConfigManager().register(keyBindConfig);
         EventBus.register(this);
 
-//        new Reflections("net.hydonclient.managers.impl.keybind.impl")
-//                .getSubTypesOf(HydonKeyBind.class).forEach(aClass -> {
-//            try {
-//                HydonKeyBind keyBind = aClass.newInstance();
-//                keyBindList.add(keyBind);
-//
-//                List<KeyBinding> newBinds = new ArrayList<>(
-//                        Arrays.asList(Minecraft.getMinecraft().gameSettings.keyBindings));
-//                newBinds.add(keyBind);
-//                Minecraft.getMinecraft().gameSettings.keyBindings = newBinds
-//                        .toArray(new KeyBinding[0]);
-//            } catch (InstantiationException | IllegalAccessException e) {
-//                e.printStackTrace();
-//            }
-//        });
+        new Reflections("net.hydonclient.managers.impl.keybind.impl")
+                .getSubTypesOf(HydonKeyBind.class).forEach(aClass -> {
+            try {
+                HydonKeyBind keyBind = aClass.newInstance();
+                keyBindList.add(keyBind);
+
+                List<KeyBinding> newBinds = new ArrayList<>(
+                        Arrays.asList(Minecraft.getMinecraft().gameSettings.keyBindings));
+                newBinds.add(keyBind);
+                Minecraft.getMinecraft().gameSettings.keyBindings = newBinds
+                        .toArray(new KeyBinding[0]);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**

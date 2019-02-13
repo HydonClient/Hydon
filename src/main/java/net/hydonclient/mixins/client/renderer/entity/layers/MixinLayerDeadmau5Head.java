@@ -1,4 +1,4 @@
-package net.hydonclient.mixins.client.renderer.entity.layer;
+package net.hydonclient.mixins.client.renderer.entity.layers;
 
 import net.hydonclient.api.UserManager;
 import net.hydonclient.api.objects.EnumCosmetic;
@@ -20,6 +20,7 @@ public class MixinLayerDeadmau5Head {
 
     /**
      * @author Koding
+     * @reason Deadmau5 cosmetic
      */
     @Overwrite
     public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_,

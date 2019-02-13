@@ -33,11 +33,14 @@ import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
+import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S0BPacketAnimation;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.world.WorldSettings;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -46,11 +49,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(NetHandlerPlayClient.class)
-public abstract class MixinNetHandlerPlayClient {
+@Mixin(value = NetHandlerPlayClient.class, priority = 500)
+public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient {
 
-    @Shadow
-    private Minecraft gameController;
+    @Shadow(aliases = "gameController")
+    private Minecraft client;
 
     @Shadow
     @Final
@@ -59,8 +62,11 @@ public abstract class MixinNetHandlerPlayClient {
     @Shadow
     public abstract NetworkManager getNetworkManager();
 
+    @Shadow(aliases = "clientWorldController")
+    private WorldClient world;
+
     @Shadow
-    private WorldClient clientWorldController;
+    private boolean doneLoadingTerrain;
 
     /**
      * @author Koding
@@ -69,7 +75,7 @@ public abstract class MixinNetHandlerPlayClient {
     public void handleTabComplete(S3APacketTabComplete packetIn) {
         PacketThreadUtil
                 .checkThreadAndEnqueue(packetIn, Minecraft.getMinecraft().thePlayer.sendQueue,
-                        this.gameController);
+                        this.client);
         String[] astring = packetIn.func_149630_c();
 
         List<String> newOptions = new ArrayList<>(Arrays.asList(astring));
@@ -107,8 +113,8 @@ public abstract class MixinNetHandlerPlayClient {
             e.printStackTrace();
         }
 
-        if (this.gameController.currentScreen instanceof GuiChat) {
-            GuiChat guichat = (GuiChat) this.gameController.currentScreen;
+        if (this.client.currentScreen instanceof GuiChat) {
+            GuiChat guichat = (GuiChat) this.client.currentScreen;
             guichat.onAutocompleteResponse(astring);
         }
     }
@@ -163,7 +169,7 @@ public abstract class MixinNetHandlerPlayClient {
      */
     @Overwrite
     public void handleChat(S02PacketChat packetIn) {
-        PacketThreadUtil.checkThreadAndEnqueue(packetIn, (INetHandlerPlayClient) getNetworkManager().getNetHandler(), this.gameController);
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, (INetHandlerPlayClient) getNetworkManager().getNetHandler(), this.client);
 
         ServerChatEvent event = new ServerChatEvent(packetIn.getType(), packetIn.getChatComponent());
 
@@ -174,9 +180,9 @@ public abstract class MixinNetHandlerPlayClient {
         }
 
         if (packetIn.getType() == 2) {
-            gameController.ingameGUI.setRecordPlaying(event.getChat(), false);
+            client.ingameGUI.setRecordPlaying(event.getChat(), false);
         } else {
-            gameController.ingameGUI.getChatGUI().printChatMessage(event.getChat());
+            client.ingameGUI.getChatGUI().printChatMessage(event.getChat());
         }
     }
 
@@ -192,9 +198,9 @@ public abstract class MixinNetHandlerPlayClient {
             worldTime = config.time;
         }
 
-        PacketThreadUtil.checkThreadAndEnqueue(packetIn, Minecraft.getMinecraft().thePlayer.sendQueue, this.gameController);
-        this.gameController.theWorld.setTotalWorldTime(packetIn.getTotalWorldTime());
-        this.gameController.theWorld.setWorldTime(worldTime);
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, Minecraft.getMinecraft().thePlayer.sendQueue, this.client);
+        this.client.theWorld.setTotalWorldTime(packetIn.getTotalWorldTime());
+        this.client.theWorld.setWorldTime(worldTime);
     }
 
     /**
@@ -203,13 +209,13 @@ public abstract class MixinNetHandlerPlayClient {
      */
     @Overwrite
     public void handleAnimation(S0BPacketAnimation packetIn) {
-        PacketThreadUtil.checkThreadAndEnqueue(packetIn, (INetHandlerPlayClient) getNetworkManager().getNetHandler(), this.gameController);
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, (INetHandlerPlayClient) getNetworkManager().getNetHandler(), this.client);
 
-        if (this.clientWorldController == null) {
+        if (this.world == null) {
             return;
         }
 
-        Entity entity = this.clientWorldController.getEntityByID(packetIn.getEntityID());
+        Entity entity = this.world.getEntityByID(packetIn.getEntityID());
 
         if (entity != null) {
             if (packetIn.getAnimationType() == 0) {
@@ -221,10 +227,37 @@ public abstract class MixinNetHandlerPlayClient {
                 EntityPlayer entityplayer = (EntityPlayer) entity;
                 entityplayer.wakeUpPlayer(false, false, false);
             } else if (packetIn.getAnimationType() == 4) {
-                this.gameController.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT);
+                this.client.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT);
             } else if (packetIn.getAnimationType() == 5) {
-                this.gameController.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC);
+                this.client.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC);
             }
         }
+    }
+
+    /**
+     * @author prplz
+     * @reason Skip "Downloading terrain..." screen
+     */
+    @Overwrite
+    @Override
+    public void handleRespawn(S07PacketRespawn packetIn) {
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, client);
+
+        if (packetIn.getDimensionID() != client.thePlayer.dimension) {
+            doneLoadingTerrain = false;
+            client.displayGuiScreen(null);
+
+            Scoreboard scoreboard = world.getScoreboard();
+            world = new WorldClient(
+                    (NetHandlerPlayClient) (Object) this, new WorldSettings(0L, packetIn.getGameType(), false,
+                    client.theWorld.getWorldInfo().isHardcoreModeEnabled(), packetIn.getWorldType()), packetIn.getDimensionID(), packetIn.getDifficulty(),
+                    client.mcProfiler);
+            world.setWorldScoreboard(scoreboard);
+            client.loadWorld(world);
+            client.thePlayer.dimension = packetIn.getDimensionID();
+        }
+
+        client.setDimensionAndSpawnPlayer(packetIn.getDimensionID());
+        client.playerController.setGameType(packetIn.getGameType());
     }
 }

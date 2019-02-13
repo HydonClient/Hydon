@@ -1,7 +1,7 @@
 package net.hydonclient.mixins;
 
 import net.hydonclient.Hydon;
-import net.hydonclient.SplashScreen;
+import net.hydonclient.gui.SplashScreen;
 import net.hydonclient.packages.PackageBootstrap;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.WorldChangedEvent;
@@ -21,18 +21,23 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.profiler.IPlayerUsage;
+import net.minecraft.profiler.Profiler;
+import net.minecraft.util.IThreadListener;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
-public abstract class MixinMinecraft {
+public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
 
     @Shadow
     public GuiScreen currentScreen;
@@ -62,6 +67,10 @@ public abstract class MixinMinecraft {
 
     @Shadow
     public abstract void setIngameFocus();
+
+    @Shadow
+    @Final
+    public Profiler mcProfiler;
 
     private HydonMinecraft impl = new HydonMinecraft((Minecraft) (Object) this);
 
@@ -201,5 +210,17 @@ public abstract class MixinMinecraft {
     @Overwrite
     private void drawSplashScreen(TextureManager textureManagerInstance) {
         SplashScreen.render(textureManagerInstance);
+    }
+
+    @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", ordinal = 0))
+    private void endStartGUISection(Profiler profiler, String name) {
+        profiler.endStartSection("gui");
+    }
+
+    @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/TextureManager;tick()V", ordinal = 0))
+    private void tickTextureManagerWithProperProfiler(TextureManager textureManager) {
+        mcProfiler.endStartSection("textures");
+        textureManager.tick();
+        mcProfiler.endStartSection("gui");
     }
 }

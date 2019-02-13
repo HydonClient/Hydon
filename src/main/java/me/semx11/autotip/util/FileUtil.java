@@ -13,6 +13,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 import me.semx11.autotip.Autotip;
+import net.hydonclient.Hydon;
 import org.apache.commons.io.FilenameUtils;
 
 public class FileUtil {
@@ -25,7 +26,7 @@ public class FileUtil {
     private LocalDate firstDate;
 
     public FileUtil(Autotip autotip) {
-        this.userDir = this.getRawPath("mods/autotip/" + autotip.getGameProfile().getId());
+        this.userDir = this.getRawPath(Hydon.STORAGE_FOLDER + "/autotip/" + autotip.getGameProfile().getId());
         this.statsDir = this.getPath("stats");
     }
 

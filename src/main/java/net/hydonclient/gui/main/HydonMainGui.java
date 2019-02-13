@@ -135,13 +135,31 @@ public class HydonMainGui extends GuiScreen {
         /* Old Animations Configuration */
         SettingsDropdownElement oldAnimationsElement = new SettingsDropdownElement("Animations");
 
-        SettingGroup animationElements = new SettingGroup("HUD Items");
+        SettingGroup animationElements = new SettingGroup("Animation Items");
 
         animationElements.addElements(
+                new SettingsToggle("1.7 Armor", Hydon.SETTINGS.oldArmor,
+                        result -> Hydon.SETTINGS.oldArmor = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Blocking", Hydon.SETTINGS.oldBlocking,
+                        result -> Hydon.SETTINGS.oldBlocking = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Damage", Hydon.SETTINGS.oldDamageFlash,
+                        result -> Hydon.SETTINGS.oldDamageFlash = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Item Holding", Hydon.SETTINGS.oldItemHolding,
+                        result -> Hydon.SETTINGS.oldItemHolding = result));
+        animationElements.addElements(
+                new SettingsToggle("1.7 Sneaking", Hydon.SETTINGS.oldSneaking,
+                        result -> Hydon.SETTINGS.oldSneaking = result));
+
+        SettingGroup hudElements = new SettingGroup("HUD Items");
+
+        hudElements.addElements(
                 new SettingsToggle("1.7 Debug", Hydon.SETTINGS.oldDebugMenu,
                         result -> Hydon.SETTINGS.oldDebugMenu = result));
 
-        oldAnimationsElement.addElements(animationElements);
+        oldAnimationsElement.addElements(animationElements, hudElements);
 
         controller.addElements(oldAnimationsElement);
 
@@ -188,7 +206,7 @@ public class HydonMainGui extends GuiScreen {
                 new SettingsToggle("Windowed Fullscreen", Hydon.SETTINGS.windowedFullscreen,
                         result -> Hydon.SETTINGS.windowedFullscreen = result));
         generalImprovements.addElements(
-                new SettingsToggle("Hide Titles", Hydon.SETTINGS.disableTitles,
+                new SettingsToggle("Disable Titles", Hydon.SETTINGS.disableTitles,
                         result -> Hydon.SETTINGS.disableTitles = result));
         generalImprovements.addElements(
                 new SettingsToggle("Disable Boss Footer", Hydon.SETTINGS.disableBossFooter,
@@ -231,6 +249,12 @@ public class HydonMainGui extends GuiScreen {
         hotBarElements.addElements(
                 new SettingsToggle("Damage Preview", Hydon.SETTINGS.damagePreview,
                         result -> Hydon.SETTINGS.damagePreview = result));
+        hotBarElements.addElements(
+                new SettingsToggle("Hotbar Numbers", Hydon.SETTINGS.hotbarNumbers,
+                        result -> Hydon.SETTINGS.hotbarNumbers = result));
+        hotBarElements.addElements(
+                new SettingsToggle("Number Shadow", Hydon.SETTINGS.hotbarNumberShadow,
+                        result -> Hydon.SETTINGS.hotbarNumberShadow = result));
 
         /*
          * Inventory Elements
@@ -251,11 +275,17 @@ public class HydonMainGui extends GuiScreen {
          */
         SettingGroup miscElements = new SettingGroup("Other Elements");
         miscElements.addElements(
-                new SettingsToggle("Third Person Crosshair", Hydon.SETTINGS.thirdPersonCrosshair,
-                        result -> Hydon.SETTINGS.thirdPersonCrosshair = result));
-        miscElements.addElements(
                 new SettingsToggle("Compact Chat", Hydon.SETTINGS.compactChat,
                         result -> Hydon.SETTINGS.compactChat = result));
+        miscElements.addElements(
+                new SettingsToggle("Confirm Disconnect", Hydon.SETTINGS.confirmDisconnect,
+                        result -> Hydon.SETTINGS.confirmDisconnect = result));
+        miscElements.addElements(
+                new SettingsToggle("Confirm Quit Game", Hydon.SETTINGS.confirmQuitGame,
+                        result -> Hydon.SETTINGS.confirmQuitGame = result));
+        miscElements.addElements(
+                new SettingsToggle("Third Person Crosshair", Hydon.SETTINGS.thirdPersonCrosshair,
+                        result -> Hydon.SETTINGS.thirdPersonCrosshair = result));
 
         veElement.addElements(hotBarElements, inventoryElements, miscElements);
         controller.addElements(veElement);
@@ -597,38 +627,40 @@ public class HydonMainGui extends GuiScreen {
 
             if (currentGroup == potionDisplayElements) {
                 Collection<PotionEffect> effects;
-                effects = hud.getMinecraft().thePlayer.getActivePotionEffects();
+                if (mc.theWorld != null) {
+                    effects = hud.getMinecraft().thePlayer.getActivePotionEffects();
 
-                for (PotionEffect potionEffect : effects) {
-                    Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
+                    for (PotionEffect potionEffect : effects) {
+                        Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
 
-                    StringBuilder effectName = new StringBuilder(I18n.format(potion.getName()));
+                        StringBuilder effectName = new StringBuilder(I18n.format(potion.getName()));
 
-                    if (potionEffect.getAmplifier() == 1) {
-                        effectName.append(" ").append(
-                                I18n.format("enchantment.level.2"));
+                        if (potionEffect.getAmplifier() == 1) {
+                            effectName.append(" ").append(
+                                    I18n.format("enchantment.level.2"));
 
-                    } else if (potionEffect.getAmplifier() == 2) {
-                        effectName.append(" ").append(
-                                I18n.format("enchantment.level.3"));
+                        } else if (potionEffect.getAmplifier() == 2) {
+                            effectName.append(" ").append(
+                                    I18n.format("enchantment.level.3"));
 
-                    } else if (potionEffect.getAmplifier() == 3) {
-                        effectName.append(" ").append(
-                                I18n.format("enchantment.level.4"));
-                    }
-
-                    String duration = Potion.getDurationString(potionEffect);
-                    String jointedText;
-
-                    // TODO: fix the NPE when changing the separator (any reason why an npe is being thrown?), then replace " * " with the used separator
-                    if (hud.getConfig().POTIONSTATUS) {
-                        if (!hud.getConfig().POTIONSTATUS_PARENTHESES) {
-                            jointedText = ("" + effectName + " * " + duration);
-                        } else {
-                            jointedText = ("(" + effectName + " * " + duration + ")");
+                        } else if (potionEffect.getAmplifier() == 3) {
+                            effectName.append(" ").append(
+                                    I18n.format("enchantment.level.4"));
                         }
 
-                        hud.drawCenteredString(jointedText, this.width, 16777215);
+                        String duration = Potion.getDurationString(potionEffect);
+                        String jointedText;
+
+                        // TODO: fix the NPE when changing the separator (any reason why an npe is being thrown?), then replace " * " with the used separator
+                        if (hud.getConfig().POTIONSTATUS) {
+                            if (!hud.getConfig().POTIONSTATUS_PARENTHESES) {
+                                jointedText = ("" + effectName + " * " + duration);
+                            } else {
+                                jointedText = ("(" + effectName + " * " + duration + ")");
+                            }
+
+                            hud.drawCenteredString(jointedText, this.width, 16777215);
+                        }
                     }
                 }
             }

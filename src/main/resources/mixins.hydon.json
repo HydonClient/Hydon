@@ -8,6 +8,7 @@
 
     "client.MixinLoadingScreenRenderer",
     "client.MixinClientBrandRetriever",
+    "client.MixinMinecraftCrashing",
 
     "client.entity.MixinAbstractClientPlayer",
     "client.entity.MixinEntityPlayerSP",
@@ -17,6 +18,7 @@
     "client.gui.MixinGui",
     "client.gui.MixinGuiButton",
     "client.gui.MixinGuiButtonLanguage",
+    "client.gui.MixinGuiContainer",
     "client.gui.MixinGuiDisconnected",
     "client.gui.MixinGuiDownloadTerrain",
     "client.gui.MixinGuiGameOver",
@@ -32,6 +34,8 @@
     "client.gui.MixinGuiTextField",
     "client.gui.MixinGuiUtilRenderComponents",
 
+    "client.model.MixinModelBiped",
+
     "client.multiplayer.MixinGuiConnecting",
 
     "client.renderer.IMixinEntityRenderer",
@@ -40,16 +44,20 @@
     "client.renderer.MixinEntityRenderer",
     "client.renderer.MixinInventoryEffectRenderer",
     "client.renderer.MixinOpenGlHelper",
+    "client.renderer.MixinWorldRenderer",
 
-    "client.renderer.entity.layer.MixinLayerDeadmau5Head",
+    "client.renderer.entity.layers.MixinLayerArmorBase",
+    "client.renderer.entity.layers.MixinLayerCape",
+    "client.renderer.entity.layers.MixinLayerDeadmau5Head",
+    "client.renderer.entity.layers.MixinLayerHeldItem",
 
+    "client.renderer.entity.IMixinRenderLivingEntity",
     "client.renderer.entity.MixinRender",
     "client.renderer.entity.MixinRenderEntityItem",
     "client.renderer.entity.MixinRendererLivingEntity",
+    "client.renderer.entity.MixinRenderFish",
     "client.renderer.entity.MixinRenderItem",
     "client.renderer.entity.MixinRenderPlayer",
-
-    "client.renderer.entity.layers.MixinLayerArmorBase",
 
     "client.renderer.tileentity.MixinRenderItemFrame",
     "client.renderer.tileentity.MixinTileEntitySignRenderer",
@@ -59,6 +67,10 @@
     "client.resources.MixinLocale",
 
     "client.settings.MixinKeyBinding",
+
+    "crash.MixinCrashReport",
+
+    "entity.player.MixinEntityPlayer",
 
     "entity.MixinEntity",
     "entity.MixinEntityLivingBase",
@@ -73,7 +85,12 @@
 
     "scoreboard.MixinScoreboard",
 
+    "server.integrated.MixinIntegratedServer",
+
+    "server.MixinMinecraftServer",
+
     "util.MixinScreenshotHelper",
+    "util.MixinUtil",
 
     "world.MixinWorld",
 

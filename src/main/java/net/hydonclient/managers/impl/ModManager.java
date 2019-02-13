@@ -8,7 +8,6 @@ import net.hydonclient.mods.blur.BlurMod;
 import net.hydonclient.mods.chatlocker.ChatLocker;
 import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.hydonclient.mods.itemphysics.ItemPhysics;
-import net.hydonclient.mods.oldanimations.OldAnimations;
 import net.hydonclient.mods.timechanger.TimeChangerMod;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
 import net.hydonclient.mods.wings.Wings;
@@ -24,7 +23,6 @@ public class ModManager {
     private Autotip autotip;
     private Wings wings;
     private VanillaEnhancements vanillaEnhancements;
-    private OldAnimations oldAnimations;
     private KeystrokesMod keystrokesMod;
     private BlockOverlay blockOverlay;
     private TimeChangerMod timeChangerMod;
@@ -52,9 +50,6 @@ public class ModManager {
 
         vanillaEnhancements = new VanillaEnhancements();
         vanillaEnhancements.load();
-
-        oldAnimations = new OldAnimations();
-        oldAnimations.load();
 
         keystrokesMod = new KeystrokesMod();
         keystrokesMod.load();
@@ -93,10 +88,6 @@ public class ModManager {
 
     public VanillaEnhancements getVanillaEnhancements() {
         return vanillaEnhancements;
-    }
-
-    public OldAnimations getOldAnimations() {
-        return oldAnimations;
     }
 
     public KeystrokesMod getKeystrokesMod() {

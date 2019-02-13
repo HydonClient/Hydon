@@ -14,12 +14,20 @@ public class MixinGuiIngameMenu extends GuiScreen {
 
     private HydonGuiIngameMenu impl = new HydonGuiIngameMenu((GuiIngameMenu) (Object) this);
 
-    @Inject(method = "initGui", at = @At("RETURN"))
+    /**
+     * @author asbyth
+     * @reason Hydon Main menu
+     */
+    @Inject(method = "initGui", at = @At("HEAD"))
     private void initGui(CallbackInfo ci) {
         impl.initGui(buttonList);
     }
 
-    @Inject(method = "actionPerformed", at = @At("RETURN"))
+    /**
+     * @author asbyth & Mojang
+     * @reason Confirm disconnect
+     */
+    @Inject(method = "actionPerformed", at = @At("HEAD"))
     private void actionPerformed(GuiButton button, CallbackInfo ci) {
         impl.actionPerformed(button);
     }
