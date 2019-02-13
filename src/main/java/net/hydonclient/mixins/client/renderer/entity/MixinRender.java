@@ -13,10 +13,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Render.class)
-public abstract class MixinRender<T extends Entity> {
+public abstract class MixinRender {
 
     @Inject(method = "doRender", at = @At("HEAD"))
-    private void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+    private void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         EventBus.call(new EntityRenderEvent(entity, (float) x, (float) y, (float) z, entity.rotationPitch, entityYaw, 1.0F));
     }
 

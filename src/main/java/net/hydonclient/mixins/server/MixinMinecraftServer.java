@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -49,5 +50,14 @@ public class MixinMinecraftServer implements IPatchedMinecraftServer {
     @Override
     public String getProfilerName() {
         return profilerName;
+    }
+
+    @Redirect(method = "run", at = @At(value = "INVOKE", target = "Ljava/lang/Thread;sleep(J)V"))
+    private void run(long millis) throws InterruptedException {
+        theProfiler.startSection("root");
+        theProfiler.startSection("tickLimitWait");
+        Thread.sleep(millis);
+        theProfiler.endSection();
+        theProfiler.endSection();
     }
 }
