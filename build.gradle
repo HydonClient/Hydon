@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    embed 'org.spongepowered:mixin:0.7-SNAPSHOT'
+    embed 'org.spongepowered:mixin:0.7.10-SNAPSHOT'
     embed 'com.github.FalseHonesty:reflections:21959e6e'
     embed group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
     embed 'com.github.Vatuu:discord-rpc:1.6.0'
