@@ -189,7 +189,7 @@ public abstract class MixinMinecraftCrashing implements IThreadListener, IPlayer
     }
 
     private void addInfoToCrash(CrashReport report) { // TODO: fix integer amount being set as a lambda when crashing
-        report.getCategory().addCrashSection("Client crashed since restart", (Callable<String>) () -> String.valueOf(clientCrashCount));
+        report.getCategory().addCrashSection("Client crashes since restart", (Callable<String>) () -> String.valueOf(clientCrashCount));
         report.getCategory().addCrashSection("Integrated server crashes since restart", (Callable<String>) () -> String.valueOf(serverCrashCount));
     }
 

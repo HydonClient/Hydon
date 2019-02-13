@@ -232,6 +232,9 @@ public class HydonMainGui extends GuiScreen {
         generalImprovements.addElements(
                 new SettingsToggle("Fullbright", Hydon.SETTINGS.fullbright,
                         result -> Hydon.SETTINGS.fullbright = result));
+        generalImprovements.addElements(
+                new SettingsToggle("Numbered Ping", Hydon.SETTINGS.numberPing,
+                        result -> Hydon.SETTINGS.numberPing = result));
 //        generalImprovements.addElements(
 //                new SettingsToggle("Chat Locker", ChatLocker.CHATLOCKER,
 //                        result -> ChatLocker.CHATLOCKER = result));

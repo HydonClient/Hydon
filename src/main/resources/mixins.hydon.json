@@ -15,6 +15,7 @@
     "client.entity.MixinAbstractClientPlayer",
     "client.entity.MixinEntityPlayerSP",
 
+    "client.gui.IMixinGui",
     "client.gui.IMixinGuiNewChat",
     "client.gui.MixinFontRenderer",
     "client.gui.MixinGui",

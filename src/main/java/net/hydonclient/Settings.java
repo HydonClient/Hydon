@@ -180,6 +180,9 @@ public class Settings {
     @SaveVal
     public boolean confirmQuitGame = false;
 
+    @SaveVal
+    public boolean numberPing = false;
+
     public boolean isBoChroma() {
         return boChroma;
     }
