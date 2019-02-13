@@ -14,4 +14,7 @@ public class AnimationUtil {
         return -c / 2 * ((float) Math.cos(Math.PI * t / d) - 1) + b;
     }
 
+    public static float clamp(float t, float b, float c) {
+        return t < b ? b : t > c ? c : t;
+    }
 }

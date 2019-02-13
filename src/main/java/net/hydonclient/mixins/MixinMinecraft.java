@@ -10,7 +10,6 @@ import net.hydonclient.event.events.gui.MouseInputEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
 import net.hydonclient.gui.GuiHydonMainMenu;
 import net.hydonclient.mixinsimp.HydonMinecraft;
-import net.hydonclient.util.patches.IPatchedMinecraftServer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -24,11 +23,9 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.profiler.IPlayerUsage;
 import net.minecraft.profiler.Profiler;
-import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.IThreadListener;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.spongepowered.asm.lib.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -36,13 +33,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
@@ -230,5 +223,12 @@ public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
         mcProfiler.endStartSection("textures");
         textureManager.tick();
         mcProfiler.endStartSection("gui");
+    }
+
+    @Inject(method = "getLimitFramerate", at = @At("HEAD"), cancellable = true)
+    private void getLimitFramerate(CallbackInfoReturnable<Integer> cir) {
+        if (!Display.isActive() && Hydon.SETTINGS.limitFramerate) {
+            cir.setReturnValue(30);
+        }
     }
 }

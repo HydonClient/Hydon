@@ -183,6 +183,9 @@ public class Settings {
     @SaveVal
     public boolean numberPing = false;
 
+    @SaveVal
+    public boolean limitFramerate = false;
+
     public boolean isBoChroma() {
         return boChroma;
     }

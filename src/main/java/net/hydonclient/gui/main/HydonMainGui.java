@@ -235,6 +235,9 @@ public class HydonMainGui extends GuiScreen {
         generalImprovements.addElements(
                 new SettingsToggle("Numbered Ping", Hydon.SETTINGS.numberPing,
                         result -> Hydon.SETTINGS.numberPing = result));
+        generalImprovements.addElements(
+                new SettingsToggle("Framerate Limiter", Hydon.SETTINGS.limitFramerate,
+                        result -> Hydon.SETTINGS.limitFramerate = result));
 //        generalImprovements.addElements(
 //                new SettingsToggle("Chat Locker", ChatLocker.CHATLOCKER,
 //                        result -> ChatLocker.CHATLOCKER = result));

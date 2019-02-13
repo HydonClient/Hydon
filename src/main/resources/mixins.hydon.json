@@ -79,7 +79,9 @@
 
     "client.resources.IMixinAbstractResourcePack",
     "client.resources.MixinAbstractResourcePack",
+    "client.resources.MixinFallbackResourceManager",
     "client.resources.MixinLocale",
+    "client.resources.MixinSimpleReloadableResourceManager",
 
     "client.settings.MixinKeyBinding",
 
