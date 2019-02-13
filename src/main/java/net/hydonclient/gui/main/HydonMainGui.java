@@ -197,6 +197,15 @@ public class HydonMainGui extends GuiScreen {
         framerateImprovements.addElements(
                 new SettingsToggle("Hide Item Frames", Hydon.SETTINGS.disableItemFrames,
                         result -> Hydon.SETTINGS.disableItemFrames = result));
+        framerateImprovements.addElements(
+                new SettingsToggle("Hide Experience Orbs", Hydon.SETTINGS.disableXPOrbs,
+                        result -> Hydon.SETTINGS.disableXPOrbs = result));
+        framerateImprovements.addElements(
+                new SettingsToggle("Hide All Particles", Hydon.SETTINGS.disableAllParticles,
+                        result -> Hydon.SETTINGS.disableAllParticles = result));
+        framerateImprovements.addElements(
+                new SettingsToggle("Hide Thrown Projectiles", Hydon.SETTINGS.disableThrownProjectiles,
+                        result -> Hydon.SETTINGS.disableThrownProjectiles = result));
 
         /*
          * General Improvements

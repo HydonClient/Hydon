@@ -28,6 +28,15 @@ public class Settings {
     public boolean disableItemFrames = false;
 
     @SaveVal
+    public boolean disableXPOrbs = false;
+
+    @SaveVal
+    public boolean disableAllParticles = false;
+
+    @SaveVal
+    public boolean disableThrownProjectiles = false;
+
+    @SaveVal
     public boolean windowedFullscreen;
 
     @SaveVal

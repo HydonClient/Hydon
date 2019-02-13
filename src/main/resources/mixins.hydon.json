@@ -41,6 +41,8 @@
 
     "client.multiplayer.MixinGuiConnecting",
 
+    "client.particle.MixinEffectRenderer",
+
     "client.renderer.chunk.MixinCompiledChunk",
     "client.renderer.chunk.MixinRenderChunk",
 
@@ -67,6 +69,7 @@
     "client.renderer.entity.MixinRenderFish",
     "client.renderer.entity.MixinRenderItem",
     "client.renderer.entity.MixinRenderPlayer",
+    "client.renderer.entity.MixinRenderXPOrb",
 
     "client.renderer.texture.MixinTextureAtlasSprite",
 
@@ -82,6 +85,8 @@
     "crash.MixinCrashReport",
 
     "entity.player.MixinEntityPlayer",
+
+    "entity.projectile.MixinEntityThrowable",
 
     "entity.MixinEntity",
     "entity.MixinEntityLivingBase",
