@@ -1,15 +1,15 @@
 package net.hydonclient.mixins;
 
 import net.hydonclient.Hydon;
-import net.hydonclient.gui.SplashScreen;
-import net.hydonclient.packages.PackageBootstrap;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.event.events.game.WorldChangedEvent;
 import net.hydonclient.event.events.gui.GuiDisplayEvent;
 import net.hydonclient.event.events.gui.MouseInputEvent;
 import net.hydonclient.event.events.render.RenderTickEvent;
 import net.hydonclient.gui.GuiHydonMainMenu;
+import net.hydonclient.gui.SplashScreen;
 import net.hydonclient.mixinsimp.HydonMinecraft;
+import net.hydonclient.packages.MinecraftPackageBootstrap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -196,7 +196,7 @@ public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
     private void shutdown(CallbackInfo callbackInfo) {
         Hydon.INSTANCE.stop();
 
-        PackageBootstrap.gameShutdown();
+        MinecraftPackageBootstrap.shutdown();
     }
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;next()Z", shift = Shift.BEFORE))

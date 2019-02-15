@@ -1,6 +1,5 @@
 package net.hydonclient.packages;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,15 +8,12 @@ import net.hydonclient.packages.discovery.impl.DevelopmentPackageDiscoverer;
 import net.hydonclient.packages.discovery.impl.FolderPackageDiscoverer;
 import net.hydonclient.packages.transformer.impl.ASMPackageTransformer;
 import net.hydonclient.packages.transformer.impl.MixinPackageTransformer;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.launchwrapper.LaunchClassLoader;
 
 public class PackageBootstrap {
 
-    private static final List<PackageManifest> DISCOVERED_PACKAGES = new ArrayList<>();
-    private static final List<AbstractPackage> LOADED_PACKAGES = new ArrayList<>();
+    public static final List<PackageManifest> DISCOVERED_PACKAGES = new ArrayList<>();
 
-    public static void tweakerInit() {
+    public static void init() {
         List<PackageManifest> packageManifests = new ArrayList<>();
 
         Arrays.asList(
@@ -47,37 +43,6 @@ public class PackageBootstrap {
                 .forEach(iPackageTransformer::transformPackage));
     }
 
-    public static void gameInit() {
-        List<AbstractPackage> packages = new ArrayList<>();
-        LaunchClassLoader classLoader = Launch.classLoader;
-
-        DISCOVERED_PACKAGES.forEach(packageManifest -> {
-            try {
-                Class<?> clazz = classLoader.findClass(packageManifest.getMainClass());
-
-                if (clazz == null) {
-                    System.out.println(
-                        "ERROR: Couldn't find package class (" + packageManifest.getName() + ").");
-                    return;
-                }
-
-                AbstractPackage packageImpl = (AbstractPackage) clazz.getConstructor()
-                    .newInstance();
-                packageImpl.setPackageManifest(packageManifest);
-                packages.add(packageImpl);
-            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        });
-
-        packages.forEach(AbstractPackage::load);
-        LOADED_PACKAGES.addAll(packages);
-    }
-
-    public static void gameShutdown() {
-        LOADED_PACKAGES.forEach(AbstractPackage::shutdown);
-    }
-
     private static boolean resolveDependency(PackageManifest manifest, List<String> resolved,
         List<String> unresolved) {
         unresolved.add(manifest.getName());
@@ -99,9 +64,5 @@ public class PackageBootstrap {
         resolved.add(manifest.getName());
         unresolved.remove(manifest.getName());
         return true;
-    }
-
-    public static List<AbstractPackage> getLoadedPackages() {
-        return LOADED_PACKAGES;
     }
 }

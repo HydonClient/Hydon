@@ -50,12 +50,12 @@ public class HydonTweaker implements ITweaker {
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
         classLoader.addClassLoaderExclusion("net.hydonclient.packages.PackageBootstrap");
         classLoader.addClassLoaderExclusion("net.hydonclient.packages.PackageManifest");
-        classLoader.addClassLoaderExclusion("net.hydonclient.packages.AbstractPackage");
+//        classLoader.addClassLoaderExclusion("net.hydonclient.packages.AbstractPackage");
 
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.hydon.json");
 
-        PackageBootstrap.tweakerInit();
+        PackageBootstrap.init();
     }
 
     /**

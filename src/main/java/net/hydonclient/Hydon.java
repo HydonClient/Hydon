@@ -9,7 +9,7 @@ import net.hydonclient.gui.main.HydonMainGui;
 import net.hydonclient.integrations.compactchat.CompactChat;
 import net.hydonclient.integrations.discord.DiscordPresence;
 import net.hydonclient.managers.HydonManagers;
-import net.hydonclient.packages.PackageBootstrap;
+import net.hydonclient.packages.MinecraftPackageBootstrap;
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,7 +60,7 @@ public class Hydon {
         DiscordPresence.getInstance().load();
 
         LOGGER.info("Initializing packages");
-        PackageBootstrap.gameInit();
+        MinecraftPackageBootstrap.init();
 
         LOGGER.info("Loading config values");
         HydonManagers.INSTANCE.getConfigManager().load();
