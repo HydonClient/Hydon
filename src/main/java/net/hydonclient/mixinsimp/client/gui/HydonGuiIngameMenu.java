@@ -46,7 +46,7 @@ public class HydonGuiIngameMenu extends GuiScreen {
         }
 
         if (button.id == 8) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(Minecraft.getMinecraft().currentScreen));
+            Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(this));
         }
 
         if (button.id == 9) {
