@@ -4,6 +4,7 @@ import net.hydonclient.Hydon;
 import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.gui.main.HydonMainGui;
 import net.hydonclient.gui.misc.GuiConfirmQuit;
+import net.hydonclient.mods.accountmanager.gui.SwitchAccounts;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.AnimationUtil;
@@ -134,6 +135,10 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
                 ServerData data = new ServerData(Hydon.SETTINGS.previousServer, hostName, false);
                 ((IPatchedGuiMultiplayer) multiplayer).setIp(data);
                 multiplayer.confirmClicked(true, 0);
+                break;
+
+            case 8:
+                mc.displayGuiScreen(new SwitchAccounts());
                 break;
 
             case 10:

@@ -3,6 +3,7 @@ package net.hydonclient.managers.impl;
 import me.aycy.blockoverlay.BlockOverlay;
 import me.semx11.autotip.Autotip;
 import net.hydonclient.Hydon;
+import net.hydonclient.mods.accountmanager.AccountManager;
 import net.hydonclient.mods.autogg.AutoGGMod;
 import net.hydonclient.mods.blur.BlurMod;
 import net.hydonclient.mods.chatlocker.ChatLocker;
@@ -29,6 +30,7 @@ public class ModManager {
     private HydonHUD hydonHUD;
     private ItemPhysics itemPhysics;
     private ChatLocker chatLocker;
+    private AccountManager accountManager;
 
     /**
      * Load all of the mods that are registered
@@ -68,6 +70,9 @@ public class ModManager {
 
         chatLocker = new ChatLocker();
         chatLocker.load();
+
+        accountManager = new AccountManager();
+        accountManager.load();
     }
 
     public AutoGGMod getAutoGGMod() {
@@ -112,5 +117,9 @@ public class ModManager {
 
     public ChatLocker getChatLocker() {
         return chatLocker;
+    }
+
+    public AccountManager getAccountManager() {
+        return accountManager;
     }
 }
