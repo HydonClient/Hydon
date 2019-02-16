@@ -186,6 +186,9 @@ public class Settings {
     @SaveVal
     public boolean limitFramerate = false;
 
+    @SaveVal
+    public String previousServer = "";
+
     public boolean isBoChroma() {
         return boChroma;
     }

@@ -9,11 +9,13 @@ import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.AnimationUtil;
 import net.hydonclient.util.maps.Images;
 import net.hydonclient.util.ResolutionUtil;
+import net.hydonclient.util.patches.IPatchedGuiMultiplayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonLanguage;
 import net.minecraft.client.gui.GuiLanguage;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
@@ -21,6 +23,7 @@ import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.demo.DemoWorldServer;
@@ -50,12 +53,17 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.buttonList.add(new GuiButton(0, this.width / 2 + 1, j + 22, 100, 20,
                 "Minecraft Settings"));
 
-        this.buttonList.add(new GuiButton(6, this.width / 2 - 101, j + 44, 100, 20,
+        buttonList.add(new GuiButton(7, width / 2 - 101, j + 44, 100, 20,
+                "Previous Server"));
+        buttonList.add(new GuiButton(8, width / 2 + 1, j + 44, 100, 20,
+                "Accounts")); // no functionality yet, todo
+
+        this.buttonList.add(new GuiButton(6, this.width / 2 - 101, j + 66, 100, 20,
                 "Credits"));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 1, j + 44, 100, 20,
+        this.buttonList.add(new GuiButton(4, this.width / 2 + 1, j + 66, 100, 20,
                 I18n.format("menu.quit")));
 
-        this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 123, j + 44));
+        this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 123, j + 66));
     }
 
     /**
@@ -116,6 +124,16 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
 
             case 6:
                 mc.displayGuiScreen(new GuiHydonCredits());
+                break;
+
+            case 7:
+                GuiMultiplayer multiplayer = new GuiMultiplayer(new GuiMainMenu());
+                multiplayer.setWorldAndResolution(Minecraft.getMinecraft(), width, height);
+                ((IPatchedGuiMultiplayer) multiplayer).makeDirectConnect();
+                String hostName = Hydon.SETTINGS.previousServer;
+                ServerData data = new ServerData(Hydon.SETTINGS.previousServer, hostName, false);
+                ((IPatchedGuiMultiplayer) multiplayer).setIp(data);
+                multiplayer.confirmClicked(true, 0);
                 break;
 
             case 10:

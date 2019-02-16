@@ -120,12 +120,16 @@ public class DiscordPresence {
                     );
 
                     /*
-                     * If the server isn't known, make the rpc say they're on "Server: current server ip"
+                     * If the server isn't known, make the rpc say they're on a server
+                     *
+                     * used to print the ip of the server they were on, but this could lead
+                     * to private servers being leaked, so it's been changed to this (could be a better message,
+                     * but this is temporary until better phrase is found)
                      */
                 } else {
                     DiscordRPC.discordUpdatePresence(
                             new DiscordRichPresence.Builder(
-                                    "Server: " + Minecraft.getMinecraft().getCurrentServerData().serverIP)
+                                    "On a Server")
                                     .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
                                     .setStartTimestamps(startTime)
                                     .setBigImage("game", "In game")
