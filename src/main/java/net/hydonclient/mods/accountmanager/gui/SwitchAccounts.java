@@ -125,7 +125,7 @@ public class SwitchAccounts extends GuiScreen {
             int pos = (i - re) * multi;
 
             GuiUtility.drawBorderedRect(x, pos + 20, selWidth, 40, 0x55000000, 0x88000000);
-            GuiUtility.drawBorderedRect(x + 1, pos + 21, 36, 38, 0x55000000, 0x88000000);
+//            GuiUtility.drawBorderedRect(x + 1, pos + 21, 36, 38, 0x55000000, 0x88000000);
 
             String alias = acc.alias;
 
@@ -355,7 +355,6 @@ public class SwitchAccounts extends GuiScreen {
                 break;
         }
     }
-
 
     private int maxPages() {
         int amount = manager.accounts.size();
