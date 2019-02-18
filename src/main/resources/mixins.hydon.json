@@ -27,6 +27,7 @@
     "client.gui.MixinGuiGameOver",
     "client.gui.MixinGuiIngame",
     "client.gui.MixinGuiIngameMenu",
+    "client.gui.MixinGuiMultiplayer",
     "client.gui.MixinGuiNewChat",
     "client.gui.MixinGuiOptionSlider",
     "client.gui.MixinGuiOverlayDebug",
@@ -109,7 +110,6 @@
     "server.MixinMinecraftServer",
 
     "util.MixinScreenshotHelper",
-    "util.MixinUtil",
 
     "world.MixinWorld",
 
