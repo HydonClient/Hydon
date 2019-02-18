@@ -6,7 +6,9 @@ import net.minecraft.util.ResourceLocation;
 
 public enum Images {
 
-    LOGO(new ResourceLocation("textures/logo.png"), 1920, 1080);
+    LOGO(new ResourceLocation("textures/logo.png"), 1920, 1080),
+    LOGO_V2(new ResourceLocation("textures/logo_v2.png"), 1920, 1080),
+    LOGO_V2_DOWNSCALED(new ResourceLocation("textures/logo_v2_downscaled.png"), 288, 162);
 
     private ResourceLocation location;
     private int width, height;

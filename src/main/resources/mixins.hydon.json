@@ -51,6 +51,7 @@
     "client.renderer.IMixinEntityRenderer",
     "client.renderer.IMixinGuiContainer",
     "client.renderer.IMixinInventoryEffectRenderer",
+    "client.renderer.IMixinItemRenderer",
     "client.renderer.MixinBlockFluidRenderer",
     "client.renderer.MixinBlockModelShapes",
     "client.renderer.MixinEntityRenderer",

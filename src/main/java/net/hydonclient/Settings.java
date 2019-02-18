@@ -64,6 +64,18 @@ public class Settings {
     public boolean oldSneaking = false;
 
     @SaveVal
+    public boolean oldBow = false;
+
+    @SaveVal
+    public boolean oldRod = false;
+
+    @SaveVal
+    public boolean oldBlockHit = false;
+
+    @SaveVal
+    public boolean oldEating = false;
+
+    @SaveVal
     public boolean ampPreview = true;
 
     @SaveVal

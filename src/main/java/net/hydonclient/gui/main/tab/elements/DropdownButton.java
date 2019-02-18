@@ -1,14 +1,17 @@
-package net.hydonclient.gui.main.element.impl;
+package net.hydonclient.gui.main.tab.elements;
 
 import java.awt.Color;
-
 import net.hydonclient.gui.main.element.SettingsElement;
-import net.hydonclient.util.GraphicsUtil;
 import net.hydonclient.util.GuiUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import org.lwjgl.input.Mouse;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 
-public class SettingsButton extends SettingsElement {
+public class DropdownButton extends SettingsElement {
 
     /**
      * The button text
@@ -32,7 +35,7 @@ public class SettingsButton extends SettingsElement {
      * @param label   the text as to what the button will say
      * @param onClick when clicked, what will it do (open a gui? print a message in chat?)
      */
-    public SettingsButton(String label, Runnable onClick) {
+    public DropdownButton(String label, Runnable onClick) {
         this.label = label;
         this.onClick = onClick;
         this.width = 150;
@@ -50,11 +53,15 @@ public class SettingsButton extends SettingsElement {
         this.x = x;
         this.y = y;
 
-        Gui.drawRect(x + width - 30, y, x + width - 10, y + height - 1, new Color(255, 255, 255, 255).getRGB());
-        GraphicsUtil.drawRegularPolygon(x + width - 30, y + 7, 7, 0xffffff);
-        GraphicsUtil.drawRegularPolygon(x + width - 10, y + 7, 7, 0xffffff);
-        regularFont.drawCenteredString("Click", x + width - 20, y + 4, 0x000000);
-        regularFont.drawString(label, x + 5, y + 3, 0xffffff);
+        if (GuiUtils.isHovered(x, y, width, height)) {
+            Color color = new Color(0x42a5f5);
+            GlStateManager.enableBlend();
+            Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/shapes/right-triangle.png"));
+            GlStateManager.color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+            Gui.drawModalRectWithCustomSizedTexture(x + 8, y + 2, 0, 0, height / 4 * 3, height / 4 * 3, height / 4 * 3, height / 4 * 3);
+        }
+
+        regularFont.drawString(label, x + 25, y + 3, 0xffffff);
     }
 
     /**
