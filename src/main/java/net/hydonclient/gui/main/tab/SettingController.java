@@ -5,11 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import net.hydonclient.Hydon;
+import net.hydonclient.gui.enums.EnumBackground;
 import net.hydonclient.gui.main.HydonMainGui;
+import net.hydonclient.util.GraphicsUtil;
+import net.hydonclient.util.GuiUtils;
+import net.hydonclient.util.maps.Images;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import org.lwjgl.opengl.GL11;
 
 /**
  * The controller for all of the settings
@@ -27,16 +33,36 @@ public class SettingController {
     public void draw() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
-        int width = 150;
-        int height = scaledResolution.getScaledHeight();
+        int padding = scaledResolution.getScaledHeight() / 8;
+        int width = scaledResolution.getScaledWidth() - padding;
+        int height = scaledResolution.getScaledHeight() - padding;
 
-        Gui.drawRect(0, 0, width, height, new Color(0, 0, 0, 40).getRGB());
+        Gui.drawRect(padding - 1, padding - 1, width + 1, height + 1, new Color(10, 10, 10).getRGB());
+        Gui.drawRect(padding, padding, width, height, new Color(5, 5, 5).getRGB());
 
-        int leftSideOffset = HydonMainGui.INSTANCE.leftSideOffset;
+        GlStateManager.enableBlend();
+        float logoFactor = 2.5f;
+        Images.LOGO_V2_DOWNSCALED.bind();
+        GlStateManager.color(1, 1, 1, 1);
+        Gui.drawModalRectWithCustomSizedTexture(padding, padding, 0, 0,
+            (int) (Images.LOGO_V2_DOWNSCALED.getWidth() / logoFactor), (int) (Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor),
+            Images.LOGO_V2_DOWNSCALED.getWidth() / logoFactor, Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
 
-        AtomicInteger yMod = new AtomicInteger(leftSideOffset);
+        int startHeight = (int) (padding + Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
+        int sidebarWidth = scaledResolution.getScaledWidth() / 4;
+
+        Gui.drawRect(padding, startHeight, sidebarWidth, height, new Color(7, 7, 7).getRGB());
+        Gui.drawRect(sidebarWidth, startHeight, width, height, new Color(6, 6, 6).getRGB());
+        Gui.drawRect(padding, startHeight - 1, width, startHeight, new Color(10, 10, 10).getRGB());
+        Gui.drawRect(sidebarWidth, startHeight - 1, sidebarWidth + 1, height, new Color(10, 10, 10).getRGB());
+
+        AtomicInteger yMod = new AtomicInteger(startHeight + HydonMainGui.INSTANCE.leftSideOffset);
         dropdownElements.forEach(settingsDropdownElement -> {
-            settingsDropdownElement.draw(0, yMod.get());
+            if (yMod.get() + 20 >= scaledResolution.getScaledHeight() - padding) {
+                return;
+            }
+
+            settingsDropdownElement.draw(padding, yMod.get());
             yMod.addAndGet(settingsDropdownElement.getHeight() + 5);
         });
     }
@@ -50,7 +76,7 @@ public class SettingController {
      */
     public void mouseClicked(int button, int mouseX, int mouseY) {
         dropdownElements.forEach(settingsDropdownElement -> settingsDropdownElement
-                .mouseClicked(button, mouseX, mouseY));
+            .mouseClicked(button, mouseX, mouseY));
     }
 
     /**

@@ -6,7 +6,11 @@ import net.hydonclient.gui.main.element.SettingsElement;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.GuiUtils;
+import net.hydonclient.util.maps.Images;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class SettingsSlider extends SettingsElement {
 
@@ -70,7 +74,7 @@ public class SettingsSlider extends SettingsElement {
      */
     public SettingsSlider(String prefix, String suf, double minVal, double maxVal,
                           double currentVal, boolean showDec, Listener listener) {
-        this.width = 140;
+        this.width = 130;
         this.height = 30;
         minValue = minVal;
         maxValue = maxVal;
@@ -106,12 +110,12 @@ public class SettingsSlider extends SettingsElement {
         }
 
         if (this.dragging) {
-            this.sliderValue = (mouseX - (this.x + 4)) / (float) (this.width - 8);
+            this.sliderValue = (mouseX - (this.x + 4)) / (float) (this.width);
             updateSlider();
         }
 
-        Gui.drawRect(this.x + (int) (this.sliderValue * (float) (this.width - 8)), this.y, 8,
-                this.height, new Color(0, 0, 0, 20).getRGB());
+        Gui.drawRect(this.x + (int) (this.sliderValue * (float) (this.width)), this.y, 8,
+                this.height, new Color(255, 255, 255, 20).getRGB());
     }
 
     /**
@@ -127,13 +131,14 @@ public class SettingsSlider extends SettingsElement {
 
         MinecraftFontRenderer fontRenderer = HydonFonts.FONT_REGULAR;
 
-        Gui.drawRect(this.x, this.y, this.x + this.width, this.y + this.height,
-                new Color(0, 0, 0, 20).getRGB());
+//        Gui.drawRect(this.x, this.y, this.x + this.width, this.y + this.height,
+//                new Color(255, 255, 255, 20).getRGB());
+        GlStateManager.enableBlend();
         Gui.drawRect(this.x, this.y + 15, this.x + this.width, this.y + this.height,
-                new Color(0, 0, 0, 20).getRGB());
-        Gui.drawRect(this.x + (int) (this.sliderValue * (float) (this.width - 8)), this.y + 15,
-                this.x + (int) (this.sliderValue * (float) (this.width - 8)) + 8,
-                this.y + this.height, new Color(0, 0, 0, 20).getRGB());
+                new Color(255, 255, 255, 20).getRGB());
+        Gui.drawRect(this.x + (int) (this.sliderValue * this.width), this.y + 15,
+                this.x + (int) (this.sliderValue * this.width) + 5,
+                this.y + this.height, new Color(255, 255, 255, 20).getRGB());
 
         fontRenderer
                 .drawCenteredString(displayString, this.x + this.width / 2f, this.y + 5, 0xffffff);
@@ -152,7 +157,7 @@ public class SettingsSlider extends SettingsElement {
             return;
         }
 
-        this.sliderValue = (float) (mouseX - (this.x + 4)) / (float) (this.width - 8);
+        this.sliderValue = (float) (mouseX - (this.x + 4)) / (float) (this.width);
         updateSlider();
         this.dragging = true;
     }
@@ -229,6 +234,11 @@ public class SettingsSlider extends SettingsElement {
      */
     public void setValue(double value) {
         this.sliderValue = (value - minValue) / (maxValue - minValue);
+    }
+
+    @Override
+    public void setWidth(int width) {
+        this.width = width - 8;
     }
 
     /**

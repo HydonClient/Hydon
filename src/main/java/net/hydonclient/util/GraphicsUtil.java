@@ -15,7 +15,7 @@ public class GraphicsUtil {
     private static Tessellator tessellator = Tessellator.getInstance();
     private static WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 
-    private static void drawRegularPolygon(double x, double y, int radius, int color) {
+    public static void drawRegularPolygon(double x, double y, int radius, int color) {
         int sides = 50;
 
         GlStateManager.pushAttrib();

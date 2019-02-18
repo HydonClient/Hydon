@@ -1,6 +1,5 @@
 package net.hydonclient.gui.main.tab;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,11 +7,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import net.hydonclient.gui.main.HydonMainGui;
 import net.hydonclient.gui.main.element.SettingsElement;
-import net.hydonclient.gui.main.element.impl.SettingsButton;
+import net.hydonclient.gui.main.tab.elements.DropdownButton;
 import net.hydonclient.ttf.HydonFonts;
 import net.hydonclient.ttf.MinecraftFontRenderer;
+import net.hydonclient.util.maps.Images;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 
 public class SettingGroup {
@@ -30,7 +29,7 @@ public class SettingGroup {
     /**
      * The button that holds all of the options
      */
-    private SettingsButton settingsButton;
+    private DropdownButton dropdownButton;
 
     /**
      * Regular font for the text
@@ -58,7 +57,7 @@ public class SettingGroup {
      */
     public SettingGroup(String name) {
         this.name = name;
-        this.settingsButton = new SettingsButton(name, () -> {
+        this.dropdownButton = new DropdownButton(name, () -> {
         });
     }
 
@@ -68,24 +67,31 @@ public class SettingGroup {
     public void draw() {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
-        this.x = scaledResolution.getScaledWidth() - width;
-        this.y = 0;
-        this.width = 150;
+        int padding = scaledResolution.getScaledHeight() / 8;
+        int sidebarWidth = scaledResolution.getScaledWidth() / 4;
+
+        this.x = sidebarWidth;
+        this.y = padding + Images.LOGO_V2.getHeight() / 20;
+        this.width = scaledResolution.getScaledWidth() - sidebarWidth - padding;
         this.height = 20;
         settingsElements.forEach(settingsElement -> this.height += settingsElement.getHeight());
 
-        Gui.drawRect(scaledResolution.getScaledWidth() - width, 0,
-                scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(),
-                new Color(0, 0, 0, 20).getRGB());
+        boldFont.drawString(name, x + 5, y + HydonMainGui.INSTANCE.rightSideOffset + 5, 0xffffff);
 
-        int rightSideOffset = HydonMainGui.INSTANCE.rightSideOffset;
-
-        boldFont.drawCenteredString(name, x + width / 2f, 5 + rightSideOffset, 0xffffff);
-
-        AtomicInteger yMod = new AtomicInteger();
+        AtomicInteger yMod = new AtomicInteger(HydonMainGui.INSTANCE.rightSideOffset);
+        AtomicInteger index = new AtomicInteger();
         settingsElements.forEach(settingsElement -> {
-            settingsElement.draw(x, y + 25 + yMod.get() + rightSideOffset);
-            yMod.addAndGet(settingsElement.getHeight() + 5);
+//            if (yMod.get() + settingsElement.getHeight() >= scaledResolution.getScaledHeight() - padding) {
+//                return;
+//            }
+
+            boolean isSecond = index.get() % 2 == 1;
+            settingsElement.setWidth(width / 2);
+            settingsElement.draw(x + (isSecond ? width / 2 : 0), y + 25 + yMod.get());
+            if (isSecond) {
+                yMod.addAndGet(settingsElement.getHeight() + 5);
+            }
+            index.getAndIncrement();
         });
     }
 
@@ -183,8 +189,8 @@ public class SettingGroup {
      *
      * @return the set button
      */
-    public SettingsButton getSettingsButton() {
-        return settingsButton;
+    public DropdownButton getDropdownButton() {
+        return dropdownButton;
     }
 
     /**
@@ -192,7 +198,7 @@ public class SettingGroup {
      *
      * @param runnable the action
      */
-    public void setSettingsButton(Runnable runnable) {
-        this.settingsButton = new SettingsButton(name, runnable);
+    public void setDropdownButton(Runnable runnable) {
+        this.dropdownButton = new DropdownButton(name, runnable);
     }
 }
