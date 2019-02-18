@@ -23,11 +23,15 @@ import net.hydonclient.mods.hydonhud.modules.display.MovePotionStatusElement;
 import net.hydonclient.mods.hydonhud.modules.display.MoveSprintingElement;
 import net.hydonclient.packages.AbstractPackage;
 import net.hydonclient.packages.MinecraftPackageBootstrap;
+import net.hydonclient.util.GraphicsUtil;
 import net.hydonclient.util.GuiUtils;
+import net.hydonclient.util.maps.Images;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -575,114 +579,134 @@ public class HydonMainGui extends GuiScreen {
         controller.draw();
         if (currentGroup != null) {
             currentGroup.draw();
-
-            if (currentGroup == keyStrokesElements) {
-                HydonManagers.INSTANCE.getModManager().getKeystrokesMod().getKeyHolder()
-                    .draw(0, 0, scaledResolution.getScaledWidth() / 2 - 40,
-                        scaledResolution.getScaledHeight() / 2 - 40);
-            }
-
-            if (currentGroup == fpsElements) {
-                String fps;
-                if (!hud.getConfig().FPS_PARENTHESES) {
-                    fps = ("fps: " + Minecraft.getDebugFPS());
-                } else {
-                    fps = ("(fps: " + Minecraft.getDebugFPS() + ")");
-                }
-
-                hud.drawCenteredString(fps, this.width,
-                    new Color(hud.getConfig().FPS_RED, hud.getConfig().FPS_GREEN,
-                        hud.getConfig().FPS_BLUE).
-                        getRGB());
-            }
-
-            if (currentGroup == coordsElements) {
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                String coords;
-                if (player != null) {
-                    StringBuilder expandedCoordinates = new StringBuilder("0");
-
-                    if (hud.getConfig().PRECISION > 0) {
-                        expandedCoordinates.append(".");
-
-                        for (int i = 0; i < hud.getConfig().PRECISION; i++) {
-                            expandedCoordinates.append("0");
-                        }
-
-                        DecimalFormat format = new DecimalFormat(expandedCoordinates.toString());
-
-                        if (!hud.getConfig().COORDS_PARENTHESES) {
-                            coords = ("x: " + format.format(player.posX) +
-                                ", y: " + format.format(player.posY) +
-                                ", z: " + format.format(player.posZ));
-                        } else {
-                            coords = ("(x: " + format.format(player.posX) +
-                                ", y: " + format.format(player.posY) +
-                                ", z: " + format.format(player.posZ) + ")");
-                        }
-
-                        hud.drawCenteredString(coords, this.width,
-                            new Color(hud.getConfig().COORDS_RED, hud.getConfig().COORDS_GREEN,
-                                hud.getConfig().COORDS_BLUE).
-                                getRGB());
-                    }
-                }
-            }
-
-            if (currentGroup == sprintElements) {
-                String status;
-                if (!hud.getConfig().SPRINT_PARENTHESES) {
-                    status = "sprinting";
-                } else {
-                    status = "(sprinting)";
-                }
-
-                hud.drawCenteredString(status, this.width,
-                    new Color(hud.getConfig().STATUS_RED, hud.getConfig().STATUS_GREEN,
-                        hud.getConfig().STATUS_BLUE).
-                        getRGB());
-            }
-
-            if (currentGroup == potionDisplayElements) {
-                Collection<PotionEffect> effects;
-                if (mc.theWorld != null) {
-                    effects = hud.getMinecraft().thePlayer.getActivePotionEffects();
-
-                    for (PotionEffect potionEffect : effects) {
-                        Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
-
-                        StringBuilder effectName = new StringBuilder(I18n.format(potion.getName()));
-
-                        if (potionEffect.getAmplifier() == 1) {
-                            effectName.append(" ").append(
-                                I18n.format("enchantment.level.2"));
-
-                        } else if (potionEffect.getAmplifier() == 2) {
-                            effectName.append(" ").append(
-                                I18n.format("enchantment.level.3"));
-
-                        } else if (potionEffect.getAmplifier() == 3) {
-                            effectName.append(" ").append(
-                                I18n.format("enchantment.level.4"));
-                        }
-
-                        String duration = Potion.getDurationString(potionEffect);
-                        String jointedText;
-
-                        // TODO: fix the NPE when changing the separator (any reason why an npe is being thrown?), then replace " * " with the used separator
-                        if (hud.getConfig().POTIONSTATUS) {
-                            if (!hud.getConfig().POTIONSTATUS_PARENTHESES) {
-                                jointedText = ("" + effectName + " * " + duration);
-                            } else {
-                                jointedText = ("(" + effectName + " * " + duration + ")");
-                            }
-
-                            hud.drawCenteredString(jointedText, this.width, 16777215);
-                        }
-                    }
-                }
-            }
+//
+//            if (currentGroup == keyStrokesElements) {
+//                HydonManagers.INSTANCE.getModManager().getKeystrokesMod().getKeyHolder()
+//                    .draw(0, 0, scaledResolution.getScaledWidth() / 2 - 40,
+//                        scaledResolution.getScaledHeight() / 2 - 40);
+//            }
+//
+//            if (currentGroup == fpsElements) {
+//                String fps;
+//                if (!hud.getConfig().FPS_PARENTHESES) {
+//                    fps = ("fps: " + Minecraft.getDebugFPS());
+//                } else {
+//                    fps = ("(fps: " + Minecraft.getDebugFPS() + ")");
+//                }
+//
+//                hud.drawCenteredString(fps, this.width,
+//                    new Color(hud.getConfig().FPS_RED, hud.getConfig().FPS_GREEN,
+//                        hud.getConfig().FPS_BLUE).
+//                        getRGB());
+//            }
+//
+//            if (currentGroup == coordsElements) {
+//                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+//                String coords;
+//                if (player != null) {
+//                    StringBuilder expandedCoordinates = new StringBuilder("0");
+//
+//                    if (hud.getConfig().PRECISION > 0) {
+//                        expandedCoordinates.append(".");
+//
+//                        for (int i = 0; i < hud.getConfig().PRECISION; i++) {
+//                            expandedCoordinates.append("0");
+//                        }
+//
+//                        DecimalFormat format = new DecimalFormat(expandedCoordinates.toString());
+//
+//                        if (!hud.getConfig().COORDS_PARENTHESES) {
+//                            coords = ("x: " + format.format(player.posX) +
+//                                ", y: " + format.format(player.posY) +
+//                                ", z: " + format.format(player.posZ));
+//                        } else {
+//                            coords = ("(x: " + format.format(player.posX) +
+//                                ", y: " + format.format(player.posY) +
+//                                ", z: " + format.format(player.posZ) + ")");
+//                        }
+//
+//                        hud.drawCenteredString(coords, this.width,
+//                            new Color(hud.getConfig().COORDS_RED, hud.getConfig().COORDS_GREEN,
+//                                hud.getConfig().COORDS_BLUE).
+//                                getRGB());
+//                    }
+//                }
+//            }
+//
+//            if (currentGroup == sprintElements) {
+//                String status;
+//                if (!hud.getConfig().SPRINT_PARENTHESES) {
+//                    status = "sprinting";
+//                } else {
+//                    status = "(sprinting)";
+//                }
+//
+//                hud.drawCenteredString(status, this.width,
+//                    new Color(hud.getConfig().STATUS_RED, hud.getConfig().STATUS_GREEN,
+//                        hud.getConfig().STATUS_BLUE).
+//                        getRGB());
+//            }
+//
+//            if (currentGroup == potionDisplayElements) {
+//                Collection<PotionEffect> effects;
+//                if (mc.theWorld != null) {
+//                    effects = hud.getMinecraft().thePlayer.getActivePotionEffects();
+//
+//                    for (PotionEffect potionEffect : effects) {
+//                        Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
+//
+//                        StringBuilder effectName = new StringBuilder(I18n.format(potion.getName()));
+//
+//                        if (potionEffect.getAmplifier() == 1) {
+//                            effectName.append(" ").append(
+//                                I18n.format("enchantment.level.2"));
+//
+//                        } else if (potionEffect.getAmplifier() == 2) {
+//                            effectName.append(" ").append(
+//                                I18n.format("enchantment.level.3"));
+//
+//                        } else if (potionEffect.getAmplifier() == 3) {
+//                            effectName.append(" ").append(
+//                                I18n.format("enchantment.level.4"));
+//                        }
+//
+//                        String duration = Potion.getDurationString(potionEffect);
+//                        String jointedText;
+//
+//                        // TODO: fix the NPE when changing the separator (any reason why an npe is being thrown?), then replace " * " with the used separator
+//                        if (hud.getConfig().POTIONSTATUS) {
+//                            if (!hud.getConfig().POTIONSTATUS_PARENTHESES) {
+//                                jointedText = ("" + effectName + " * " + duration);
+//                            } else {
+//                                jointedText = ("(" + effectName + " * " + duration + ")");
+//                            }
+//
+//                            hud.drawCenteredString(jointedText, this.width, 16777215);
+//                        }
+//                    }
+//                }
+//            }
         }
+
+        int padding = scaledResolution.getScaledHeight() / 8;
+        int width = scaledResolution.getScaledWidth() - padding;
+        float logoFactor = 2.5f;
+        int startHeight = (int) (padding + Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
+
+        Minecraft.getMinecraft().getTextureManager()
+            .bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, scaledResolution.getScaledWidth(), startHeight, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+        Gui.drawModalRectWithCustomSizedTexture(0, scaledResolution.getScaledHeight() - padding, 0, scaledResolution.getScaledHeight() - padding, scaledResolution.getScaledWidth(), startHeight, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+
+        Gui.drawRect(padding - 1, padding - 1, width + 1, startHeight + 1, new Color(10, 10, 10).getRGB());
+        Gui.drawRect(1 + padding, padding, width, startHeight, new Color(5, 5, 5).getRGB());
+
+        GlStateManager.enableBlend();
+        Images.LOGO_V2_DOWNSCALED.bind();
+        GlStateManager.color(1, 1, 1, 1);
+        Gui.drawModalRectWithCustomSizedTexture(padding, padding, 0, 0,
+            (int) (Images.LOGO_V2_DOWNSCALED.getWidth() / logoFactor), (int) (Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor),
+            Images.LOGO_V2_DOWNSCALED.getWidth() / logoFactor, Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -743,11 +767,17 @@ public class HydonMainGui extends GuiScreen {
     public void handleMouseInput() throws IOException {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         int mouseOffset = MathHelper.clamp_int(Mouse.getEventDWheel(), -1, 1);
-        int mouseX = (int) GuiUtils.getMouse().getX();
-        if (mouseX <= 150) {
+
+        int padding = scaledResolution.getScaledHeight() / 8;
+        int height = scaledResolution.getScaledHeight() - padding;
+        int sidebarWidth = scaledResolution.getScaledWidth() / 4;
+
+        if (GuiUtils.isHovered(padding, padding, sidebarWidth, height - padding)) {
             leftSideOffset += mouseOffset * 10;
-        } else if (mouseX >= scaledResolution.getScaledWidth() - 150) {
+//            leftSideOffset = Math.max(0, leftSideOffset);
+        } else if (GuiUtils.isHovered(sidebarWidth, padding, scaledResolution.getScaledWidth() - sidebarWidth - padding, height - padding)) {
             rightSideOffset += mouseOffset * 10;
+//            rightSideOffset = Math.max(0, rightSideOffset);
         }
         super.handleMouseInput();
     }

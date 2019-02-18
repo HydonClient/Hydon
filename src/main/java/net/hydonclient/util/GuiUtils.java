@@ -102,8 +102,8 @@ public class GuiUtils {
         float r = (float) ratio;
         float ir = (float) 1.0 - r;
 
-        float[] rgb1 = new float[3];
-        float[] rgb2 = new float[3];
+        float[] rgb1 = new float[4];
+        float[] rgb2 = new float[4];
 
         color1.getColorComponents(rgb1);
         color2.getColorComponents(rgb2);
@@ -111,6 +111,7 @@ public class GuiUtils {
         float red = rgb1[0] * r + rgb2[0] * ir;
         float green = rgb1[1] * r + rgb2[1] * ir;
         float blue = rgb1[2] * r + rgb2[2] * ir;
+        float alpha = rgb1[3] * r + rgb2[3] * ir;
 
         if (red < 0) {
             red = 0;
@@ -127,10 +128,15 @@ public class GuiUtils {
         } else if (blue > 255) {
             blue = 255;
         }
+        if (alpha < 0) {
+            alpha = 0;
+        } else if (alpha > 255) {
+            alpha = 255;
+        }
 
         Color color = null;
         try {
-            color = new Color(red, green, blue);
+            color = new Color(red, green, blue, alpha);
         } catch (IllegalArgumentException exp) {
             NumberFormat nf = NumberFormat.getNumberInstance();
             System.out.println(nf.format(red) + "; " + nf.format(green) + "; " + nf.format(blue));

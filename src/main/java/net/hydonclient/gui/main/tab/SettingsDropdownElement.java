@@ -12,6 +12,9 @@ import net.hydonclient.ttf.MinecraftFontRenderer;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
 
 public class SettingsDropdownElement {
 
@@ -69,29 +72,47 @@ public class SettingsDropdownElement {
         this.y = y;
         this.width = 150;
         this.height = 20;
+
+        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        int padding = scaledResolution.getScaledHeight() / 8;
+        int sidebarWidth = scaledResolution.getScaledWidth() / 4;
+
         if (this.expanded) {
             this.height += 5;
             settingGroups
-                    .forEach(settingsElement -> this.height += settingsElement.getSettingsButton().getHeight() + 5);
+                    .forEach(settingsElement -> this.height += settingsElement.getDropdownButton().getHeight() + 5);
         }
 
-        Gui.drawRect(x + 5, y + 5, x + width - 5, y + 20,
-                new Color(0, 0, 0, GuiUtils.isHovered(x, y, width, height) || expanded ? 50 : 70).getRGB());
-        regularFont
-                .drawCenteredString(name, x + width / 2f, y + 8,
-                        0xffffff);
+        if (GuiUtils.isHovered(x, y, width, height) || expanded) {
+            GlStateManager.pushMatrix();
+            Color color = new Color(0x42a5f5);
+            GlStateManager.enableBlend();
+            Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/shapes/" + (expanded ? "down" : "right") + "-triangle.png"));
+            GlStateManager.color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+            Gui.drawModalRectWithCustomSizedTexture(x + 10, y + 5, 0, 0, 10, 10, 10, 10);
+            GlStateManager.popMatrix();
+        }
+
+        regularFont.drawString(name, x + 25, y + 7, 0xffffff);
 
         if (this.expanded) {
-            Gui.drawRect(x + 10, y + 20, x + width - 10, y + height, new Color(0, 0, 0, 30).getRGB());
+//            Gui.drawRect(x + 10, y + 20, x + width - 10, y + height, new Color(0, 0, 0, 30).getRGB());
             AtomicInteger yMod = new AtomicInteger();
+
+            AtomicInteger index = new AtomicInteger();
             settingGroups.forEach(settingGroup -> {
-                settingGroup.getSettingsButton().setOverrideHovered(((HydonMainGui) Minecraft
+                if (y + 35 + yMod.get() >= scaledResolution.getScaledHeight() - padding) {
+                    return;
+                }
+
+                settingGroup.getDropdownButton().setOverrideHovered(((HydonMainGui) Minecraft
                         .getMinecraft().currentScreen).currentGroup == settingGroup);
-                settingGroup.setSettingsButton(() -> ((HydonMainGui) Minecraft
+                settingGroup.setDropdownButton(() -> ((HydonMainGui) Minecraft
                         .getMinecraft().currentScreen).currentGroup = settingGroup);
-                settingGroup.getSettingsButton().setWidth(130);
-                settingGroup.getSettingsButton().draw(x + 10, y + 25 + yMod.get());
-                yMod.addAndGet(settingGroup.getSettingsButton().getHeight() + 5);
+                settingGroup.getDropdownButton().setWidth(130);
+                settingGroup.getDropdownButton().draw(x + 10, y + 25 + yMod.get());
+                yMod.addAndGet(settingGroup.getDropdownButton().getHeight() + 5);
+                index.getAndIncrement();
             });
         }
     }
@@ -113,7 +134,7 @@ public class SettingsDropdownElement {
                     });
         }
         settingGroups.forEach(
-                settingGroup -> settingGroup.getSettingsButton().mouseClicked(button, mouseX, mouseY));
+                settingGroup -> settingGroup.getDropdownButton().mouseClicked(button, mouseX, mouseY));
         if (GuiUtils.isHovered(getX(), getY(), this.width, 20) && button == 0) {
             expanded = !expanded;
         }
@@ -172,5 +193,13 @@ public class SettingsDropdownElement {
      */
     public int getY() {
         return y;
+    }
+
+    /**
+     * If it's expanded
+     * @return expanded
+     */
+    public boolean isExpanded() {
+        return expanded;
     }
 }

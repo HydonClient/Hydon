@@ -1,10 +1,11 @@
 package net.hydonclient.gui.main.element.impl;
 
 import java.awt.Color;
-
 import net.hydonclient.gui.main.element.SettingsElement;
+import net.hydonclient.util.GraphicsUtil;
 import net.hydonclient.util.GuiUtils;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
 
 public class SettingsToggle extends SettingsElement {
@@ -32,8 +33,8 @@ public class SettingsToggle extends SettingsElement {
     /**
      * The constructor for toggles
      *
-     * @param label          the buttons text
-     * @param toggled        the current state of the option
+     * @param label the buttons text
+     * @param toggled the current state of the option
      * @param resultCallback the new state of the option
      */
     public SettingsToggle(String label, boolean toggled, Result resultCallback) {
@@ -55,12 +56,15 @@ public class SettingsToggle extends SettingsElement {
         this.x = x;
         this.y = y;
         progress = MathHelper.clamp_int(progress + (toggled ? 5 : -5), 0, 100);
-        Gui.drawRect(x + 5, y, x + width - 5, y + height,
-                GuiUtils.blendColors(new Color(0x8bc34a), new Color(0xF44336), progress / 100d)
-                        .getRGB());
-        regularFont
-                .drawCenteredString(label + ": " + (toggled ? "ON" : "OFF"), x + width / 2f,
-                        y + 3, 0xffffff);
+
+        Gui.drawRect(x + width - 30, y + 3, x + width - 10, y + height - 6, new Color(255, 255, 255, 255).getRGB());
+        GraphicsUtil.drawRegularPolygon(x + width - 30, y + 6, 3, 0xffffff);
+        GraphicsUtil.drawRegularPolygon(x + width - 10, y + 6, 3, 0xffffff);
+        GraphicsUtil.drawRegularPolygon(x + width - 30 + (20 * (progress / 100d)), y + height / 3f,
+            height / 2,
+            GuiUtils.blendColors(new Color(0x8bc34a), new Color(0xF44336), progress / 100d)
+                .getRGB());
+        regularFont.drawString(label, x + 5, y, 0xffffff);
     }
 
     /**
