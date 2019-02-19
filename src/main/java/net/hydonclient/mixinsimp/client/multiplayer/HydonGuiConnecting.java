@@ -9,6 +9,6 @@ public class HydonGuiConnecting {
     public void connect(String ip, int port) {
         EventBus.call(new ServerJoinEvent(ip, port));
 
-        Hydon.SETTINGS.previousServer = ip;
+        Hydon.SETTINGS.PREVIOUS_SERVER = ip;
     }
 }

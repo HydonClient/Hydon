@@ -5,8 +5,6 @@ import me.semx11.autotip.Autotip;
 import net.hydonclient.Hydon;
 import net.hydonclient.mods.accountmanager.AccountManager;
 import net.hydonclient.mods.blur.BlurMod;
-import net.hydonclient.mods.chatlocker.ChatLocker;
-import net.hydonclient.mods.hydonhud.HydonHUD;
 import net.hydonclient.mods.timechanger.TimeChangerMod;
 import net.hydonclient.mods.vanillaenhancements.VanillaEnhancements;
 import net.hydonclient.mods.wings.Wings;
@@ -24,8 +22,6 @@ public class ModManager {
     private KeystrokesMod keystrokesMod;
     private BlockOverlay blockOverlay;
     private TimeChangerMod timeChangerMod;
-    private HydonHUD hydonHUD;
-    private ChatLocker chatLocker;
     private AccountManager accountManager;
 
     /**
@@ -54,12 +50,6 @@ public class ModManager {
 
         timeChangerMod = new TimeChangerMod();
         timeChangerMod.load();
-
-        hydonHUD = new HydonHUD();
-        hydonHUD.load();
-
-        chatLocker = new ChatLocker();
-        chatLocker.load();
 
         accountManager = new AccountManager();
         accountManager.load();
@@ -91,14 +81,6 @@ public class ModManager {
 
     public TimeChangerMod getTimeChangerMod() {
         return timeChangerMod;
-    }
-
-    public HydonHUD getHydonHUD() {
-        return hydonHUD;
-    }
-
-    public ChatLocker getChatLocker() {
-        return chatLocker;
     }
 
     public AccountManager getAccountManager() {

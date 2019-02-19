@@ -15,7 +15,7 @@ public abstract class MixinTileEntitySignRenderer extends TileEntitySpecialRende
     private HydonTileEntitySignRenderer impl = new HydonTileEntitySignRenderer();
 
     @Inject(method = "renderTileEntityAt", at = @At("HEAD"), cancellable = true)
-    public void renderTileEntityAt(TileEntitySign te, double x, double y, double z, float partialTicks, int destroyStage, CallbackInfo ci) {
+    private void renderTileEntityAt(TileEntitySign te, double x, double y, double z, float partialTicks, int destroyStage, CallbackInfo ci) {
         impl.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage, ci);
     }
 }

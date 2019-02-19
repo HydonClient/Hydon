@@ -11,6 +11,7 @@ import net.hydonclient.gui.SplashScreen;
 import net.hydonclient.mixinsimp.HydonMinecraft;
 import net.hydonclient.packages.MinecraftPackageBootstrap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiGameOver;
@@ -24,6 +25,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.profiler.IPlayerUsage;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.util.IThreadListener;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Final;
@@ -73,11 +75,13 @@ public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
     @Final
     public Profiler mcProfiler;
 
+    @Shadow long systemTime;
+
     private HydonMinecraft impl = new HydonMinecraft((Minecraft) (Object) this);
 
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
-        Display.setTitle("[STARTING] Hydon (" + Hydon.VERSION + ")");
+        Display.setTitle("Hydon | [STARTING]");
     }
 
     @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;drawSplashScreen(Lnet/minecraft/client/renderer/texture/TextureManager;)V", shift = At.Shift.AFTER))
@@ -135,9 +139,12 @@ public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
         impl.toggleFullscreen(fullscreen, displayWidth, displayHeight, ci);
     }
 
-    @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("RETURN"))
+    @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At(
+            value = "INVOKE", target = "Ljava/lang/System;gc()V"), cancellable = true)
     private void loadWorld(WorldClient worldClient, String loadingMessage, CallbackInfo callbackInfo) {
         EventBus.call(new WorldChangedEvent());
+        systemTime = 0;
+        callbackInfo.cancel();
     }
 
     /**
@@ -189,7 +196,9 @@ public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
 
     @Inject(method = "startGame", at = @At("RETURN"))
     private void startGame2(CallbackInfo callbackInfo) {
-        Display.setTitle("Hydon (" + Hydon.VERSION + ")");
+        Display.setTitle("Hydon | " + Hydon.VERSION);
+        SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
+        handler.playSound(PositionedSoundRecord.create(new ResourceLocation("note.pling"), 1.0f));
     }
 
     @Inject(method = "shutdown", at = @At("HEAD"))
@@ -227,8 +236,10 @@ public abstract class MixinMinecraft implements IThreadListener, IPlayerUsage {
 
     @Inject(method = "getLimitFramerate", at = @At("HEAD"), cancellable = true)
     private void getLimitFramerate(CallbackInfoReturnable<Integer> cir) {
-        if (!Display.isActive() && Hydon.SETTINGS.limitFramerate) {
+        if (!Display.isActive() && Hydon.SETTINGS.LIMIT_FRAMERATE && gameSettings.limitFramerate > 30) {
             cir.setReturnValue(30);
+        } else if (gameSettings.limitFramerate < 30) {
+            cir.setReturnValue(gameSettings.limitFramerate);
         }
     }
 }

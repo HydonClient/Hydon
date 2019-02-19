@@ -26,7 +26,7 @@ public class AmplifierPreview {
 
     @EventListener
     public void renderEnchantments(RenderGameOverlayEvent event) {
-        if (Hydon.SETTINGS.ampPreview) {
+        if (Hydon.SETTINGS.AMPLIFIER_PREVIEW) {
             ItemStack heldItem = core.getMinecraft().thePlayer.inventory.getCurrentItem();
 
             if (heldItem != null) {

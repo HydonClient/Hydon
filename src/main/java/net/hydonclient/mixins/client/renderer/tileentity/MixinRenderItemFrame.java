@@ -14,7 +14,7 @@ public class MixinRenderItemFrame {
     private HydonRenderItemFrame impl = new HydonRenderItemFrame();
 
     @Inject(method = "doRender", at = @At("HEAD"), cancellable = true)
-    public void doRender(EntityItemFrame entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+    private void doRender(EntityItemFrame entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         impl.doRender(entity, x, y, z, entityYaw, partialTicks, ci);
     }
 }

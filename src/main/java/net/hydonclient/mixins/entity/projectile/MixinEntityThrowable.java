@@ -12,7 +12,7 @@ public abstract class MixinEntityThrowable {
 
     @Inject(method = "isInRangeToRenderDist", at = @At("HEAD"), cancellable = true)
     private void isInRangeToRenderDist(double distance, CallbackInfoReturnable<Boolean> cir) {
-        if (Hydon.SETTINGS.disableThrownProjectiles) {
+        if (Hydon.SETTINGS.DISABLE_THROWN_PROJECTILES) {
             cir.setReturnValue(false);
         }
     }

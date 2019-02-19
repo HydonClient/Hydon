@@ -13,14 +13,14 @@ public class MixinEffectRenderer {
 
     @Inject(method = "renderParticles", at = @At("HEAD"), cancellable = true)
     private void renderParticles(Entity entityIn, float partialTicks, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableAllParticles) {
+        if (Hydon.SETTINGS.DISABLE_ALL_PARTICLES) {
             ci.cancel();
         }
     }
 
     @Inject(method = "renderLitParticles", at = @At("HEAD"), cancellable = true)
     private void renderLitParticles(Entity entityIn, float partialTicks, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableAllParticles) {
+        if (Hydon.SETTINGS.DISABLE_ALL_PARTICLES) {
             ci.cancel();
         }
     }

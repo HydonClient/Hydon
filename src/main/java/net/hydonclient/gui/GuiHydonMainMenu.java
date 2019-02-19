@@ -57,7 +57,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         buttonList.add(new GuiButton(7, width / 2 - 101, j + 44, 100, 20,
                 "Previous Server"));
         buttonList.add(new GuiButton(8, width / 2 + 1, j + 44, 100, 20,
-                "Accounts")); // no functionality yet, todo
+                "Accounts"));
 
         this.buttonList.add(new GuiButton(6, this.width / 2 - 101, j + 66, 100, 20,
                 "Credits"));
@@ -112,7 +112,7 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
                 break;
 
             case 4:
-                if (Hydon.SETTINGS.confirmQuitGame) {
+                if (Hydon.SETTINGS.CONFIRM_QUIT) {
                     Minecraft.getMinecraft().displayGuiScreen(new GuiConfirmQuit());
                 } else {
                     this.mc.shutdown();
@@ -131,8 +131,8 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
                 GuiMultiplayer multiplayer = new GuiMultiplayer(new GuiMainMenu());
                 multiplayer.setWorldAndResolution(Minecraft.getMinecraft(), width, height);
                 ((IPatchedGuiMultiplayer) multiplayer).makeDirectConnect();
-                String hostName = Hydon.SETTINGS.previousServer;
-                ServerData data = new ServerData(Hydon.SETTINGS.previousServer, hostName, false);
+                String hostName = Hydon.SETTINGS.PREVIOUS_SERVER;
+                ServerData data = new ServerData(Hydon.SETTINGS.PREVIOUS_SERVER, hostName, false);
                 ((IPatchedGuiMultiplayer) multiplayer).setIp(data);
                 multiplayer.confirmClicked(true, 0);
                 break;

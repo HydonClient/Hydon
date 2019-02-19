@@ -2,8 +2,7 @@ package net.hydonclient.mixinsimp;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.Callable;
-import net.hydonclient.mixins.ITextureManager;
+import net.hydonclient.mixins.client.renderer.texture.ITextureManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.ITickableTextureObject;
@@ -47,11 +46,10 @@ public class HydonTextureManager {
             textureObj.loadTexture(Minecraft.getMinecraft().getResourceManager());
         } catch (IOException ioexception) {
             ((ITextureManager) textureManager).getLogger()
-                .warn((String) ("Failed to load texture: " + textureLocation),
-                    (Throwable) ioexception);
+                .warn(("Failed to load texture: " + textureLocation), ioexception);
             textureObj = TextureUtil.missingTexture;
             ((ITextureManager) this).getMapTextureObjects()
-                .put(textureLocation, (ITextureObject) textureObj);
+                .put(textureLocation, textureObj);
             flag = false;
         } catch (Throwable throwable) {
             final ITextureObject p_110579_2_f = textureObj;
@@ -60,16 +58,12 @@ public class HydonTextureManager {
                 .makeCategory("Resource location being registered");
             crashreportcategory.addCrashSection("Resource location", textureLocation);
             crashreportcategory
-                .addCrashSectionCallable("Texture object class", new Callable<String>() {
-                    public String call() throws Exception {
-                        return p_110579_2_f.getClass().getName();
-                    }
-                });
+                .addCrashSectionCallable("Texture object class", () -> p_110579_2_f.getClass().getName());
             throw new ReportedException(crashreport);
         }
 
         ((ITextureManager) textureManager).getMapTextureObjects()
-            .put(textureLocation, (ITextureObject) textureObj);
+            .put(textureLocation, textureObj);
         return flag;
     }
 

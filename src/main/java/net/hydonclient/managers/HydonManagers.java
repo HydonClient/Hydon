@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.hydonclient.Hydon;
 import net.hydonclient.managers.impl.CommandManager;
+import net.hydonclient.managers.impl.DisplayManager;
 import net.hydonclient.managers.impl.KeybindHandler;
 import net.hydonclient.managers.impl.ModManager;
 import net.hydonclient.managers.impl.config.ConfigManager;
@@ -36,6 +37,11 @@ public class HydonManagers {
     private KeybindHandler keybindHandler;
 
     /**
+     * The display manager
+     */
+    private DisplayManager displayManager;
+
+    /**
      * Fired from Hydon#start
      * Starts the config, the commands, the mods and the keybinds.
      */
@@ -54,6 +60,8 @@ public class HydonManagers {
 
         configManager.load();
         keybindHandler.loadPrevBinds();
+
+        displayManager = new DisplayManager();
     }
 
     /**
@@ -101,5 +109,14 @@ public class HydonManagers {
      */
     public KeybindHandler getKeybindHandler() {
         return keybindHandler;
+    }
+
+    /**
+     * The getDisplayManager method, used to display a screen the next ingame tick
+     *
+     * @return the instance
+     */
+    public DisplayManager getDisplayManager() {
+        return displayManager;
     }
 }

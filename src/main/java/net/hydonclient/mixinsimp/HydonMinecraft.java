@@ -19,7 +19,7 @@ public class HydonMinecraft {
     public void setInitialDisplayMode(boolean fullscreen, int displayWidth, int displayHeight, CallbackInfo ci) throws LWJGLException {
         Display.setFullscreen(false);
         if (fullscreen) {
-            if (Hydon.SETTINGS.windowedFullscreen) {
+            if (Hydon.SETTINGS.WINDOWED_FULLSCREEN) {
                 System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
             } else {
                 Display.setFullscreen(true);
@@ -29,7 +29,7 @@ public class HydonMinecraft {
                 ((IMixinMinecraft) minecraft).setDisplayHeight(Math.max(1, mode.getHeight()));
             }
         } else {
-            if (Hydon.SETTINGS.windowedFullscreen) {
+            if (Hydon.SETTINGS.WINDOWED_FULLSCREEN) {
                 System.setProperty("org.lwjgl.opengl.Window.undecorated", "false");
             } else {
                 Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
@@ -43,7 +43,7 @@ public class HydonMinecraft {
     }
 
     public void toggleFullscreen(boolean fullscreen, int displayWidth, int displayHeight, CallbackInfo ci) throws LWJGLException {
-        if (Hydon.SETTINGS.windowedFullscreen) {
+        if (Hydon.SETTINGS.WINDOWED_FULLSCREEN) {
             if (fullscreen) {
                 System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 

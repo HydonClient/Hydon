@@ -53,7 +53,7 @@ public class WingsRenderer extends ModelBase {
 
         if (UserManager.getInstance().getUser(player.getUniqueID())
             .hasUnlockedCosmetic(EnumCosmetic.WINGS)
-            && !player.isInvisible() && Hydon.SETTINGS.wingsEnabled) {
+            && !player.isInvisible() && Hydon.SETTINGS.WINGS) {
             renderWings(player, event.getPartialTicks(), event.getX(), event.getY(), event.getZ());
         }
     }
@@ -62,7 +62,7 @@ public class WingsRenderer extends ModelBase {
 
     private void renderWings(EntityPlayer player, float partialTicks, double x, double y,
         double z) {
-        double scale = Hydon.SETTINGS.wingsScale / 100.0;
+        double scale = Hydon.SETTINGS.WINGS_SCALE / 100.0;
         double rotate = this
             .interpolate(player.prevRenderYawOffset, player.renderYawOffset, partialTicks);
 

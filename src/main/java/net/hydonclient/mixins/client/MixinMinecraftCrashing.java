@@ -188,6 +188,10 @@ public abstract class MixinMinecraftCrashing implements IThreadListener, IPlayer
         }
     }
 
+    /**
+     * This will add the amount of client & integrated (singleplayer) crashes that've occurred during the instance
+     * @param report crashreport instance
+     */
     private void addInfoToCrash(CrashReport report) {
         report.getCategory().addCrashSectionCallable("Client crashes since restart", () -> String.valueOf(clientCrashCount));
         report.getCategory().addCrashSectionCallable("Integrated server crashes since restart", () -> String.valueOf(serverCrashCount));

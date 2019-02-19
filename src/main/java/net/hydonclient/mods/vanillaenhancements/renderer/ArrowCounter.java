@@ -19,7 +19,7 @@ public class ArrowCounter {
 
     @EventListener
     public void renderArrowCount(RenderGameOverlayEvent event) {
-        if (Hydon.SETTINGS.arrowCounter) {
+        if (Hydon.SETTINGS.ARROW_COUNTER) {
             EntityPlayerSP player = core.getMinecraft().thePlayer;
             if (player != null) {
                 ItemStack heldItem = player.getHeldItem();

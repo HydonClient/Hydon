@@ -58,7 +58,7 @@ public class DropdownButton extends SettingsElement {
             GlStateManager.enableBlend();
             Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/shapes/right-triangle.png"));
             GlStateManager.color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
-            Gui.drawModalRectWithCustomSizedTexture(x + 8, y + 2, 0, 0, height / 4 * 3, height / 4 * 3, height / 4 * 3, height / 4 * 3);
+            Gui.drawModalRectWithCustomSizedTexture(x + 8, y + 2, 0, 0, height / 4 * 3, height / 4 * 3, (height >> 2) * 3, (height >> 2) * 3);
         }
 
         regularFont.drawString(label, x + 25, y + 3, 0xffffff);

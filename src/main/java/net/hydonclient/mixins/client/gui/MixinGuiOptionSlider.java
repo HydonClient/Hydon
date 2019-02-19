@@ -33,7 +33,7 @@ public class MixinGuiOptionSlider extends GuiButton {
      */
     @Overwrite
     protected void mouseDragged(Minecraft mc, int mouseX, int mouseY) {
-        if (Hydon.SETTINGS.hydonButtons) {
+        if (Hydon.SETTINGS.HYDON_BUTTONS) {
             if (this.visible) {
                 if (this.dragging) {
                     this.sliderValue = (float) (mouseX - (this.xPosition + 4)) / (float) (this.width - 8);

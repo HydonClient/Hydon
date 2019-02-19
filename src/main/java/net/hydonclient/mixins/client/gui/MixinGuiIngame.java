@@ -36,9 +36,6 @@ public abstract class MixinGuiIngame extends Gui {
     private Minecraft mc;
 
     @Shadow
-    public abstract FontRenderer getFontRenderer();
-
-    @Shadow
     private long healthUpdateCounter;
     @Shadow
     private int updateCounter;
@@ -59,7 +56,7 @@ public abstract class MixinGuiIngame extends Gui {
      */
     @Inject(method = "renderGameOverlay", at = @At("RETURN"))
     private void renderGameOverlay(float partialTicks, CallbackInfo ci) {
-        impl.renderGameOverlay(partialTicks, ci);
+        impl.renderGameOverlay(partialTicks);
     }
 
     /**
@@ -77,7 +74,7 @@ public abstract class MixinGuiIngame extends Gui {
      */
     @Inject(method = "displayTitle", at = @At("HEAD"), cancellable = true)
     private void displayTitle(String title, String subTitle, int timeFadeIn, int displayTime, int timeFadeOut, CallbackInfo ci) {
-        impl.displayTitle(title, subTitle, timeFadeIn, displayTime, timeFadeOut, ci);
+        impl.displayTitle(ci);
     }
 
     /**
@@ -95,7 +92,7 @@ public abstract class MixinGuiIngame extends Gui {
      */
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes, CallbackInfo ci) {
-        impl.renderScoreboard(objective, scaledRes, ci);
+        impl.renderScoreboard(ci);
     }
 
     /**
@@ -199,7 +196,7 @@ public abstract class MixinGuiIngame extends Gui {
                 }
 
                 this.drawTexturedModalRect(healthWidth, healthHeight, 16 + gettingDamage * 9, 9 * hardCore, 9, 9);
-                if (!Hydon.SETTINGS.oldDamageFlash) {
+                if (!Hydon.SETTINGS.OLD_DAMAGE_FLASH) {
                     if (isGettingDamage) {
                         if (healthHeartAmount * 2 + 1 < lastPlayerHealth) {
                             this.drawTexturedModalRect(healthWidth, healthHeight, baseTextureX + 54, 9 * hardCore, 9, 9);

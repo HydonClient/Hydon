@@ -28,7 +28,7 @@ public class DiscordPresence {
      * Initializes the DiscordRPC Thread
      */
     public void load() {
-        if (!Hydon.SETTINGS.discordRichPresence) {
+        if (!Hydon.SETTINGS.DISCORD_RICH_PRESENCE) {
             return;
         }
 

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class HydonTileEntitySignRenderer {
 
     public void renderTileEntityAt(TileEntitySign te, double x, double y, double z, float partialTicks, int destroyStage, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableSigns) {
+        if (Hydon.SETTINGS.DISABLE_SIGNS) {
             ci.cancel();
         }
     }

@@ -15,11 +15,8 @@ public class HydonLayerArmorBase<T extends ModelBase> implements LayerRenderer<E
         return false;
     }
 
-    public void renderGlint(EntityLivingBase entitylivingbaseIn, T modelbaseIn,
-                             float p_177183_3_, float p_177183_4_, float partialTicks,
-                             float p_177183_6_, float p_177183_7_, float p_177183_8_, float scale,
-                             CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableEnchantments) {
+    public void renderGlint(CallbackInfo ci) {
+        if (Hydon.SETTINGS.DISABLE_ENCHANTMENTS) {
             ci.cancel();
         }
     }

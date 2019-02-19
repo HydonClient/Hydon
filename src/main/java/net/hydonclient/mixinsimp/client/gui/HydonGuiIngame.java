@@ -20,28 +20,29 @@ public class HydonGuiIngame {
         this.guiIngame = guiIngame;
     }
 
-    public void renderGameOverlay(float partialTicks, CallbackInfo ci) {
+    public void renderGameOverlay(float partialTicks) {
+        Minecraft.getMinecraft().mcProfiler.startSection("hydon_ingame_overlay");
         EventBus.call(new RenderGameOverlayEvent(new ScaledResolution(Minecraft.getMinecraft()), partialTicks));
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        Minecraft.getMinecraft().mcProfiler.endSection();
     }
 
     public void showCrosshair(CallbackInfoReturnable<Boolean> cir) {
-        if (!Hydon.SETTINGS.thirdPersonCrosshair
+        if (!Hydon.SETTINGS.THIRD_PERSON_CROSSHAIR
                 && Minecraft.getMinecraft().gameSettings.thirdPersonView > 0) {
             cir.setReturnValue(false);
         }
     }
 
-    public void displayTitle(String title, String subTitle, int timeFadeIn, int displayTime,
-                             int timeFadeOut, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableTitles) {
+    public void displayTitle(CallbackInfo ci) {
+        if (Hydon.SETTINGS.DISABLE_TITLES) {
             ci.cancel();
         }
     }
 
     public void renderBossHealth() {
         if (BossStatus.bossName != null && BossStatus.statusBarTime > 0
-                && !Hydon.SETTINGS.disableBossBar) {
+                && !Hydon.SETTINGS.DISABLE_BOSS_BAR) {
             --BossStatus.statusBarTime;
             ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
             int i = scaledresolution.getScaledWidth();
@@ -50,7 +51,7 @@ public class HydonGuiIngame {
             int l = (int) (BossStatus.healthScale * (float) (j + 1));
             int i1 = 12;
 
-            if (!Hydon.SETTINGS.disableBossFooter) {
+            if (!Hydon.SETTINGS.DISABLE_BOSS_FOOTER) {
                 guiIngame.drawTexturedModalRect(k, i1, 0, 74, j, 5);
                 guiIngame.drawTexturedModalRect(k, i1, 0, 74, j, 5);
 
@@ -69,8 +70,8 @@ public class HydonGuiIngame {
         }
     }
 
-    public void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableScoreboard) {
+    public void renderScoreboard(CallbackInfo ci) {
+        if (Hydon.SETTINGS.DISABLE_SCOREBOARD) {
             ci.cancel();
         }
     }

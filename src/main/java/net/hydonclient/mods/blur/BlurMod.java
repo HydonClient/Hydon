@@ -39,7 +39,7 @@ public class BlurMod extends Mod {
      */
     @EventListener
     public void onRenderTick(RenderTickEvent e) {
-        if (Hydon.SETTINGS.blurEnabled) {
+        if (Hydon.SETTINGS.GUI_BLUR) {
             ShaderGroup sg = Minecraft.getMinecraft().entityRenderer.getShaderGroup();
             try {
                 if (!Minecraft.getMinecraft().entityRenderer.isShaderActive()) {

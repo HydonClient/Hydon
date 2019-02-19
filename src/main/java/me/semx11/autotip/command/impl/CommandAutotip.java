@@ -32,7 +32,6 @@ import net.minecraft.util.IChatComponent;
 public class CommandAutotip extends CommandAbstract {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy");
-    private static final DateTimeFormatter SESSION_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final DateTimeFormatter WAVE_FORMAT = DateTimeFormatter.ofPattern("mm:ss");
 
     public CommandAutotip(Autotip autotip) {

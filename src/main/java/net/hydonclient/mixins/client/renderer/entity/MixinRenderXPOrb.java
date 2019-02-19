@@ -13,7 +13,7 @@ public class MixinRenderXPOrb {
 
     @Inject(method = "doRender", at = @At("HEAD"), cancellable = true)
     private void doRender(EntityXPOrb entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableXPOrbs) {
+        if (Hydon.SETTINGS.DISABLE_XPORBS) {
             ci.cancel();
         }
     }

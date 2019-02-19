@@ -2,7 +2,6 @@ package net.hydonclient.util;
 
 import java.awt.Color;
 
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -44,5 +43,4 @@ public class GraphicsUtil {
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
     }
-
 }

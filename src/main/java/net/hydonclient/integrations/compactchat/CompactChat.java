@@ -53,7 +53,7 @@ public class CompactChat {
      */
     @EventListener
     public void onChat(ChatEvent event) {
-        if (Hydon.SETTINGS.compactChat) {
+        if (Hydon.SETTINGS.COMPACT_CHAT) {
             if (!event.isCancelled()) {
                 GuiNewChat guiNewChat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
 

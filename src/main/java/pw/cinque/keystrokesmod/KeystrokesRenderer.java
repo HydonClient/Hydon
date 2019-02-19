@@ -20,7 +20,7 @@ public class KeystrokesRenderer {
 
     @EventListener
     public void onRenderTick(RenderTickEvent event) {
-        if (Minecraft.getMinecraft().inGameHasFocus && !Minecraft.getMinecraft().gameSettings.showDebugInfo && Hydon.SETTINGS.enableKeystrokes) {
+        if (Minecraft.getMinecraft().inGameHasFocus && !Minecraft.getMinecraft().gameSettings.showDebugInfo && Hydon.SETTINGS.ENABLE_KEYSTROKES) {
             keystrokesMod.getKeyHolder().draw(0, 0, -1, -1);
         }
     }

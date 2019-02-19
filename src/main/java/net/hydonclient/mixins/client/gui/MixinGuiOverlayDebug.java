@@ -41,8 +41,8 @@ public abstract class MixinGuiOverlayDebug {
     public void renderDebugInfo(ScaledResolution scaledResolutionIn) {
         this.mc.mcProfiler.startSection("debug");
         GlStateManager.pushMatrix();
-        if (Hydon.SETTINGS.oldDebugMenu) {
-            this.renderOldDebugInfoLeft(scaledResolutionIn);
+        if (Hydon.SETTINGS.OLD_DEBUG_MENU) {
+            this.renderOldDebugInfoLeft();
             this.renderOldDebugInfoRight(scaledResolutionIn);
             GlStateManager.popMatrix();
             this.mc.mcProfiler.endSection();
@@ -58,7 +58,7 @@ public abstract class MixinGuiOverlayDebug {
     }
 
 
-    private void renderOldDebugInfoLeft(ScaledResolution scaledResolutionIn) {
+    private void renderOldDebugInfoLeft() {
         FontRenderer fontRenderer = mc.fontRendererObj;
 
         fontRenderer.drawStringWithShadow(

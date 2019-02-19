@@ -39,14 +39,13 @@ import me.semx11.autotip.util.MinecraftVersion;
 import me.semx11.autotip.util.Version;
 import net.hydonclient.event.EventBus;
 import net.hydonclient.managers.HydonManagers;
-import net.hydonclient.managers.impl.command.Command;
 import net.hydonclient.mods.Mod;
 import net.hydonclient.mods.Mod.Info;
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Info(name = "Auto Tip", author = "Semex11", version = "3.0")
+@Info(name = "Auto Tip", author = "Semx11", version = "3.0")
 public class Autotip extends Mod {
 
     public static final Logger LOGGER = LogManager.getLogger("Autotip");

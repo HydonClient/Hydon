@@ -41,7 +41,7 @@ public class BlockOverlayRenderer {
     @EventListener
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (BlockOverlay.mc.thePlayer != null && BlockOverlay.mc.theWorld != null
-                && Hydon.SETTINGS.boPersistent && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.NONE
+                && Hydon.SETTINGS.BLOCKOVERLAY_PERSISTENT && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.NONE
                 && Hydon.SETTINGS.getBoMode() != BlockOverlayMode.DEFAULT
                 && (BlockOverlay.mc.playerController.getCurrentGameType()
                 == WorldSettings.GameType.ADVENTURE ||
@@ -74,7 +74,7 @@ public class BlockOverlayRenderer {
         double z = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 
         double expandAmount = 0.0020000000949949026;
-        boolean isOutlined = Hydon.SETTINGS.boLineWidth > 0.0f;
+        boolean isOutlined = Hydon.SETTINGS.BLOCKOVERLAY_LINE_WIDTH > 0.0f;
 
         AxisAlignedBB boundingBox = block
                 .getSelectedBoundingBox(BlockOverlay.mc.theWorld, mouseOver.getBlockPos())
@@ -90,12 +90,12 @@ public class BlockOverlayRenderer {
         GlStateManager.disableTexture2D();
         GlStateManager.depthMask(false);
 
-        if (Hydon.SETTINGS.boIgnoreDepth) {
+        if (Hydon.SETTINGS.BLOCKOVERLAY_IGNORE_DEPTH) {
             GlStateManager.disableDepth();
         }
 
         if (isOutlined) {
-            GL11.glLineWidth((float) Hydon.SETTINGS.boLineWidth);
+            GL11.glLineWidth((float) Hydon.SETTINGS.BLOCKOVERLAY_LINE_WIDTH);
         }
 
         switch (Hydon.SETTINGS.getBoMode()) {

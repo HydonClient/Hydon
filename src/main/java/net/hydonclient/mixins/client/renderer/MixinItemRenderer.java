@@ -49,20 +49,20 @@ public class MixinItemRenderer {
      */
     @Overwrite
     public void transformFirstPersonItem(float equipProgress, float swingProgress) {
-        if (Hydon.SETTINGS.oldBow && mc != null && mc.thePlayer != null &&
+        if (Hydon.SETTINGS.OLD_BOW && mc != null && mc.thePlayer != null &&
                 mc.thePlayer.getItemInUse() != null && mc.thePlayer.getItemInUse().getItem() != null &&
                 Item.getIdFromItem(mc.thePlayer.getItemInUse().getItem()) == 261) {
             translate(0.0f, 0.05f, 0.04f);
         }
 
-        if (Hydon.SETTINGS.oldRod && mc != null && mc.thePlayer != null &&
+        if (Hydon.SETTINGS.OLD_ROD && mc != null && mc.thePlayer != null &&
                 mc.thePlayer.getItemInUse() != null && mc.thePlayer.getItemInUse().getItem() != null &&
                 Item.getIdFromItem(mc.thePlayer.getItemInUse().getItem()) == 346) {
             translate(0.08f, -0.027f, -0.33f);
             scale(0.93f, 1.0f, 1.0f);
         }
 
-        if (Hydon.SETTINGS.oldBlockHit && mc != null && mc.thePlayer != null &&
+        if (Hydon.SETTINGS.OLD_BLOCK_HITTING && mc != null && mc.thePlayer != null &&
                 mc.thePlayer.isSwingInProgress && mc.thePlayer.getCurrentEquippedItem() != null &&
                 !mc.thePlayer.isEating() && !mc.thePlayer.isBlocking()) {
             scale(0.85f, 0.85f, 0.85f);
@@ -111,7 +111,7 @@ public class MixinItemRenderer {
                     case EAT:
                     case DRINK:
                         ((IMixinItemRenderer) this).callPerformDrinking(player, partialTicks);
-                        if (Hydon.SETTINGS.oldEating) {
+                        if (Hydon.SETTINGS.OLD_EATING) {
                             transformFirstPersonItem(progress, swing);
                             break;
                         } else {
@@ -120,7 +120,7 @@ public class MixinItemRenderer {
                         }
 
                     case BLOCK:
-                        if (Hydon.SETTINGS.oldBlockHit) {
+                        if (Hydon.SETTINGS.OLD_BLOCK_HITTING) {
                             transformFirstPersonItem(progress, swing);
                             ((IMixinItemRenderer) this).callDoBlockTransformations();
                             scale(0.83f, 0.88f, 0.85f);
@@ -133,7 +133,7 @@ public class MixinItemRenderer {
                         }
 
                     case BOW:
-                        if (Hydon.SETTINGS.oldBow) {
+                        if (Hydon.SETTINGS.OLD_BOW) {
                             transformFirstPersonItem(progress, swing);
                             ((IMixinItemRenderer) this).callDoBowTransformations(partialTicks, player);
                             translate(0.0F, 0.1F, -0.15F);

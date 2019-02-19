@@ -28,7 +28,7 @@ public class HydonGuiIngameMenu extends GuiScreen {
 
     public void actionPerformed(GuiButton button) {
         if (button.id == 1) {
-            if (Hydon.SETTINGS.confirmDisconnect) {
+            if (Hydon.SETTINGS.CONFIRM_DISCONNECT) {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiConfirmDisconnect());
 
             } else {

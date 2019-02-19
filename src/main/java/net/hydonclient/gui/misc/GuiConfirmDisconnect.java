@@ -23,7 +23,7 @@ public class GuiConfirmDisconnect extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
-        fontRendererObj.drawStringWithShadow("Are you sure you want to disconnect?", this.width / 2 - 90, this.height / 4 + 72 + i, 16777215);
+        fontRendererObj.drawStringWithShadow("Are you sure you want to disconnect?", (this.width >> 1) - 90, this.height / 4 + 72 + i, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

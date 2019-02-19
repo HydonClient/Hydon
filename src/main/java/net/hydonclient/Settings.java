@@ -7,209 +7,197 @@ import net.hydonclient.managers.impl.config.SaveVal;
 public class Settings {
 
     @SaveVal
-    public boolean fastChat = false;
+    public boolean FAST_CHAT = false;
 
     @SaveVal
-    public boolean autoGGEnabled = true;
+    public boolean GUI_BLUR = true;
 
     @SaveVal
-    public int autoGGDelay = 2;
+    public boolean DISABLE_ARMORSTANDS = false;
 
     @SaveVal
-    public boolean blurEnabled = true;
+    public boolean DISABLE_SIGNS = false;
 
     @SaveVal
-    public boolean disableArmorstands = false;
+    public boolean DISABLE_ITEMFRAMES = false;
 
     @SaveVal
-    public boolean disableSigns = false;
+    public boolean DISABLE_XPORBS = false;
 
     @SaveVal
-    public boolean disableItemFrames = false;
+    public boolean DISABLE_ALL_PARTICLES = false;
 
     @SaveVal
-    public boolean disableXPOrbs = false;
+    public boolean DISABLE_THROWN_PROJECTILES = false;
 
     @SaveVal
-    public boolean disableAllParticles = false;
+    public boolean WINDOWED_FULLSCREEN = false;
 
     @SaveVal
-    public boolean disableThrownProjectiles = false;
+    public boolean TOGGLESPRINT = true;
 
     @SaveVal
-    public boolean windowedFullscreen;
+    public boolean STOP_SPRINTING_WHEN_RELEASED = false;
 
     @SaveVal
-    public boolean togglesprintEnabled = true;
+    public boolean OLD_DEBUG_MENU = false;
 
     @SaveVal
-    public boolean stopSprintingAfterReleased = false;
+    public boolean OLD_BLOCKING = false;
 
     @SaveVal
-    public boolean oldDebugMenu = false;
+    public boolean OLD_ITEM_HOLDING = false;
 
     @SaveVal
-    public boolean oldBlocking = false;
+    public boolean OLD_ARMOR = false;
 
     @SaveVal
-    public boolean oldItemHolding = false;
+    public boolean OLD_DAMAGE_FLASH = false;
 
     @SaveVal
-    public boolean oldArmor = false;
+    public boolean OLD_SNEAKING = false;
 
     @SaveVal
-    public boolean oldDamageFlash = false;
+    public boolean OLD_BOW = false;
 
     @SaveVal
-    public boolean oldSneaking = false;
+    public boolean OLD_ROD = false;
 
     @SaveVal
-    public boolean oldBow = false;
+    public boolean OLD_BLOCK_HITTING = false;
 
     @SaveVal
-    public boolean oldRod = false;
+    public boolean OLD_EATING = false;
 
     @SaveVal
-    public boolean oldBlockHit = false;
+    public boolean AMPLIFIER_PREVIEW = true;
 
     @SaveVal
-    public boolean oldEating = false;
+    public boolean PROTECTION_PREVIEW = true;
 
     @SaveVal
-    public boolean ampPreview = true;
+    public boolean PROJECTILE_PROT_PREVIEW = true;
 
     @SaveVal
-    public boolean protPotential = true;
+    public boolean ARROW_COUNTER = true;
 
     @SaveVal
-    public boolean projPotential = true;
+    public boolean DAMAGE_PREVIEW = true;
 
     @SaveVal
-    public boolean arrowCounter = true;
+    public boolean THIRD_PERSON_CROSSHAIR = true;
 
     @SaveVal
-    public boolean damagePreview = true;
+    public boolean COMPACT_CHAT = true;
 
     @SaveVal
-    public boolean thirdPersonCrosshair = true;
+    public boolean WINGS = true;
 
     @SaveVal
-    public boolean compactChat = true;
+    public double WINGS_SCALE = 80D;
 
     @SaveVal
-    public boolean wingsEnabled = true;
+    public boolean KEYSTROKES_CHROMA = true;
 
     @SaveVal
-    public double wingsScale = 80D;
+    public boolean KEYSTROKES_OUTLINE = true;
 
     @SaveVal
-    public boolean keyStrokesChroma = true;
+    public boolean DISABLE_TITLES = false;
 
     @SaveVal
-    public boolean keyStrokesOutline = true;
+    public boolean ENABLE_KEYSTROKES = false;
 
     @SaveVal
-    public boolean disableTitles = false;
+    public boolean DISABLE_BOSS_FOOTER = false;
 
     @SaveVal
-    public boolean enableKeystrokes = false;
+    public boolean DISABLE_BOSS_BAR = false;
 
     @SaveVal
-    public boolean disableBossFooter = false;
+    public boolean DISCORD_RICH_PRESENCE = true;
 
     @SaveVal
-    public boolean disableBossBar = false;
+    public boolean REPLACE_DEFAULT_FONT = false;
 
     @SaveVal
-    public boolean discordRichPresence = true;
+    public boolean DISABLE_SCOREBOARD = false;
 
     @SaveVal
-    public boolean replaceDefaultFont = false;
+    public int BLOCKOVERLAY_MODE = BlockOverlayMode.DEFAULT.ordinal();
 
     @SaveVal
-    public boolean disableScoreboard = false;
+    public boolean BLOCKOVERLAY_PERSISTENT = false;
 
     @SaveVal
-    public int boMode = BlockOverlayMode.DEFAULT.ordinal();
+    public boolean BLOCKOVERLAY_CHROMA = false;
 
     @SaveVal
-    public boolean boPersistent = false;
+    public boolean BLOCKOVERLAY_IGNORE_DEPTH = false;
 
     @SaveVal
-    public boolean boChroma = false;
+    public double BLOCKOVERLAY_LINE_WIDTH = 2.0;
 
     @SaveVal
-    public boolean boIgnoreDepth = false;
+    public int BLOCKOVERLAY_RED = 255;
 
     @SaveVal
-    public double boLineWidth = 2.0;
+    public int BLOCKOVERLAY_GREEN = 255;
 
     @SaveVal
-    public int boRed = 255;
+    public int BLOCKOVERLAY_BLUE = 255;
 
     @SaveVal
-    public int boGreen = 255;
+    public int BLOCKOVERLAY_ALPHA = 255;
 
     @SaveVal
-    public int boBlue = 255;
+    public int BLOCKOVERLAY_CHROMA_SPEED = 5;
 
     @SaveVal
-    public int boAlpha = 255;
+    public int CURRENT_BACKGROUND = 0;
 
     @SaveVal
-    public int boChromaSpeed = 5;
+    public boolean HELD_PERSPECTIVE = true;
 
     @SaveVal
-    public int currentBackground = 0;
+    public boolean HYDON_BUTTONS = true;
 
     @SaveVal
-    public boolean heldPerspective = true;
+    public boolean FULLBRIGHT = false;
 
     @SaveVal
-    public boolean hydonButtons = true;
+    public boolean DISABLE_ENCHANTMENTS = false;
 
     @SaveVal
-    public boolean itemPhysics = false;
+    public boolean HOTBAR_NUMBERS = false;
 
     @SaveVal
-    public float rotateSpeed = 1.0F;
+    public boolean HOTBAR_NUMBER_SHADOW = false;
 
     @SaveVal
-    public boolean fullbright = false;
+    public boolean CONFIRM_DISCONNECT = false;
 
     @SaveVal
-    public boolean disableEnchantments = false;
+    public boolean CONFIRM_QUIT = false;
 
     @SaveVal
-    public boolean hotbarNumbers = false;
+    public boolean NUMBER_PING = false;
 
     @SaveVal
-    public boolean hotbarNumberShadow = false;
+    public boolean LIMIT_FRAMERATE = false;
 
     @SaveVal
-    public boolean confirmDisconnect = false;
-
-    @SaveVal
-    public boolean confirmQuitGame = false;
-
-    @SaveVal
-    public boolean numberPing = false;
-
-    @SaveVal
-    public boolean limitFramerate = false;
-
-    @SaveVal
-    public String previousServer = "";
+    public String PREVIOUS_SERVER = "";
 
     public boolean isBoChroma() {
-        return boChroma;
+        return BLOCKOVERLAY_CHROMA;
     }
 
     public BlockOverlayMode getBoMode() {
-        return BlockOverlayMode.values()[boMode];
+        return BlockOverlayMode.values()[BLOCKOVERLAY_MODE];
     }
 
     public EnumBackground getCurrentBackground() {
-        return EnumBackground.values()[currentBackground];
+        return EnumBackground.values()[CURRENT_BACKGROUND];
     }
 }

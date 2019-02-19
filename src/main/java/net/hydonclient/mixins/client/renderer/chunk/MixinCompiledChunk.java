@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Mixin(CompiledChunk.class)
 public class MixinCompiledChunk implements IPatchedCompiledChunk {
-    public Set<TextureAtlasSprite> visibleTextures = new HashSet<>();
+    private Set<TextureAtlasSprite> visibleTextures = new HashSet<>();
 
     @Override
     public Set<TextureAtlasSprite> getVisibleTextures() {

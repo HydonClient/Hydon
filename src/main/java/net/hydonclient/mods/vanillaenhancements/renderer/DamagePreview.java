@@ -17,7 +17,7 @@ public class DamagePreview {
 
     @EventListener
     public void renderDamage(RenderGameOverlayEvent event) {
-        if (Hydon.SETTINGS.damagePreview) {
+        if (Hydon.SETTINGS.DAMAGE_PREVIEW) {
             ItemStack stack = core.getMinecraft().thePlayer.inventory.getCurrentItem();
 
             if (stack != null) {

@@ -134,7 +134,7 @@ public class KeyHolder {
     int getColor(double offset, boolean invert) {
         int color;
 
-        if (Hydon.SETTINGS.keyStrokesChroma) {
+        if (Hydon.SETTINGS.KEYSTROKES_CHROMA) {
             // if chroma effect is enabled, use black instead of the actual inverted color
             if (invert) {
                 color = 0xFF000000;
@@ -165,7 +165,7 @@ public class KeyHolder {
     }
 
     public boolean isOutlineEnabled() {
-        return Hydon.SETTINGS.keyStrokesOutline;
+        return Hydon.SETTINGS.KEYSTROKES_OUTLINE;
     }
 
     public void setColor(Color color) {
