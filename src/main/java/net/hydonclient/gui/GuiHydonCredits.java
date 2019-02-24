@@ -103,8 +103,8 @@ public class GuiHydonCredits extends GuiScreen {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
         double logoScaleFactor = ResolutionUtil.getImageScaleFactor() / 1.3;
-        int logoWidth = (int) (Images.LOGO.getWidth() * logoScaleFactor);
-        int logoHeight = (int) (Images.LOGO.getHeight() * logoScaleFactor);
+        int logoWidth = (int) (Images.LOGO_V2.getWidth() * logoScaleFactor);
+        int logoHeight = (int) (Images.LOGO_V2.getHeight() * logoScaleFactor);
         int logoX = (ResolutionUtil.getCurrent().getScaledWidth() - logoWidth) / 2;
         int logoY = 10;
 
@@ -155,7 +155,7 @@ public class GuiHydonCredits extends GuiScreen {
         GuiUtils.overlayBackground(scaledResolution.getScaledHeight() - 50,
                 scaledResolution.getScaledHeight(), Minecraft.getMinecraft());
 
-        this.mc.getTextureManager().bindTexture(Images.LOGO.getLocation());
+        this.mc.getTextureManager().bindTexture(Images.LOGO_V2.getLocation());
 
         GlStateManager.color(0.0f, 0.0f, 0.0f, 0.2f);
         Gui.drawModalRectWithCustomSizedTexture(logoX + 2, logoY + 2, 0, 0, logoWidth, logoHeight,

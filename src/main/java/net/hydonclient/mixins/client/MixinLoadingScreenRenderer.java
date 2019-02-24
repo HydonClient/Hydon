@@ -71,10 +71,10 @@ public class MixinLoadingScreenRenderer {
 
             if (this.currentlyDisplayedText.isEmpty() && this.message.isEmpty()) {
                 GlStateManager.enableAlpha();
-                this.mc.getTextureManager().bindTexture(Images.LOGO.getLocation());
+                this.mc.getTextureManager().bindTexture(Images.LOGO_V2.getLocation());
                 double logoScaleFactor = ResolutionUtil.getImageScaleFactor();
-                int logoWidth = (int) (Images.LOGO.getWidth() * logoScaleFactor);
-                int logoHeight = (int) (Images.LOGO.getHeight() * logoScaleFactor);
+                int logoWidth = (int) (Images.LOGO_V2.getWidth() * logoScaleFactor);
+                int logoHeight = (int) (Images.LOGO_V2.getHeight() * logoScaleFactor);
                 int logoX = (ResolutionUtil.getCurrent().getScaledWidth() - logoWidth) / 2;
                 int logoY = (ResolutionUtil.getCurrent().getScaledHeight() + logoHeight) / 4;
 

@@ -27,8 +27,8 @@ public class MixinGuiIngameMenu extends GuiScreen {
      * @author asbyth & Mojang
      * @reason Confirm disconnect
      */
-    @Inject(method = "actionPerformed", at = @At("HEAD"))
+    @Inject(method = "actionPerformed", at = @At("HEAD"), cancellable = true)
     private void actionPerformed(GuiButton button, CallbackInfo ci) {
-        impl.actionPerformed(button);
+        impl.actionPerformed(button, ci);
     }
 }

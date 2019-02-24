@@ -209,10 +209,10 @@ public class GuiHydonMainMenu extends GuiScreen implements GuiYesNoCallback {
         }
 
         GlStateManager.enableAlpha();
-        this.mc.getTextureManager().bindTexture(Images.LOGO.getLocation());
+        this.mc.getTextureManager().bindTexture(Images.LOGO_V2.getLocation());
         double logoScaleFactor = ResolutionUtil.getImageScaleFactor();
-        int logoWidth = (int) (Images.LOGO.getWidth() * logoScaleFactor);
-        int logoHeight = (int) (Images.LOGO.getHeight() * logoScaleFactor);
+        int logoWidth = (int) (Images.LOGO_V2.getWidth() * logoScaleFactor);
+        int logoHeight = (int) (Images.LOGO_V2.getHeight() * logoScaleFactor);
         int logoX = (ResolutionUtil.getCurrent().getScaledWidth() - logoWidth) / 2;
         int logoY = (scaledResolution.getScaledHeight() + logoHeight) / 4 - yMod;
 

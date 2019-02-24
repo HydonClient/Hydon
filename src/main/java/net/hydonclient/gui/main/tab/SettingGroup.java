@@ -69,9 +69,10 @@ public class SettingGroup {
 
         int padding = scaledResolution.getScaledHeight() / 8;
         int sidebarWidth = scaledResolution.getScaledWidth() / 4;
+        float logoFactor = 2.5f;
 
         this.x = sidebarWidth;
-        this.y = padding + Images.LOGO_V2.getHeight() / 20;
+        this.y = (int) (padding + Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
         this.width = scaledResolution.getScaledWidth() - sidebarWidth - padding;
         this.height = 20;
         settingsElements.forEach(settingsElement -> this.height += settingsElement.getHeight());

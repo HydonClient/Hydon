@@ -575,7 +575,7 @@ public class HydonMainGui extends GuiScreen {
 
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
-        GuiUtils.drawBG();
+        GuiUtils.drawBG(true);
         controller.draw();
         if (currentGroup != null) {
             currentGroup.draw();

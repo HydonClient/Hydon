@@ -90,10 +90,10 @@ public class SplashScreen {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
 
         GlStateManager.enableAlpha();
-        tm.bindTexture(Images.LOGO.getLocation());
+        tm.bindTexture(Images.LOGO_V2.getLocation());
         double logoScaleFactor = ResolutionUtil.getImageScaleFactor();
-        int logoWidth = (int) (Images.LOGO.getWidth() * logoScaleFactor);
-        int logoHeight = (int) (Images.LOGO.getHeight() * logoScaleFactor);
+        int logoWidth = (int) (Images.LOGO_V2.getWidth() * logoScaleFactor);
+        int logoHeight = (int) (Images.LOGO_V2.getHeight() * logoScaleFactor);
         int logoX = (ResolutionUtil.getCurrent().getScaledWidth() - logoWidth) / 2;
         int logoY = (sr.getScaledHeight() + logoHeight) / 4;
 

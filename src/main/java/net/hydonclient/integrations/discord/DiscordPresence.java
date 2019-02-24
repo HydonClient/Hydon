@@ -24,8 +24,7 @@ public class DiscordPresence {
     private long startTime;
 
     /**
-     * Called upon launching the client
-     * Initializes the DiscordRPC Thread
+     * Called upon launching the client Initializes the DiscordRPC Thread
      */
     public void load() {
         if (!Hydon.SETTINGS.discordRichPresence) {
@@ -51,8 +50,7 @@ public class DiscordPresence {
     }
 
     /**
-     * Called upon shutting down the client
-     * Closes the DiscordRPC thread properly
+     * Called upon shutting down the client Closes the DiscordRPC thread properly
      */
     public void shutdown() {
         DiscordRPC.discordClearPresence();
@@ -72,11 +70,11 @@ public class DiscordPresence {
          */
         if (e.getGuiScreen() instanceof GuiHydonMainMenu) {
             DiscordRPC.discordUpdatePresence(
-                    new DiscordRichPresence.Builder("Main Menu")
-                            .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
-                            .setStartTimestamps(startTime)
-                            .setBigImage("assets/hydon", "Hydon")
-                            .build()
+                new DiscordRichPresence.Builder("Main Menu")
+                    .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
+                    .setStartTimestamps(startTime)
+                    .setBigImage("hydon", "Hydon")
+                    .build()
             );
 
             /*
@@ -85,11 +83,11 @@ public class DiscordPresence {
              */
         } else if (e.getGuiScreen() instanceof GuiMultiplayer) {
             DiscordRPC.discordUpdatePresence(
-                    new DiscordRichPresence.Builder("Browsing servers")
-                            .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
-                            .setStartTimestamps(startTime)
-                            .setBigImage("assets/hydon", "Hydon")
-                            .build()
+                new DiscordRichPresence.Builder("Browsing servers")
+                    .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
+                    .setStartTimestamps(startTime)
+                    .setBigImage("hydon", "Hydon")
+                    .build()
             );
 
             /*
@@ -97,11 +95,11 @@ public class DiscordPresence {
              */
         } else if (e.getGuiScreen() instanceof GuiChat) {
             DiscordRPC.discordUpdatePresence(
-                    new DiscordRichPresence.Builder("Typing in chat")
-                            .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
-                            .setStartTimestamps(startTime)
-                            .setBigImage("chat", "Chat")
-                            .build()
+                new DiscordRichPresence.Builder("Typing in chat")
+                    .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
+                    .setStartTimestamps(startTime)
+                    .setBigImage("chat", "Chat")
+                    .build()
             );
 
             /*
@@ -109,48 +107,33 @@ public class DiscordPresence {
              */
         } else if (e.getGuiScreen() == null) {
             if (Minecraft.getMinecraft().getCurrentServerData() != null) {
-                if (Minecraft.getMinecraft().getCurrentServerData().serverIP.toLowerCase()
-                        .endsWith("hypixel.net")) {
-                    DiscordRPC.discordUpdatePresence(
-                            new DiscordRichPresence.Builder("On Hypixel")
-                                    .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
-                                    .setStartTimestamps(startTime)
-                                    .setBigImage("hypixel", "Hypixel")
-                                    .build()
-                    );
-
-                    /*
-                     * If the server isn't known, make the rpc say they're on "Server: current server ip"
-                     */
-                } else {
-                    DiscordRPC.discordUpdatePresence(
-                            new DiscordRichPresence.Builder(
-                                    "Server: " + Minecraft.getMinecraft().getCurrentServerData().serverIP)
-                                    .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
-                                    .setStartTimestamps(startTime)
-                                    .setBigImage("game", "In game")
-                                    .build()
-                    );
-                }
+                DiscordRPC.discordUpdatePresence(
+                    new DiscordRichPresence.Builder(
+                        "Server: " + Minecraft.getMinecraft().getCurrentServerData().serverIP)
+                        .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
+                        .setStartTimestamps(startTime)
+                        .setBigImage("server", "On a server")
+                        .build()
+                );
 
                 /*
                  * If the player is in singleplayer, make the rpc say they're playing singleplayer
                  */
             } else {
                 DiscordRPC.discordUpdatePresence(
-                        new DiscordRichPresence.Builder("Playing Singleplayer")
-                                .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
-                                .setStartTimestamps(startTime)
-                                .setBigImage("singleplayer", "Singleplayer")
-                                .build()
+                    new DiscordRichPresence.Builder("Playing Singleplayer")
+                        .setDetails("IGN: " + Minecraft.getMinecraft().getSession().getUsername())
+                        .setStartTimestamps(startTime)
+                        .setBigImage("singleplayer", "Singleplayer")
+                        .build()
                 );
             }
         }
     }
 
     /**
-     * The getInstance method for DiscordPresence so it can be used in other classes
-     * without static calls
+     * The getInstance method for DiscordPresence so it can be used in other classes without static
+     * calls
      *
      * @return the instance
      */

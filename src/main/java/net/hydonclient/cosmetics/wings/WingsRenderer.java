@@ -19,7 +19,6 @@ public class WingsRenderer extends ModelBase {
     private ModelRenderer wing;
     private ModelRenderer wingTip;
     private ResourceLocation texture;
-    private boolean playerUsesFullHeight;
 
     public WingsRenderer() {
         this.texture = new ResourceLocation("textures/cosmetics/wings.png");
@@ -30,18 +29,17 @@ public class WingsRenderer extends ModelBase {
         this.setTextureOffset("wingtip.bone", 0, 5);
         this.setTextureOffset("wingtip.skin", -10, 18);
 
-        (this.wing = new ModelRenderer(this, "wing")).setTextureSize(30, 30);
+        this.wing = new ModelRenderer(this, "wing").setTextureSize(30, 30);
         this.wing.setRotationPoint(-2.0f, 0.0f, 0.0f);
         this.wing.addBox("bone", -10.0f, -1.0f, -1.0f, 10, 2, 2);
         this.wing.addBox("skin", -10.0f, 0.0f, 0.5f, 10, 0, 10);
 
-        (this.wingTip = new ModelRenderer(this, "wingtip")).setTextureSize(30, 30);
+        this.wingTip = new ModelRenderer(this, "wingtip").setTextureSize(30, 30);
         this.wingTip.setRotationPoint(-10.0f, 0.0f, 0.0f);
         this.wingTip.addBox("bone", -10.0f, -0.5f, -0.5f, 10, 1, 1);
         this.wingTip.addBox("skin", -10.0f, 0.0f, 0.5f, 10, 0, 10);
 
         this.wing.addChild(this.wingTip);
-
     }
 
     @EventListener
@@ -72,7 +70,7 @@ public class WingsRenderer extends ModelBase {
         GlStateManager.scale(-scale, -scale, scale);
         GlStateManager.rotate((float) (180.0F + rotate), 0.0F, 1.0F, 0.0F);
 
-        float scaledHeight = (float) ((this.playerUsesFullHeight ? 1.45 : 1.25) / scale);
+        float scaledHeight = (float) (1.25 / scale);
 
         GlStateManager.translate(0.0F, -scaledHeight, 0.0F);
         GlStateManager.translate(0.0F, 0.0F, 0.15F / scale);

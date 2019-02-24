@@ -19,8 +19,7 @@ public class GuiCrashScreen extends GuiScreen {
     @Override
     public void initGui() {
         super.initGui();
-        int i = -12;
-        GuiOptionButton mainMenuButton = new GuiOptionButton(0, width / 2 - 70, height / 4 + 120 + i, 150, 20, "Return to title screen");
+        GuiOptionButton mainMenuButton = new GuiOptionButton(0, width / 2 - 70, height / 2 + 22, 150, 20, "Return to title screen");
         buttonList.add(mainMenuButton);
     }
 
