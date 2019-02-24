@@ -23,10 +23,7 @@ public abstract class MixinAbstractClientPlayer {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void init(World worldIn, GameProfile playerProfile, CallbackInfo callbackInfo) {
         Multithreading.run(() -> {
-            User user = UserManager.getInstance().getUser(playerProfile.getId());
-            Capes.loadCape(playerProfile.getId(),
-                user.hasUnlockedCosmetic(EnumCosmetic.CAPE) ? user.getCapeUrl()
-                    : String.format("http://s.optifine.net/capes/%s.png", playerProfile.getName()));
+            UserManager.getInstance().process(playerProfile.getId(), false);
         });
     }
 

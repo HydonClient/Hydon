@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import net.hydonclient.api.HydonApi;
 import net.hydonclient.api.UserManager;
+import net.hydonclient.util.Variables;
 
 public class User {
 
@@ -30,11 +31,28 @@ public class User {
 
         JsonObject cosmeticsResult = HydonApi.getCosmetics(uuid);
         if (cosmeticsResult.has("success") && cosmeticsResult.get("success").getAsBoolean()) {
+            String activeCape = "";
+
+            if (cosmeticsResult.has("storage")) {
+                JsonObject storage = cosmeticsResult.getAsJsonObject("storage");
+                if (storage.has("actives")) {
+                    JsonObject actives = storage.getAsJsonObject("actives");
+                    if (actives.has("cape")) {
+                        activeCape = actives.get("cape").getAsString();
+                    }
+                }
+            }
+
             for (JsonElement element : cosmeticsResult.getAsJsonArray("cosmetics")) {
                 JsonObject jsonObject = element.getAsJsonObject();
                 Cosmetic cosmetic = new Cosmetic(jsonObject.get("name").getAsString());
-                cosmetic.setEnabled(
-                    !jsonObject.has("enabled") || jsonObject.get("enabled").getAsBoolean());
+
+                if (cosmetic.getName().startsWith("CAPE_")) {
+                    cosmetic.setEnabled(activeCape.equalsIgnoreCase(cosmetic.getName()));
+                } else {
+                    cosmetic.setEnabled(!jsonObject.has("enabled") || jsonObject.get("enabled").getAsBoolean());
+                }
+
                 cosmetic.setData(jsonObject.getAsJsonObject("data"));
                 cosmetics.add(cosmetic);
             }
@@ -64,7 +82,7 @@ public class User {
 
     public String getCapeUrl() {
         for (Cosmetic cosmetic : getCosmetics()) {
-            if (cosmetic.getName().equalsIgnoreCase(EnumCosmetic.CAPE.name()) && cosmetic.getData()
+            if (cosmetic.getName().startsWith("CAPE_") && cosmetic.isEnabled() && cosmetic.getData()
                 .has("url")) {
                 return cosmetic.getData().get("url").getAsString();
             }

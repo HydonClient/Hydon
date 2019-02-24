@@ -189,6 +189,12 @@ public class Settings {
     @SaveVal
     public String PREVIOUS_SERVER = "";
 
+    @SaveVal
+    public boolean confirmDisconnect = false;
+
+    @SaveVal
+    public boolean discordRichPresence = true;
+
     public boolean isBoChroma() {
         return BLOCKOVERLAY_CHROMA;
     }

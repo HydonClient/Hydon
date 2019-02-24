@@ -38,23 +38,26 @@ public class UserManager {
         Capes.getCapes().clear();
     }
 
-    public void reprocess(UUID uuid) {
+    public void process(UUID uuid, boolean wait) {
         Multithreading.run(() -> {
-            try {
-                Thread.sleep(2500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (wait) {
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
             if (Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid) == null) {
                 return;
             }
+
             userMap.remove(uuid);
             processingList.remove(uuid);
             Capes.getCapes().remove(uuid);
             User user = UserManager.getInstance().getUser(uuid);
-            Capes.loadCape(uuid,
-                user.hasUnlockedCosmetic(EnumCosmetic.CAPE) ? user.getCapeUrl()
-                    : String.format("http://s.optifine.net/capes/%s.png",
+            Capes.loadCape(uuid, !user.getCapeUrl().isEmpty() ? user.getCapeUrl() :
+                    String.format("http://s.optifine.net/capes/%s.png",
                         Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid).getName()));
         });
     }
