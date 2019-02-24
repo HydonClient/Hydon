@@ -55,7 +55,7 @@ public abstract class MixinFontRenderer {
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
 
-            boolean shouldOverride = Hydon.SETTINGS.replaceDefaultFont;
+            boolean shouldOverride = Hydon.SETTINGS.REPLACE_DEFAULT_FONT;
             shouldOverride = shouldOverride && CharMatcher.ASCII.matchesAllOf(text.replace('§', ' '));
 
             if (shouldOverride) {

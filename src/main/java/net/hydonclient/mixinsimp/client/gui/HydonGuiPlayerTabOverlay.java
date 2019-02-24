@@ -18,7 +18,7 @@ public class HydonGuiPlayerTabOverlay {
     }
 
     public void drawPing(int textureX, int textureY, int yIn, NetworkPlayerInfo networkPlayerInfoIn, float zLevel, Minecraft mc) {
-        if (Hydon.SETTINGS.numberPing) {
+        if (Hydon.SETTINGS.NUMBER_PING) {
             int ping = networkPlayerInfoIn.getResponseTime();
             int x = textureY + textureX - (mc.fontRendererObj.getStringWidth(ping + "") >> 1) - 2;
             int y = yIn + (mc.fontRendererObj.FONT_HEIGHT >> 2);

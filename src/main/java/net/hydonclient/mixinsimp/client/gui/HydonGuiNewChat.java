@@ -120,7 +120,7 @@ public class HydonGuiNewChat {
                             if (l1 > 3) {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
-                                if (!Hydon.SETTINGS.fastChat) {
+                                if (!Hydon.SETTINGS.FAST_CHAT) {
                                     Gui.drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 }
                                 String s = chatline.getChatComponent().getFormattedText();

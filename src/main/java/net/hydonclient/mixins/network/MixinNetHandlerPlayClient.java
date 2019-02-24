@@ -33,14 +33,11 @@ import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
-import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S0BPacketAnimation;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
-import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.world.WorldSettings;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -64,9 +61,6 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
 
     @Shadow(aliases = "clientWorldController")
     private WorldClient world;
-
-    @Shadow
-    private boolean doneLoadingTerrain;
 
     /**
      * @author Koding
@@ -194,8 +188,8 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
         long worldTime = packetIn.getWorldTime();
         TimeChangerConfig config = HydonManagers.INSTANCE.getModManager().getTimeChangerMod().getConfig();
 
-        if (config.enabled) {
-            worldTime = config.time;
+        if (config.ENABLED) {
+            worldTime = config.TIME;
         }
 
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, Minecraft.getMinecraft().thePlayer.sendQueue, this.client);
@@ -232,32 +226,5 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
                 this.client.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC);
             }
         }
-    }
-
-    /**
-     * @author prplz
-     * @reason Skip "Downloading terrain..." screen
-     */
-    @Overwrite
-    @Override
-    public void handleRespawn(S07PacketRespawn packetIn) {
-        PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, client);
-
-        if (packetIn.getDimensionID() != client.thePlayer.dimension) {
-            doneLoadingTerrain = false;
-            client.displayGuiScreen(null);
-
-            Scoreboard scoreboard = world.getScoreboard();
-            world = new WorldClient(
-                    (NetHandlerPlayClient) (Object) this, new WorldSettings(0L, packetIn.getGameType(), false,
-                    client.theWorld.getWorldInfo().isHardcoreModeEnabled(), packetIn.getWorldType()), packetIn.getDimensionID(), packetIn.getDifficulty(),
-                    client.mcProfiler);
-            world.setWorldScoreboard(scoreboard);
-            client.loadWorld(world);
-            client.thePlayer.dimension = packetIn.getDimensionID();
-        }
-
-        client.setDimensionAndSpawnPlayer(packetIn.getDimensionID());
-        client.playerController.setGameType(packetIn.getGameType());
     }
 }

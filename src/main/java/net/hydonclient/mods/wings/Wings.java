@@ -6,7 +6,7 @@ import net.hydonclient.managers.HydonManagers;
 import net.hydonclient.mods.Mod;
 import net.hydonclient.mods.Mod.Info;
 
-@Info(name = "Wings", author = "Canalex", version = "1.0")
+@Info(name = "Wings", author = "canelex", version = "1.0")
 public class Wings extends Mod {
 
     @Override

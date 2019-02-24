@@ -5,9 +5,9 @@ import net.hydonclient.managers.impl.config.SaveVal;
 public class TimeChangerConfig {
 
     @SaveVal
-    public boolean enabled;
+    public boolean ENABLED;
 
     @SaveVal
-    public int time;
+    public int TIME;
 
 }

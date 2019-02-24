@@ -15,7 +15,7 @@ public class HydonEntityPlayer {
     }
 
     public float getEyeHeight() {
-        if (Hydon.SETTINGS.oldSneaking) {
+        if (Hydon.SETTINGS.OLD_SNEAKING) {
             int timeDelay = 1000 / 60;
             if (parent.isSneaking()) {
                 float sneakingHeight = 1.54F;

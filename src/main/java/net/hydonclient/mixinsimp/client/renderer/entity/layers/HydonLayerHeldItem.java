@@ -33,7 +33,7 @@ public class HydonLayerHeldItem {
 
             Label_0327:
             if (entitylivingbaseIn instanceof EntityPlayer) {
-                if (Hydon.SETTINGS.oldBlocking) {
+                if (Hydon.SETTINGS.OLD_BLOCKING) {
                     if (((EntityPlayer) entitylivingbaseIn).isBlocking()) {
                         if (entitylivingbaseIn.isSneaking()) {
                             ((ModelBiped) livingEntityRenderer.getMainModel()).
@@ -63,12 +63,12 @@ public class HydonLayerHeldItem {
                             postRenderArm(0.0625f);
                 }
 
-                if (!Hydon.SETTINGS.oldItemHolding) {
+                if (!Hydon.SETTINGS.OLD_ITEM_HOLDING) {
                     GlStateManager.
                             translate(-0.0625f, 0.4375f, 0.0625f);
                 } else {
                     if (!((EntityPlayer) entitylivingbaseIn).isBlocking()) {
-                        if (Hydon.SETTINGS.oldItemHolding) {
+                        if (Hydon.SETTINGS.OLD_ITEM_HOLDING) {
                             GlStateManager.
                                     translate(-0.0855f, 0.4775f, 0.1585f);
                             GlStateManager.

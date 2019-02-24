@@ -92,7 +92,7 @@ public enum EnumBackground {
      */
     public static void cycleBackground() {
         EnumBackground currentBg = Hydon.SETTINGS.getCurrentBackground();
-        Hydon.SETTINGS.currentBackground = (currentBg.ordinal() + 1) % values().length;
+        Hydon.SETTINGS.CURRENT_BACKGROUND = (currentBg.ordinal() + 1) % values().length;
         HydonMainGui.currentBackgroundButton.setLabel(
                 "Current Background: " + (Hydon.SETTINGS.getCurrentBackground().ordinal() + 1));
     }

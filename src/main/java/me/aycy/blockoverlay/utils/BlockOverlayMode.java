@@ -20,7 +20,7 @@ public enum BlockOverlayMode {
 
     public static void cycleNextMode() {
         BlockOverlayMode currentMode = Hydon.SETTINGS.getBoMode();
-        Hydon.SETTINGS.boMode = (currentMode.ordinal() + 1) % values().length;
+        Hydon.SETTINGS.BLOCKOVERLAY_MODE = (currentMode.ordinal() + 1) % values().length;
         HydonMainGui.outlineModeButton.setLabel("Outline Mode: " + Hydon.SETTINGS.getBoMode().getName());
     }
 

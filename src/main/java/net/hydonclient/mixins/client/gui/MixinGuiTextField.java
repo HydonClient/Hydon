@@ -72,7 +72,7 @@ public abstract class MixinGuiTextField extends Gui {
      */
     @Overwrite
     public void drawTextBox() {
-        if (Hydon.SETTINGS.replaceDefaultFont) {
+        if (Hydon.SETTINGS.REPLACE_DEFAULT_FONT) {
             if (this.getVisible()) {
                 if (this.getEnableBackgroundDrawing()) {
                     drawRect(this.xPosition, this.yPosition, this.xPosition + this.width,

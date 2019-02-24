@@ -1,4 +1,4 @@
-package net.hydonclient.mixins;
+package net.hydonclient.mixins.client.renderer.texture;
 
 import net.hydonclient.mixinsimp.HydonTextureManager;
 import net.minecraft.client.renderer.texture.ITextureObject;

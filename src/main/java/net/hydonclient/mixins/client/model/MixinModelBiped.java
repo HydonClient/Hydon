@@ -88,7 +88,7 @@ public class MixinModelBiped extends ModelBase {
             }
             case 3: {
                 this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleX * 0.5f - 0.31415927f * this.heldItemRight;
-                if (!Hydon.SETTINGS.oldBlocking) {
+                if (!Hydon.SETTINGS.OLD_BLOCKING) {
                     this.bipedRightArm.rotateAngleY = -0.5235988f;
                     break;
                 }

@@ -24,7 +24,7 @@ public class ArmorPotential {
 
     @EventListener
     public void onRenderArmor(GuiDrawScreenEvent event) {
-        if (Hydon.SETTINGS.protPotential || Hydon.SETTINGS.projPotential) {
+        if (Hydon.SETTINGS.PROTECTION_PREVIEW || Hydon.SETTINGS.PROJECTILE_PROT_PREVIEW) {
             if (event.getScreen() instanceof GuiInventory || event.getScreen() instanceof GuiContainerCreative) {
                 String percentage = getArmorString();
                 lastMessage = percentage;
@@ -41,12 +41,12 @@ public class ArmorPotential {
     }
 
     private String getArmorString() {
-        double ap = roundDecimals(getArmorPotentional(false), 2);
-        double app = roundDecimals(getArmorPotentional(true), 2);
+        double ap = roundDecimals(getArmorPotentional(false));
+        double app = roundDecimals(getArmorPotentional(true));
 
-        if (Hydon.SETTINGS.protPotential || Hydon.SETTINGS.projPotential) {
+        if (Hydon.SETTINGS.PROTECTION_PREVIEW || Hydon.SETTINGS.PROJECTILE_PROT_PREVIEW) {
             String lastMessage;
-            String percent = Hydon.SETTINGS.protPotential ? (lastMessage = ap + "%") : (lastMessage = app + "%");
+            String percent = Hydon.SETTINGS.PROTECTION_PREVIEW ? (lastMessage = ap + "%") : (lastMessage = app + "%");
             this.lastMessage = lastMessage;
             return percent;
         }
@@ -57,13 +57,13 @@ public class ArmorPotential {
         return this.lastMessage = ap + "% | " + app + "%";
     }
 
-    private double roundDecimals(double num, int a) {
+    private double roundDecimals(double num) {
         if (num == 0.0) {
             return num;
         }
 
-        num = (int) (num * Math.pow(10.0, a));
-        num /= Math.pow(10.0, a);
+        num = (int) (num * Math.pow(10.0, 2));
+        num /= Math.pow(10.0, 2);
 
         return num;
     }
@@ -87,11 +87,11 @@ public class ArmorPotential {
                 }
 
                 if (stack.isItemEnchanted()) {
-                    epf += getEffProtPoints(EnchantmentHelper.getEnchantmentLevel(0, stack), 0.75);
+                    epf += getEffProtPoints(EnchantmentHelper.getEnchantmentLevel(0, stack));
                 }
 
                 if (getProj && stack.isItemEnchanted()) {
-                    epf += getEffProtPoints(EnchantmentHelper.getEnchantmentLevel(4, stack), 0.75);
+                    epf += getEffProtPoints(EnchantmentHelper.getEnchantmentLevel(4, stack));
                 }
             }
         }
@@ -99,12 +99,11 @@ public class ArmorPotential {
         epf = ((epf < 25) ? epf : 25);
 
         double avgDef = addArmorProtResistance(armor, calcProtection(epf), resistance);
-        double avg = roundDouble(avgDef * 100.0);
-        return avg;
+        return roundDouble(avgDef * 100.0);
     }
 
-    private int getEffProtPoints(int level, double typeModifier) {
-        return (level != 0) ? ((int) Math.floor((6 + level * level) * typeModifier / 3.0)) : 0;
+    private int getEffProtPoints(int level) {
+        return (level != 0) ? ((int) Math.floor((6 + level * level) * 0.75 / 3.0)) : 0;
     }
 
     private double calcProtection(int armorEpf) {

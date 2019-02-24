@@ -150,5 +150,4 @@ public class GuiUtils {
         rainbowState %= 360;
         return Color.getHSBColor((float) (rainbowState / 360.0f), 0.8f, 0.7f);
     }
-
 }

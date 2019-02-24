@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class HydonRenderItem {
 
     public void renderEffect(IBakedModel model, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableEnchantments) {
+        if (Hydon.SETTINGS.DISABLE_ENCHANTMENTS) {
             ci.cancel();
         }
     }

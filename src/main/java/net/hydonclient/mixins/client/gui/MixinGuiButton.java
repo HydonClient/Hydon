@@ -58,7 +58,7 @@ public abstract class MixinGuiButton extends Gui {
      */
     @Overwrite
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        if (Hydon.SETTINGS.hydonButtons) {
+        if (Hydon.SETTINGS.HYDON_BUTTONS) {
             if (prevDeltaTime == 0) {
                 prevDeltaTime = System.currentTimeMillis();
             }

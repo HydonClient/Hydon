@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LayerArmorBase.class)
 public abstract class MixinLayerArmorBase<T extends ModelBase> implements LayerRenderer<EntityLivingBase> {
 
-    private HydonLayerArmorBase impl = new HydonLayerArmorBase();
+    private HydonLayerArmorBase<T> impl = new HydonLayerArmorBase<>();
 
     /**
      * Disable enchant glint
@@ -30,10 +30,10 @@ public abstract class MixinLayerArmorBase<T extends ModelBase> implements LayerR
      * @param ci                 callback
      */
     @Inject(method = "renderGlint", at = @At("HEAD"), cancellable = true)
-    public void renderGlint(EntityLivingBase entitylivingbaseIn, T modelbaseIn,
-                            float p_177183_3_, float p_177183_4_, float partialTicks,
-                            float p_177183_6_, float p_177183_7_, float p_177183_8_, float scale,
-                            CallbackInfo ci) {
-        impl.renderGlint(entitylivingbaseIn, modelbaseIn, p_177183_3_, p_177183_4_, partialTicks, p_177183_6_, p_177183_7_, p_177183_8_, scale, ci);
+    private void renderGlint(EntityLivingBase entitylivingbaseIn, T modelbaseIn,
+                             float p_177183_3_, float p_177183_4_, float partialTicks,
+                             float p_177183_6_, float p_177183_7_, float p_177183_8_, float scale,
+                             CallbackInfo ci) {
+        impl.renderGlint(ci);
     }
 }

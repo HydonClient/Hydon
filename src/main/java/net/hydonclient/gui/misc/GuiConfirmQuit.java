@@ -22,7 +22,7 @@ public class GuiConfirmQuit extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
-        fontRendererObj.drawStringWithShadow("Are you sure you want to quit?", this.width / 2 - 75, this.height / 4 + 72 + i, 16777215);
+        fontRendererObj.drawStringWithShadow("Are you sure you want to quit?", (this.width >> 1) - 75, this.height / 4 + 72 + i, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

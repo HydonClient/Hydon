@@ -24,8 +24,8 @@ public class TimeChangerCommand extends Command {
         if (args.length == 0) {
             ChatUtils.addChatMessage("Usage: " + getUsage());
         } else if (args[0].equalsIgnoreCase("reset")) {
-            config.enabled = false;
-            config.time = -1;
+            config.ENABLED = false;
+            config.TIME = -1;
             ChatUtils.addChatMessage("Time changer disabled.");
         } else if (args[0].equalsIgnoreCase("set")) {
             if (args.length == 1) {
@@ -36,8 +36,8 @@ public class TimeChangerCommand extends Command {
                     if (time >= 24000) {
                         ChatUtils.addChatMessage("Please enter a time from 0 - 23999");
                     } else {
-                        config.time = time;
-                        config.enabled = true;
+                        config.TIME = time;
+                        config.ENABLED = true;
                         ChatUtils.addChatMessage("Set time to: " + time + ".");
                     }
                 } catch (Exception e) {
@@ -45,16 +45,16 @@ public class TimeChangerCommand extends Command {
                 }
             }
         } else if (args[0].equalsIgnoreCase("day")) {
-            config.time = -6000;
-            config.enabled = true;
+            config.TIME = -6000;
+            config.ENABLED = true;
             ChatUtils.addChatMessage("Set time to day.");
         } else if (args[0].equalsIgnoreCase("night")) {
-            config.time = -18000;
-            config.enabled = true;
+            config.TIME = -18000;
+            config.ENABLED = true;
             ChatUtils.addChatMessage("Set time to night.");
         } else if (args[0].equalsIgnoreCase("sunset")) {
-            config.time = -22880;
-            config.enabled = true;
+            config.TIME = -22880;
+            config.ENABLED = true;
             ChatUtils.addChatMessage("Set time to sunset.");
         } else {
             ChatUtils.addChatMessage("Unrecognized sub-command.");

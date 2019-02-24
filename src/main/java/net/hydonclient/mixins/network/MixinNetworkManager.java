@@ -54,5 +54,4 @@ public class MixinNetworkManager {
             callbackInfo.cancel();
         }
     }
-
 }

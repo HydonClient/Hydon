@@ -77,7 +77,7 @@ public class PerspectiveKeyBind extends HydonKeyBind {
     public void onPress() {
         if (!toggled) {
             enable();
-        } else if (!Hydon.SETTINGS.heldPerspective) {
+        } else if (!Hydon.SETTINGS.HELD_PERSPECTIVE) {
             disable();
         }
     }
@@ -88,7 +88,7 @@ public class PerspectiveKeyBind extends HydonKeyBind {
      */
     @Override
     public void onRelease() {
-        if (Hydon.SETTINGS.heldPerspective) {
+        if (Hydon.SETTINGS.HELD_PERSPECTIVE) {
             disable();
         }
     }

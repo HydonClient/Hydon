@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class HydonChunk {
 
     public void getLightFor(EnumSkyBlock type, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        if (!Minecraft.getMinecraft().isIntegratedServerRunning() && Hydon.SETTINGS.fullbright) {
+        if (!Minecraft.getMinecraft().isIntegratedServerRunning() && Hydon.SETTINGS.FULLBRIGHT) {
             cir.setReturnValue(15);
         }
     }
 
     public void getLightSubtracted(BlockPos pos, int amount, CallbackInfoReturnable<Integer> cir) {
-        if (!Minecraft.getMinecraft().isIntegratedServerRunning() && Hydon.SETTINGS.fullbright) {
+        if (!Minecraft.getMinecraft().isIntegratedServerRunning() && Hydon.SETTINGS.FULLBRIGHT) {
             cir.setReturnValue(15);
         }
     }

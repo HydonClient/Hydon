@@ -1,4 +1,4 @@
-package net.hydonclient.mixins;
+package net.hydonclient.mixins.client.renderer.texture;
 
 import java.util.List;
 import java.util.Map;

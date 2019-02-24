@@ -28,7 +28,7 @@ public class HydonRendererLivingEntity<T extends EntityLivingBase> extends Rende
     }
 
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-        if (Hydon.SETTINGS.disableArmorstands && entity instanceof EntityArmorStand) {
+        if (Hydon.SETTINGS.DISABLE_ARMORSTANDS && entity instanceof EntityArmorStand) {
             ci.cancel();
         }
     }
@@ -37,7 +37,7 @@ public class HydonRendererLivingEntity<T extends EntityLivingBase> extends Rende
         for (LayerRenderer<T> layerRenderer : layerRenderers) {
             boolean combine = layerRenderer.shouldCombineTextures();
 
-            if (Hydon.SETTINGS.oldArmor) {
+            if (Hydon.SETTINGS.OLD_ARMOR) {
                 combine = true;
             }
 

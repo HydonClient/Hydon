@@ -17,13 +17,13 @@ public class HotbarPreview {
 
     @EventListener
     public void renderHotbarNumbers(RenderGameOverlayEvent event) {
-        if (Hydon.SETTINGS.hotbarNumbers) {
+        if (Hydon.SETTINGS.HOTBAR_NUMBERS) {
             int x = core.getResolution().getScaledWidth() / 2 - 87;
             int y = core.getResolution().getScaledHeight() - 18;
             int[] hotbarKeys = getHotbarKeys();
 
             for (int slot = 0; slot < 9; ++slot) {
-                core.getMinecraft().fontRendererObj.drawString(getKeyString(hotbarKeys[slot]), x + slot * 20, y, 16777215, Hydon.SETTINGS.hotbarNumberShadow);
+                core.getMinecraft().fontRendererObj.drawString(getKeyString(hotbarKeys[slot]), x + slot * 20, y, 16777215, Hydon.SETTINGS.HOTBAR_NUMBER_SHADOW);
             }
         }
     }
