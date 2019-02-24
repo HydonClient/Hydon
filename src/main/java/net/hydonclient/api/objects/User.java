@@ -54,7 +54,7 @@ public class User {
 
                 for (Entry<String, String> entry : activesMap.entrySet()) {
                     if (cosmetic.getName().toLowerCase().startsWith(entry.getKey().toLowerCase())) {
-                        cosmetic.setEnabled(entry.getKey().equalsIgnoreCase(cosmetic.getName()));
+                        cosmetic.setEnabled(entry.getValue().equalsIgnoreCase(cosmetic.getName()));
                     }
                 }
 
