@@ -3,7 +3,10 @@ package net.hydonclient.api.objects;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 import net.hydonclient.api.HydonApi;
 import net.hydonclient.api.UserManager;
@@ -31,14 +34,14 @@ public class User {
 
         JsonObject cosmeticsResult = HydonApi.getCosmetics(uuid);
         if (cosmeticsResult.has("success") && cosmeticsResult.get("success").getAsBoolean()) {
-            String activeCape = "";
+            Map<String, String> activesMap = new HashMap<>();
 
             if (cosmeticsResult.has("storage")) {
                 JsonObject storage = cosmeticsResult.getAsJsonObject("storage");
                 if (storage.has("actives")) {
                     JsonObject actives = storage.getAsJsonObject("actives");
-                    if (actives.has("cape")) {
-                        activeCape = actives.get("cape").getAsString();
+                    for (Entry<String, JsonElement> entry : actives.entrySet()) {
+                        activesMap.putIfAbsent(entry.getKey(), entry.getValue().getAsString());
                     }
                 }
             }
@@ -47,10 +50,12 @@ public class User {
                 JsonObject jsonObject = element.getAsJsonObject();
                 Cosmetic cosmetic = new Cosmetic(jsonObject.get("name").getAsString());
 
-                if (cosmetic.getName().startsWith("CAPE_")) {
-                    cosmetic.setEnabled(activeCape.equalsIgnoreCase(cosmetic.getName()));
-                } else {
-                    cosmetic.setEnabled(!jsonObject.has("enabled") || jsonObject.get("enabled").getAsBoolean());
+                cosmetic.setEnabled(!jsonObject.has("enabled") || jsonObject.get("enabled").getAsBoolean());
+
+                for (Entry<String, String> entry : activesMap.entrySet()) {
+                    if (cosmetic.getName().toLowerCase().startsWith(entry.getKey().toLowerCase())) {
+                        cosmetic.setEnabled(entry.getKey().equalsIgnoreCase(cosmetic.getName()));
+                    }
                 }
 
                 cosmetic.setData(jsonObject.getAsJsonObject("data"));

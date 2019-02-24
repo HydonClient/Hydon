@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 public class HydonMainGui extends GuiScreen {
 
@@ -398,30 +399,32 @@ public class HydonMainGui extends GuiScreen {
         drawDefaultBackground();
 
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        int padding = Minecraft.getMinecraft().displayHeight / 8;
 
-        GuiUtils.drawBG(true);
+        GuiUtils.drawBG();
+
+        GL11.glScissor(padding - 10, padding, Minecraft.getMinecraft().displayWidth + 20 - padding * 2, Minecraft.getMinecraft().displayHeight - padding * 2);
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
+
         controller.draw();
         if (currentGroup != null) {
             currentGroup.draw();
         }
 
-        int padding = scaledResolution.getScaledHeight() / 8;
-        int width = scaledResolution.getScaledWidth() - padding;
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+
+        int scaledPadding = scaledResolution.getScaledHeight() / 8;
+        int width = scaledResolution.getScaledWidth() - scaledPadding;
         float logoFactor = 2.5f;
-        int startHeight = (int) (padding + Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
+        int startHeight = (int) (scaledPadding + Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
 
-        Minecraft.getMinecraft().getTextureManager()
-            .bindTexture(Hydon.SETTINGS.getCurrentBackground().getLocation());
-        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, scaledResolution.getScaledWidth(), startHeight, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-        Gui.drawModalRectWithCustomSizedTexture(0, scaledResolution.getScaledHeight() - padding, 0, scaledResolution.getScaledHeight() - padding, scaledResolution.getScaledWidth(), startHeight, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-
-        Gui.drawRect(padding - 1, padding - 1, width + 1, startHeight + 1, new Color(10, 10, 10).getRGB());
-        Gui.drawRect(1 + padding, padding, width, startHeight, new Color(5, 5, 5).getRGB());
+        Gui.drawRect(scaledPadding - 1, scaledPadding - 1, width + 1, startHeight + 1, new Color(10, 10, 10).getRGB());
+        Gui.drawRect(1 + scaledPadding, scaledPadding, width, startHeight, new Color(5, 5, 5).getRGB());
 
         GlStateManager.enableBlend();
         Images.LOGO_V2_DOWNSCALED.bind();
         GlStateManager.color(1, 1, 1, 1);
-        Gui.drawModalRectWithCustomSizedTexture(padding, padding, 0, 0,
+        Gui.drawModalRectWithCustomSizedTexture(scaledPadding, scaledPadding, 0, 0,
             (int) (Images.LOGO_V2_DOWNSCALED.getWidth() / logoFactor), (int) (Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor),
             Images.LOGO_V2_DOWNSCALED.getWidth() / logoFactor, Images.LOGO_V2_DOWNSCALED.getHeight() / logoFactor);
 
